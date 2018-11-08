@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+// 	$(function(){
+// 		var imgArea = $("#imgArea");
+// 		var pattern = '<img src="image.do?image=%v"/>'; 
+// 		$("[name='image']").on("change", function(){
+// 			var filename = $(this).val();
+// 			imgArea.append(pattern.replace("%v",filename));
+// 		});
+// 	});
+</script>
+<body>
+
+<form action="songs" method="post" name="musicTitle" >
+	<select name ="musicTitle" onchange="this.form.submit()">
+		@songTitle
+	</select>
+</form>
+
+</body>
+
+</html>

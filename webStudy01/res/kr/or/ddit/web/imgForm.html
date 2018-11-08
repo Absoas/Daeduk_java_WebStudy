@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	$(function(){
+		var imgArea = $("#imgArea");
+		var pattern = '<img src="image.do?image=%v"/>'; 
+		$("[name='image']").on("change", function(){
+			var filename = $(this).val();
+			imgArea.append(pattern.replace("%v",filename));
+		});
+	});
+</script>
+
+<body>
+
+<form action="image.do" method="get" name="imgForm" >
+	<select name ="image" onchange="changeHandler(event);">
+		@options
+	</select>
+	
+<!-- 	<input type="submit" value="전송" /> -->
+</form>
+
+<div id="imgArea">
+	
+</div>
+</body>
+
+<!-- <script type="text/javascript">  -->
+<!--  	var imgArea = document.getElementById("imgArea"); -->
+<!--  	function changeHandler(event){ -->
+<!--  		var filename = event.target.value; -->
+<!--  		var pattern = '<img src = "image.do?image=%v"/>'; -->
+<!--  		imgArea.innerHTML = pattern.replace("%v",filename); -->
+		
+<!--  	}	 -->
+<!-- </script> -->
+
+</html>
