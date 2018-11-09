@@ -1,6 +1,6 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +8,13 @@
 <title>02/jspStandard.jsp</title>
 </head>
 <body>
-	<h4> JSP (Java Server Page) </h4>
-	
-	<a href="<%=request.getContextPath()%>/02/numberTest.jsp?minDan=2&maxDan=9">테스트용 구구단 요청 </a>
-	
-	
+	<h4>JSP (Java Server Page)</h4>
+
+	<a
+		href="<%=request.getContextPath()%>/02/numberTest.jsp?minDan=2&maxDan=9">테스트용
+		구구단 요청 </a>
+
+
 	<pre>
 		: 자바 기반의 확장 CGI 방식의 스크립트 언어, 템플릿을 작성하는 과정에서 사용.
 		: 표준 구성 요소
@@ -27,8 +29,6 @@
 			<%
 				// 자바코드 , _JspService 메소드내의 지역코드
 				String test = "테스트";
-			
-				
 			%>
 			3) 표현식(Expression)		: <%=new Date()%>, <%=test %>		
 			4) 선언부 (Declaration)	: 
@@ -42,7 +42,7 @@
 			5) 주석 (Comment):
 			
 <!-- 				HTML 주석 -->
-			<script type = "text/javascript">
+			<script type="text/javascript">
 // 				JavaScript 주석
 			</script>
 			server side  주석(******)

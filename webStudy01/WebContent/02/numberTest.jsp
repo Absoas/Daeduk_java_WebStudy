@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	table{
-		border : 1px solid black;
-	}
+table {
+	border: 1px solid black;
+}
 </style>
 </head>
 <body>
-<%
+	<%
 	String minDanStr = request.getParameter("minDan");
 	String maxDanStr = request.getParameter("maxDan");
 	
@@ -23,11 +23,11 @@
 	}
 
 %>
-<form>
-	최소단 : <input type="number" name="minDan" value="<%=minDanStr%>"/>
-	최대단 : <input type="number" name="maxDan" value="<%=maxDanStr%>"/>
-	<input type="submit" value = "구구단"/>
-</form>
+	<form>
+		최소단 : <input type="number" name="minDan" value="<%=minDanStr%>" /> 최대단
+		: <input type="number" name="maxDan" value="<%=maxDanStr%>" /> <input
+			type="submit" value="구구단" />
+	</form>
 	<table>
 		<%
 			
@@ -37,26 +37,26 @@
 			String pattern = "%d * %d = %d ";
 			for(int dan = minDan; dan <= maxDan; dan++){
 		%>
-			<tr>		
-		<%
+		<tr>
+			<%
 				for(int gob = 2; gob <= 9; gob++){
-		%>			
-				<td><%=String.format(pattern, dan, gob, dan*gob) %></td>
-		<%
+		%>
+			<td><%=String.format(pattern, dan, gob, dan*gob) %></td>
+			<%
 				}
-		%>	
-			</tr>	
+		%>
+		</tr>
 		<%		
 			}
 		%>
 	</table>
-	
+
 	<ul>
-	<% 
+		<% 
 		for(int number = 1; number<=50; number++){
 	%>
 		<li><%=number %></li>
-	<% 
+		<% 
 		}
 	%>
 	</ul>

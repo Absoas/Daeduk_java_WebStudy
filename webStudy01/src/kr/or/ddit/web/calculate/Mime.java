@@ -21,7 +21,6 @@ public enum Mime {
 		return "%s";
 	});
 	
-	
 	String mime;
 	RealMime realMime;
 	
