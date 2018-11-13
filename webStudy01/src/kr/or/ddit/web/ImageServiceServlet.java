@@ -9,42 +9,42 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-@WebServlet(value = "/image.do")
+import javax.servlet.annotation.*;
+@WebServlet(value="/imageService")
 public class ImageServiceServlet extends HttpServlet {
-
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
-		String imgName = req.getParameter("image");
-		if (imgName == null || imgName.trim().length() == 0) {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 요청 파라미터 확보 : 파라미터명(image)
+		// 이미지 스트리밍...
+		resp.setContentType("image/jpeg");
+		String image = req.getParameter("image");
+		
+		//화이트스페이스일수도 있뜸
+		if(image==null || image.trim().length()==0) {
 			resp.sendError(400);
 			return;
 		}
 		File folder = new File("d:/contents");
-		File imgFile = new File(folder,imgName);
+		File imgFile = new File(folder,image);
+		
+		//이파일이 실제로 존재하는지에 대해서 파악해봐야한다.
 		if(!imgFile.exists()) {
 			resp.sendError(404);
 			return;
 		}
-		
-		ServletContext context = req.getServletContext();
-		resp.setContentType(context.getMimeType(imgName));
-		
 		FileInputStream fis = new FileInputStream(imgFile);
 		OutputStream out = resp.getOutputStream();
 		byte[] buffer = new byte[1024];
 		int pointer = -1;
-		while ((pointer = fis.read(buffer)) != -1) {
-			out.write(buffer,0,pointer);
+		while((pointer = fis.read(buffer)) != -1){ // -1 : EOF 문자
+			out.write(buffer,0,pointer); //읽어들일 만큼만! 
 		}
 		fis.close();
 		out.close();
+	
 	}
 }

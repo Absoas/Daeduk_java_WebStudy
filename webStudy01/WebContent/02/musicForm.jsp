@@ -4,6 +4,9 @@
     pageEncoding="UTF-8"%>
 <%
    File folder = new File("d:/contents");
+
+
+
    String[] names = folder.list((dir, name) -> {
       return application.getMimeType(name).startsWith("text");
    });

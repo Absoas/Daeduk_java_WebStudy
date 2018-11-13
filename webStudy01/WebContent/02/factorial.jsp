@@ -33,6 +33,7 @@
 <%
    if(flag){
       int operand = Integer.parseInt(opStr);
+      
 %>
 <div>
    <%= factorial(operand) %>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/song")
-public class MusicLyricsServletSemVersion extends HttpServlet{
+public class MusicLyricesServlet extends HttpServlet{
       @Override
       protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
          String song = req.getParameter("song");
@@ -50,7 +50,7 @@ public class MusicLyricsServletSemVersion extends HttpServlet{
          StringBuffer html = new StringBuffer();
          while ((temp = reader.readLine()) != null) {
             html.append("<p>" + temp + "</p>");
-            System.out.println(temp);
+//            System.out.println(temp);
          }
 
          out.println(html);
