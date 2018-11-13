@@ -1,7 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%
-//	response.setHeader("Content-Type", "text/html;charset=UTF-8");
+	//	response.setHeader("Content-Type", "text/html;charset=UTF-8");
 	response.setContentType("text/html;charset=UTF-8");
 %>
 <!DOCTYPE html>
@@ -11,8 +11,8 @@
 <title>04/responseDesc.jsp</title>
 </head>
 <body>
-<h4>Http Response</h4>
-<pre>
+	<h4>Http Response</h4>
+	<pre>
 	Http의 response패키징 방식
 	1) Response Status Code(응답 상태 코드)
 		-100: ing...., HTTP1.1 부터 하위 프로토콜로 websocket 이 사용됨.
@@ -48,19 +48,19 @@
 	  	 	setHeader, setContentType, page 지시자의 contentType 속성
 	  	 b) Cache 제어 : Cache-control(HTTP/1.1), Pragma(HTTP/1.0), Expires
 	  	 <%
-	  	 //캐시를 저장하지 않도록 설정
-//	  	 	response.setHeader("Pragma", "no-cache");
-//	  	 	response.setHeader("Cache-control", "no-cache");
-//	  	 	response.setHeader("Cache-control", "no-store");
-//	  	 	response.setDateHeader("Expires", 0);
-		 //캐시를 저장하도록 설정
-		 	int maxAge = 60*60*24*7;
-		 	response.setHeader("Pragma", "public;max-age="+maxAge);
-		 	response.setHeader("Cache-Control", "public;max-age="+maxAge);
-		 	Calendar today = Calendar.getInstance();
-		 	today.add(Calendar.SECOND, maxAge);
-		 	response.setDateHeader("Expires", today.getTimeInMillis());
-		 %>
+		//캐시를 저장하지 않도록 설정
+		//	  	 	response.setHeader("Pragma", "no-cache");
+		//	  	 	response.setHeader("Cache-control", "no-cache");
+		//	  	 	response.setHeader("Cache-control", "no-store");
+		//	  	 	response.setDateHeader("Expires", 0);
+		//캐시를 저장하도록 설정
+		int maxAge = 60 * 60 * 24 * 7;
+		response.setHeader("Pragma", "public;max-age=" + maxAge);
+		response.setHeader("Cache-Control", "public;max-age=" + maxAge);
+		Calendar today = Calendar.getInstance();
+		today.add(Calendar.SECOND, maxAge);
+		response.setDateHeader("Expires", today.getTimeInMillis());
+	%>
 	  	 c) Auto Request : Refresh
 	  	 d) Page Move(Flow Control) : Location
 </pre>

@@ -26,21 +26,21 @@
 현재 서버의 시간 : <span id="severClock"></span> 
 
 <script type="text/javascript">
-   var severClock = $("#severClock");
-   
-   setInterval(function(){
-      $.ajax({
-         url : "<%=request.getContextPath()%>/05/getSeverTime.jsp",
-         dataType : "json",
-         success : function(resp) {
-            severClock.html(resp.severTime);
-         },
-         error : function(resp) {
-            console.log(resp.status  + " " + resp.responseText);
-         }
-      });
-   },1000)
-   
+	var severClock = $("#serverClock");
+	
+	setInterval(function(){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/05/getServerTime.jsp",
+			dataType : "json",
+			success : function(resp) {
+				severClock.html(resp.serverTime);
+			},
+			error : function(resp) {
+				console.log(resp.status  + " " + resp.responseText);
+			}
+		});
+	},1000)
+	
 //    var wait = 3;
 //    var count = 3;
 //    var spanTag = document.getElementById("countArea");
