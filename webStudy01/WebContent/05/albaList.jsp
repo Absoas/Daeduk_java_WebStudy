@@ -1,7 +1,7 @@
-<%@page import="java.util.Map.Entry"%>
-<%@page import="kr.or.ddit.vo.AlbasengVO"%>
 <%@page import="java.util.Map"%>
 <%@page import="kr.or.ddit.web.SimpleFormProcessServlet"%>
+<%@page import="kr.or.ddit.vo.AlbasengVO"%>
+<%@page import="java.util.Map.Entry"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,10 +11,6 @@
 <title>05/albaList.jsp</title>
 </head>
 <body>
-<%
-	Map<String,AlbasengVO> albasengs =  SimpleFormProcessServlet.albasengs;
-	
-%>
 <table>
 	<thead>
 		<tr>
@@ -24,25 +20,30 @@
 			<th>연락처</th>
 		</tr>
 	</thead>
-	
 	<tbody>
 		<%
-			AlbasengVO vo = null;
-			for(Entry<String, AlbasengVO> entry : albasengs.entrySet()){
-				String code = entry.getKey();
-		%>		
+			// 규연이가 넣은 코드.. 문제있으면 규연이에게...
+			Map<String, AlbasengVO> alba = (Map<String, AlbasengVO>)getServletContext().getAttribute("albasengs");
+			 
+			for(Entry<String, AlbasengVO> entry : alba.entrySet()){
+				%>
 				<tr>
-					<td><%=albasengs.get(code).getCode() %></td>
-					<td><%=albasengs.get(code).getName() %></td>
-					<td><%=albasengs.get(code).getAddress() %></td>
-					<td><%=albasengs.get(code).getTel() %></td>
+					<td><%=entry.getKey() %></td>
+					<td><%=entry.getValue().getName() %></td>
+					<td><%=entry.getValue().getAddress() %></td>
+					<td><%=entry.getValue().getTel() %></td>
 				</tr>
-		<%	
+				<%
 			}
+		
 		%>
-	
 	</tbody>
 </table>
-
 </body>
 </html>
+
+
+
+
+
+

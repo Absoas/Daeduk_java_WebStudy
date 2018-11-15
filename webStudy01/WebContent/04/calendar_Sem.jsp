@@ -6,11 +6,7 @@
 <%@page import="static java.util.Calendar.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>04/calendar.jsp</title>
+
 <style type = "text/css">
    .sunday{
       color: red;
@@ -29,7 +25,7 @@
 </style>
 <script type = "text/javascript">
    function eventHandler(year,month){
-      var form = document.forms[0];
+      var form = document.calForm;
       if((year && month)|| month == 0){
 	      form.year.value = year;
 	      form.month.value = month;
@@ -38,8 +34,6 @@
       return false;
    }
 </script>
-</head>
-<body>
 <%
 	request.setCharacterEncoding("UTF-8");
    String yearStr = request.getParameter("year");
@@ -80,7 +74,11 @@
    
    Locale[] locales = Locale.getAvailableLocales();
 %>
-<form>
+<form method="post" name="calForm">
+
+<input type="hidden" name= "command" value = "calendar"/>
+
+
 <h4>
 <a href="javascript:eventHandler(<%=beforeYear%>,<%=beforeMonth%>)">이전달</a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -151,5 +149,3 @@
 %>
 </tbody>
 </table>
-</body>
-</html>

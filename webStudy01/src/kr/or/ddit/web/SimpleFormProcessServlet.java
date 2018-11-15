@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import kr.or.ddit.vo.AlbasengVO;
 
 
-@WebServlet("/albamon")
+@WebServlet("/albamons")
 public class SimpleFormProcessServlet extends HttpServlet {
 	public static Map<String, String> gradeMap;
 	public static Map<String, String> licenseMap;

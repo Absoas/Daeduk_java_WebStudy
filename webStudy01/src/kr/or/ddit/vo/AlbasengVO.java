@@ -9,6 +9,22 @@ import java.util.Arrays;
 //상태 확인 메서드 toString
 //직렬화
 //
+
+/**
+ * 자바빈 : Java beans 규약에 따라 재사용 가능한 객체들.
+ * (Value Object,DTD(Data Transfer Object , Model)
+ * 1. 값을 저장할 프로퍼티
+ * 2. 캡슐화 
+ * 3. 캡슐화된 프로퍼티에 접근할 인터페이스 메소드 제공(getter/setter)
+ * 		get[set] 변수명의 첫문자만 대문자로 한 카멜 표기법
+ * 4. 상태 비교 방법 제공(equals)
+ * 5. 상태 확인 방법 제공(toString)
+ * 6. 직렬화(전송이나 저장이 가능)
+ * 
+ * 
+ * @author pc15
+ *
+ */
 public class AlbasengVO implements Serializable{
 	private String code;	//PK
 	private String name;
@@ -25,6 +41,7 @@ public class AlbasengVO implements Serializable{
 		return "AlbasengVO [name=" + name + ", age=" + age + ", tel=" + tel + ", address=" + address + ", grade=" + grade
 				+ ", gender=" + gender + ", license=" + Arrays.toString(license) + ", career=" + career + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
