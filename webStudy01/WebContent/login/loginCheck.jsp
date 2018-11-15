@@ -10,6 +10,7 @@
       		4-2. 인증 성공 : 웰컴 페이지로 이동(원본 요청을 제거하고 이동.)
       		4-3. 인증 실패 : 이동(loginForm.jsp, 기존에 입력했던 아이디를 그대로 전달.) -->
 <%
+	//test01
 	request.setCharacterEncoding("UTF-8");
 	String id = request.getParameter("mem_id");
 	String pass = request.getParameter("mem_pass");
