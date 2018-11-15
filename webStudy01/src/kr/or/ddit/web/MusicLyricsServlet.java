@@ -26,6 +26,7 @@ public class MusicLyricsServlet extends HttpServlet {
 		}
 		File folder = (File)getServletContext().getAttribute("contentFolder");
 		File songFile = new File(folder, song);
+		
 		if(!songFile.exists()) {
 			status = HttpServletResponse.SC_NOT_FOUND;
 			message = "해당 곡은 가사가 없슴다.";
