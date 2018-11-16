@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.utils.CookieUtils"%>
 <%@page import="kr.or.ddit.web.modulize.ServiceType"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,6 +9,7 @@
 	String cmdParam = request.getParameter("command");
 	int statusCode = 0;
 	String includePage = null;
+	
 	if(StringUtils.isNotBlank(cmdParam)){
 		try{
 			ServiceType sType = ServiceType.valueOf(cmdParam.toUpperCase());
