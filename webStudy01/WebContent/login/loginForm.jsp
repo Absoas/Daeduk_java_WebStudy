@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.utils.CookieUtils"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@page import="java.util.Objects"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,11 @@
 <%
 	String failedId = request.getParameter("mem_id");
 	String message = (String)session.getAttribute("message");
+	String check = (String)application.getAttribute("check");
+	CookieUtils cookie = new CookieUtils(request);
+	String cookieValue = cookie.getCookieValue("loginId");
+	
+	
 %>    
 <!DOCTYPE html>
 <html>
@@ -20,15 +26,17 @@
 			session.removeAttribute("message");
 		}
 	%>
+	
+	
 </script>
 </head>
 <body>
 <form action="<%=request.getContextPath() %>/login/loginCheck.jsp" method="post">
 	<ul>
 		<li>
-			아이디 : <input type="text" name="mem_id" value="<%=Objects.toString(failedId, "") %>" />
+			아이디 : <input type="text" name="mem_id" value="<%= Objects.toString(failedId, Objects.toString(cookieValue, "")) %>" />
 			<label>
-				<input type= "checkbox" name = "idChecked" value = "idSaved"/>아이디 기억하기
+				<input type= "checkbox" name = "idChecked" value = "idSaved" <%=Objects.toString(check,"") %>/>아이디 기억하기
 			</label>
 <!-- 			2개 혹은 3개의 파라미터가 넘어간다. 
 				체크했을때는 3개  (idCheckd, isSaved)
@@ -57,7 +65,7 @@
 					hint redirict 하기 전에 작업 처리
 					
 					체크를 하냐 마냐에 따라
-					maxage를 다르게
+					maxAge를 다르게
 					남길거면 1주일
 					지울거면 0
  -->

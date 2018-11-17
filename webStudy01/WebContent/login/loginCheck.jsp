@@ -1,5 +1,7 @@
+<%@page import="kr.or.ddit.utils.CookieUtils.TextType"%>
+<%@page import="kr.or.ddit.utils.CookieUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!-- 1. 파라미터 확보 -->
 <!-- 2. 검증(필수 데이터) -->
 <!-- 3. 불통 -->
@@ -12,31 +14,53 @@
 	request.setCharacterEncoding("UTF-8");
 	String mem_id = request.getParameter("mem_id");
 	String mem_pass = request.getParameter("mem_pass");
+	String idChecked = request.getParameter("idChecked");
+
 	String goPage = null;
+
 	boolean redirect = false;
-	if(mem_id == null || mem_id.trim().length()==0 ||
-			mem_pass == null || mem_pass.trim().length()==0){
+	if (mem_id == null || mem_id.trim().length() == 0 || mem_pass == null || mem_pass.trim().length() == 0) {
 		goPage = "/login/loginForm.jsp";
 		redirect = true;
 		session.setAttribute("message", "아이디나 비번 누락");
-	}else{
-		if(mem_id.equals(mem_pass)){
+	} else {
+		if (mem_id.equals(mem_pass)) {
 			goPage = "/";
 			redirect = true;
 			session.setAttribute("authMember", mem_id);
-		}else{
+		} else {
 			goPage = "/login/loginForm.jsp";
 			redirect = true;
 			session.setAttribute("message", "비번 오류로 인증 실패");
 		}
 	}
-	if(redirect){
+	
+	String check = null;
+
+	if (idChecked == null) {
+		//비체크
+		Cookie[] cookies = request.getCookies();
+		
+		
+		for (int i = 0; i < cookies.length; i++) {
+			cookies[i].setMaxAge(0);
+			response.addCookie(cookies[i]);
+		}
+	} else {
+		//체크
+		check = "checked";
+		Cookie cookie = CookieUtils.createCookie("loginId", mem_id, 60 * 60 * 24 * 7);
+		response.addCookie(cookie);
+	}
+	
+	application.setAttribute("check", check);
+
+	if (redirect) {
 		response.sendRedirect(request.getContextPath() + goPage);
-	}else{
+	} else {
 		RequestDispatcher rd = request.getRequestDispatcher(goPage);
 		rd.forward(request, response);
 	}
-	
 %>
 
 
