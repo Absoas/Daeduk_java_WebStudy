@@ -62,14 +62,8 @@ public class ImageServiceServlet extends HttpServlet {
          cookieValues[cookieValues.length - 1] = imgFile.getName();
       }
       
-      
-//      imgCookieValue = Arrays.toString(cookieValues);
-//      imgCookieValue = imgCookieValue.replaceAll("[\\[\\]\\s]", "");
-      
       imgCookieValue = mapper.writeValueAsString(cookieValues);
       
-      System.out.println(imgCookieValue);
-
       Cookie cookie = CookieUtils.createCookie("imageCookie", imgCookieValue, req.getContextPath(), TextType.PATH,
             60 * 60 * 24 * 3);
       resp.addCookie(cookie);

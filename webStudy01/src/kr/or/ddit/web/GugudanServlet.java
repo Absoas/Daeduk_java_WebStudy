@@ -54,7 +54,6 @@ public class GugudanServlet extends HttpServlet{
 		String replaceText = sb.toString();
 		
 		html.replace(start,end,replaceText);
-		
 		PrintWriter out = resp.getWriter();
 		out.println(html);
 //		out.close();
