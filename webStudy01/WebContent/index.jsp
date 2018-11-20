@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@page import="kr.or.ddit.utils.CookieUtils"%>
 <%@page import="kr.or.ddit.web.modulize.ServiceType"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
@@ -5,7 +6,7 @@
     pageEncoding="UTF-8"%>
     
 <%
-	String mem_id = (String) session.getAttribute("authMember");
+	MemberVO authMember = (MemberVO) session.getAttribute("authMember");
 	String cmdParam = request.getParameter("command");
 	int statusCode = 0;
 	String includePage = null;
@@ -66,13 +67,13 @@
 			로그인에 성공해서 웰컴 페이지로 접속하는 경우의 수가 있음.
 			<%
 		
-			if (StringUtils.isBlank(mem_id)) {
-		%>
+			if (authMember==null) {
+			%>
 				<a href="<%=request.getContextPath()%>/login/loginForm.jsp">로그인 하러 가기</a>
 			<%
 				} else {
 			%>
-				<%=mem_id%>님 로그인 상태, <a
+				<%=authMember.getMem_name()%>님 로그인 상태, <a
 				href="<%=request.getContextPath()%>/login/logout.jsp">로그아웃</a>
 			<%
 				}

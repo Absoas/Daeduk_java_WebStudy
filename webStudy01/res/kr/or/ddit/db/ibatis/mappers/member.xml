@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+
+<sqlMap namespace="Member">
+	<select id="selectMember" parameterClass="String" resultClass="memberVO">
+		SELECT                
+		mem_id,mem_pass,mem_name,mem_regno1, 
+		mem_regno2, TO_CHAR(mem_bir,'YYYY-MM-DD') mem_bir,mem_zip,mem_add1,   
+		mem_add2, mem_hometel,mem_comtel,mem_hp, 
+		mem_mail,mem_job, mem_like,mem_memorial, 
+		TO_CHAR(mem_memorialday,'YYYY-MM-DD') mem_memorialday,mem_mileage,mem_delete  
+		FROM member                             
+		where mem_id = #aa#						
+	</select>	
+</sqlMap>
