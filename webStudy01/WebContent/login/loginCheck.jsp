@@ -35,7 +35,6 @@
 		}
 	}
 	
-	String check = null;
 
 	if (idChecked == null) {
 		//비체크
@@ -48,12 +47,11 @@
 		}
 	} else {
 		//체크
-		check = "checked";
+		application.setAttribute("check", "checked");
 		Cookie cookie = CookieUtils.createCookie("loginId", mem_id, 60 * 60 * 24 * 7);
 		response.addCookie(cookie);
 	}
 	
-	application.setAttribute("check", check);
 
 	if (redirect) {
 		response.sendRedirect(request.getContextPath() + goPage);

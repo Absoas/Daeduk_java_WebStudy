@@ -7,6 +7,7 @@
 	String failedId = request.getParameter("mem_id");
 	String message = (String)session.getAttribute("message");
 	String check = (String)application.getAttribute("check");
+	System.out.println(check);
 	CookieUtils cookie = new CookieUtils(request);
 	String cookieValue = cookie.getCookieValue("loginId");
 	
