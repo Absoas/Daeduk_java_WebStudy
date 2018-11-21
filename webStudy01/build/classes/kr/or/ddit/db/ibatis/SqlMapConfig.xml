@@ -18,5 +18,4 @@
 	</transactionManager>
 	
 	<sqlMap resource="kr/or/ddit/db/ibatis/mappers/member.xml"/>
-	
 </sqlMapConfig>

@@ -1,4 +1,4 @@
-<%@page import="kr.or.ddit.member.service.AuthenticateServiceImpl.ServiceResult"%>
+<%@page import="kr.or.ddit.ServiceResult"%>
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@page import="kr.or.ddit.member.service.AuthenticateServiceImpl"%>
 <%@page import="kr.or.ddit.member.service.IAuthenticateService"%>
@@ -61,46 +61,6 @@
       }
    }
    
-  /*  String check = null;
->>>>>>> branch 'yb' of https://github.com/Absoas/Daeduk_java_WebStudy.git
-
-<<<<<<< HEAD
-	if (idChecked == null) {
-		//비체크
-		Cookie[] cookies = request.getCookies();
-		
-		
-		for (int i = 0; i < cookies.length; i++) {
-			cookies[i].setMaxAge(0);
-			response.addCookie(cookies[i]);
-		}
-	} else {
-		//체크
-		application.setAttribute("check", "checked");
-		Cookie cookie = CookieUtils.createCookie("loginId", mem_id, 60 * 60 * 24 * 7);
-		response.addCookie(cookie);
-	}
-	
-=======
-   if (idChecked == null) {
-      //비체크
-      Cookie[] cookies = request.getCookies();
-      
-      
-      for (int i = 0; i < cookies.length; i++) {
-         cookies[i].setMaxAge(0);
-         response.addCookie(cookies[i]);
-      }
-   } else {
-      //체크
-      check = "checked";
-      Cookie cookie = CookieUtils.createCookie("loginId", mem_id, 60 * 60 * 24 * 7);
-      Cookie checkCookie = CookieUtils.createCookie("check", check ,60 * 60 * 24 * 7);
-      response.addCookie(cookie);
-      response.addCookie(checkCookie);
-   } */
-   
-//    application.setAttribute("check", check);
 
    if (redirect) {
       response.sendRedirect(request.getContextPath() + goPage);
