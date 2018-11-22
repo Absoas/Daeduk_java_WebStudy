@@ -41,8 +41,16 @@ public class MemberServiceImpl implements IMemberService {
 
    @Override
    public ServiceResult modifyMember(MemberVO member) {
-      // TODO Auto-generated method stub
-      return null;
+	   ServiceResult result =  (ServiceResult)new AuthenticateServiceImpl().authenticate(member);
+	   if(result.equals(ServiceResult.OK)) {
+		  int cnt = memberDAO.updateMember(member);
+		  if(cnt > 0) {
+			  result = ServiceResult.OK;
+		  }else {
+			  result = ServiceResult.FAILED;
+		  }
+	   }
+	   return result;
    }
 
    @Override

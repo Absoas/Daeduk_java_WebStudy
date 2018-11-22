@@ -153,6 +153,7 @@ public class MemberVO implements Serializable{
 	public void setMem_delete(String mem_delete) {
 		this.mem_delete = mem_delete;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -162,6 +163,7 @@ public class MemberVO implements Serializable{
 		result = prime * result + ((mem_regno2 == null) ? 0 : mem_regno2.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -188,6 +190,4 @@ public class MemberVO implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 }

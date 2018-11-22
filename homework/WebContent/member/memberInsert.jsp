@@ -9,7 +9,8 @@
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%!private boolean validate(MemberVO member, Map<String, String> errors){
+<%!
+private boolean validate(MemberVO member, Map<String, String> errors){
       boolean valid = true;
     	if (StringUtils.isBlank(member.getMem_id())) {
 			valid = false;
@@ -68,16 +69,17 @@
 %>
 <jsp:useBean id="member" class="kr.or.ddit.vo.MemberVO" scope="request"></jsp:useBean>
 <jsp:setProperty name = "member" property="*"/>
-
 <%
    String goPage = null;
    boolean redirect = false;
    String message = null;
    Map<String, String> errors = new LinkedHashMap<>();
    request.setAttribute("errors", errors);
-   boolean valud = validate(member,errors);
+  
    
-   if(valud){
+   boolean valid = validate(member,errors);
+   
+   if(valid){
       IMemberService service = new MemberServiceImpl();
       ServiceResult result = service.registMember(member);
       switch(result){

@@ -69,7 +69,7 @@
 		
 			if (authMember==null) {
 			%>
-				<a href="<%=request.getContextPath()%>/login/loginForm.jsp">로그인 하러 가기</a>
+				<a href="<%=request.getContextPath()%>/member/mypage.do.jsp">로그인 하러 가기</a>
 			<%
 				} else {
 			%>
