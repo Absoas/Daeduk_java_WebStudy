@@ -60,5 +60,4 @@ public class BuyerDAOImpl implements IBuyerDAO {
 			throw new RuntimeException(e);
 		}
 	}
-
 }
