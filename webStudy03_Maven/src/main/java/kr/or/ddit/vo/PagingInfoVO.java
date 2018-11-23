@@ -49,10 +49,7 @@ public class PagingInfoVO {
 		startRow = endRow-(screenSize-1);
 		startPage = (currentPage-1)/blockSize * blockSize + 1;
 		endPage = startPage + (blockSize - 1);
-	
 	}
-	
-	
 	
 	public String getPagingHTML() {
 		String pattern = " <li class='page-item %s'><a class='page-link' href='?page=%d'>%s</a></li>";

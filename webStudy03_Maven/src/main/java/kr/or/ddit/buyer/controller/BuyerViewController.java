@@ -14,28 +14,29 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.sun.xml.internal.ws.client.ResponseContext;
 
+import kr.or.ddit.buyer.service.BuyerServiceImpl;
+import kr.or.ddit.buyer.service.IBuyerService;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ICommandHandler;
+import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 
-//@WebServlet("/member/memberView.do")
-public class BuyerViewServlet extends HttpServlet{
+public class BuyerViewController implements ICommandHandler{
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String mem_id = req.getParameter("who");
+	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String buyer_id = req.getParameter("who");
 		
-		if(StringUtils.isBlank(mem_id)) {
+		if(StringUtils.isBlank(buyer_id)) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
+			return null;
 		}
-		MemberVO member = null;
-		IMemberService service = new MemberServiceImpl();
-		member = service.retrieveMember(mem_id);
-		req.setAttribute("member", member);
-		String view = "/WEB-INF/views/member/memberView.jsp";
-		RequestDispatcher rd = req.getRequestDispatcher(view);
-		rd.forward(req, resp);
-		
+		BuyerVO buyer = null;
+		IBuyerService service = new BuyerServiceImpl();
+		buyer = service.retrieveBuyer(buyer_id);
+		req.setAttribute("buyer", buyer);
+		String view = "member/memberView";
+		return view;
 	}	
 }
