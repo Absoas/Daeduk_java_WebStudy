@@ -7,11 +7,21 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 import kr.or.ddit.db.ibatis.CustomSqlMapClientBuilder;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.PagingInfoVO;
 
 public class MemberDAOImpl implements IMemberDAO {
 
 	SqlMapClient sqlMapClient = CustomSqlMapClientBuilder.getSqlMapClient();
 	
+	@Override
+	public long selectTotalRecord(PagingInfoVO pagingVO) {
+		try {
+			return (Long)sqlMapClient.queryForObject("Member.selectTotalRecord");
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Override
 	public MemberVO selectMember(String mem_id) {
 		
@@ -33,9 +43,9 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
-	public List<MemberVO> selectMemberList() {
+	public List<MemberVO> selectMemberList(PagingInfoVO pagingVO) {
 		try {
-			List<MemberVO> memberList = sqlMapClient.queryForList("Member.selectMemberList");
+			List<MemberVO> memberList = sqlMapClient.queryForList("Member.selectMemberList",pagingVO);
 			return memberList;
 		}catch (SQLException e) {
 			throw new RuntimeException(e);

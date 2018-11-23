@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.vo.PagingInfoVO"%>
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.or.ddit.member.service.MemberServiceImpl"%>
@@ -6,8 +7,9 @@
     pageEncoding="UTF-8"%>
     
 <%
-	IMemberService service = new MemberServiceImpl();
-	List<MemberVO> memberList =  service.retrieveMemberList();
+ 	PagingInfoVO pagingVO = (PagingInfoVO)request.getAttribute("pagingVO");
+	List<MemberVO> memberList = pagingVO.getDataList();
+
 %>
     
 <!DOCTYPE html>
@@ -26,7 +28,7 @@
 <body>
 <h4> 회원 목록 </h4>
 
-<input type="button" class="button" value="신규 등록"	
+<input  class="btn btn-primary" type="button" class="button" value="신규 등록"	
 	onclick="location.href='<%=request.getContextPath()%>/member/memberInsert.do';"
 />
 <table class="table">
@@ -55,14 +57,6 @@
 					</tr>
 		
 		<%
-// 					out.println("<tr class=\"success\">");
-// 					out.println("<td>"+member.getMem_id()+"</td>");
-// 					out.println("<td>"+member.getMem_name()+"</td>");
-// 					out.println("<td>"+member.getAddress()+"</td>");
-// 					out.println("<td>"+member.getMem_hp()+"</td>");
-// 					out.println("<td>"+member.getMem_mail()+"</td>");
-// 					out.println("<td>"+member.getMem_mileage()+"</td>");
-// 					out.println("</tr>");
 				}
 			}else{
 				%>
@@ -74,6 +68,15 @@
 			}
 		%>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="6">
+				<nav aria-label="Page navigation example">
+					<%=pagingVO.getPagingHTML()%>
+				</nav>
+			</td>
+		</tr>
+	</tfoot>
 </table>
 </body>
 </html>

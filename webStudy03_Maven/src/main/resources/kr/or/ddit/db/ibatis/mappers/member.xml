@@ -15,12 +15,23 @@
 	
 	<select id="selectMember" parameterClass="String" resultClass="memberVO">
 		<include refid="Member.selectMemberFrag"/>                           
-		where mem_id = #aa#						
 	</select>	
 	
-	<select id="selectMemberList" resultClass="memberVO">
-		<include refid="Member.selectMemberFrag"/>  
-		ORDER BY ROWID DESC
+	<select id="selectTotalRecord" resultClass="Long">
+		SELECT COUNT(*)
+		FROM member
+	</select>
+	
+	<select id="selectMemberList" resultClass="memberVO" parameterClass="pagingVO">
+		SELECT B.* 
+			FROM (
+			SELECT ROWNUM RNUM, A.* FROM(
+			<include refid="Member.selectMemberFrag"/>  
+			ORDER BY ROWID DESC
+		) A ) B
+		<![CDATA[
+		WHERE RNUM >= #startRow# AND RNUM <= #endRow#
+		]]>
 	</select>
 	
 	<insert id="insertMember" parameterClass="memberVO">
@@ -61,4 +72,6 @@
        mem_delete='Y'
        where mem_id = #mem_id#
    </update>
+   
+   
 </sqlMap>

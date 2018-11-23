@@ -25,12 +25,12 @@ public class BuyerListServlet extends HttpServlet{
 		IMemberService service =  new MemberServiceImpl();
 		// 4. 로직 선택
 		// 5. 컨텐츠(Model) 확보 
-		List<MemberVO> memberList =  service.retrieveMemberList();
+//		List<MemberVO> memberList =  service.retrieveMemberList(pagingVO);
 		
 		// 6. V.L 를 선택 
 		String view = "/WEB-INF/views/member/memberList.jsp";
 		// 7. Scope 를 통해 Model 공유
-		req.setAttribute("memberList", memberList);
+//		req.setAttribute("memberList", memberList);
 		// 8. 이동 방식을 결정하고, V.L로 이동.
 		RequestDispatcher rd = req.getRequestDispatcher(view);
 		rd.forward(req, resp);

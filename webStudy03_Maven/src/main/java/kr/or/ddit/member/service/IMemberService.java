@@ -6,6 +6,7 @@ import kr.or.ddit.ServiceResult;
 import kr.or.ddit.member.dao.IMemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.PagingInfoVO;
 
 /**
  * @author pc15
@@ -30,11 +31,14 @@ public interface IMemberService {
 	 */
 	public ServiceResult registMember(MemberVO member);
 	
+	public long retrieveMemberCount(PagingInfoVO pagingVO);
+	
 	/**
 	 * 회원 목록 조회
+	 * @param pagingVO TODO
 	 * @return 존재하지 않을떄, size() == 0 
 	 */
-	public List<MemberVO> retrieveMemberList();
+	public List<MemberVO> retrieveMemberList(PagingInfoVO pagingVO);
 	
 	
 	/**

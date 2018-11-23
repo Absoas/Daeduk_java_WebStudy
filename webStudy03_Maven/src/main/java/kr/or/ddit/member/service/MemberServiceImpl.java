@@ -7,13 +7,17 @@ import kr.or.ddit.ServiceResult;
 import kr.or.ddit.member.dao.IMemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.PagingInfoVO;
 import sun.text.normalizer.ICUBinary.Authenticate;
 
 public class MemberServiceImpl implements IMemberService {
    // 의존 객체를 직접 생성하는 방식 : 결합력 최상
    IMemberDAO memberDAO = new MemberDAOImpl();
    
-   @Override
+   
+   
+
+@Override
    public ServiceResult registMember(MemberVO member) {
       ServiceResult result = null;
       if(memberDAO.selectMember(member.getMem_id())==null) {
@@ -29,9 +33,14 @@ public class MemberServiceImpl implements IMemberService {
       return result;
    }
 
-   @Override
-   public List<MemberVO> retrieveMemberList() {
-      List<MemberVO> memberList = memberDAO.selectMemberList();
+	@Override
+	public long retrieveMemberCount(PagingInfoVO pagingVO) {
+		return memberDAO.selectTotalRecord(pagingVO);
+	}
+
+	@Override
+    public List<MemberVO> retrieveMemberList(PagingInfoVO pagingVO) {
+      List<MemberVO> memberList = memberDAO.selectMemberList(pagingVO);
       return memberList;
    }
 

@@ -21,23 +21,22 @@ import kr.or.ddit.CommonException;
 import kr.or.ddit.ServiceResult;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ICommandHandler;
 import kr.or.ddit.vo.MemberVO;
 
-@WebServlet("/member/memberUpdate.do")
-public class MemberUpdateServlet extends HttpServlet{
+
+// 검증 
+// 불통 : memberView.jsp -> 기존 입력 데이터, 뭐때문에 통과하지 못했냐는 에러메시지
+// 수정 하기 위해서 의존 객체 형성
+// 로직선택
+// ServiceResult 형식으로 들어온다.
+// invalid ok faild
+// invalid -> 비번이 틀렸으면 memberView -> 기존 입력 데이터 , 에러 메시지
+// faild   -> 수정 버튼 	  memberView -> 기존 입력 데이터, 에러 메시지
+// OK 	   -> memberView -> redirect
+public class MemberUpdateController implements ICommandHandler{
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 검증 
-		// 불통 : memberView.jsp -> 기존 입력 데이터, 뭐때문에 통과하지 못했냐는 에러메시지
-		// 수정 하기 위해서 의존 객체 형성
-		// 로직선택
-		// ServiceResult 형식으로 들어온다.
-		// invalid ok faild
-		// invalid -> 비번이 틀렸으면 memberView -> 기존 입력 데이터 , 에러 메시지
-		// faild   -> 수정 버튼 	  memberView -> 기존 입력 데이터, 에러 메시지
-		// OK 	   -> memberView -> redirect
-		
-		req.setCharacterEncoding("UTF-8");
+	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		MemberVO member = new MemberVO();
 		req.setAttribute("member", member);
 		
@@ -48,7 +47,6 @@ public class MemberUpdateServlet extends HttpServlet{
 		}
 		
 		String goPage = null;
-		boolean redirect = false;
 		String message = null;
 		
 		Map<String, String> errors = new LinkedHashMap<>();
@@ -62,29 +60,23 @@ public class MemberUpdateServlet extends HttpServlet{
 			
 			switch (result) {
 			case INVALIDPASSWORD:
-				goPage = "/WEB-INF/views/member/memberView.jsp";
+				goPage = "member/memberView";
 				message = "패스워드가 틀렸습니다. ";
 				break;
 			case FAILED:
-				goPage = "/WEB-INF/views/member/memberView.jsp";
+				goPage = "member/memberView";
 				message = "서버 오류로 인한 실패, 잠시 후 다시 시도";
 				break;
 			case OK:
-				goPage = "/member/mypage.do";
-				redirect = true;
+				goPage = "redirect:/member/mypage.do";
 				break;
 			}
 			req.setAttribute("message", message);
 		} else {
-			goPage = "/WEB-INF/views/member/memberForm.jsp";
+			goPage = "member/memberForm";
 		}
 
-		if (redirect) {
-			resp.sendRedirect(req.getContextPath()+goPage);
-		} else {
-			RequestDispatcher rd = req.getRequestDispatcher(goPage);
-			rd.forward(req, resp);
-		}
+		return goPage;
 	}
 	
 	private boolean validate(MemberVO member, Map<String, String> errors){
