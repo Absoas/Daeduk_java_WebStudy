@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="Buyer">
+	<sql id = "selectBuyerFrag">
+		SELECT                
+		buyer_id,
+		buyer_name,
+		buyer_lgu,
+		buyer_bank,
+		buyer_bankno,
+		buyer_bankname,
+		buyer_zip,
+		buyer_add1,
+		buyer_add2,
+		buyer_comtel,
+		buyer_fax,
+		buyer_mail,
+		buyer_charger
+		FROM buyer 
+	</sql>
+	
+	<select id="selectTotalRecord" resultClass="Long">
+		SELECT COUNT(*)
+		FROM buyer
+	</select>
+	
+	<select id="selectBuyer" parameterClass="String" resultClass="buyerVO">
+		<include refid="Buyer.selectBuyerFrag"/>    
+		where buyer_id = #buyer_id#                       
+	</select>	
+	
+	<select id="selectBuyerList" resultClass="buyerVO" parameterClass="pagingVO">
+			SELECT B.* 
+			FROM (
+			SELECT ROWNUM RNUM, A.* FROM(
+			<include refid="Buyer.selectBuyerFrag"/>  
+			ORDER BY ROWID DESC
+		) A ) B
+		<![CDATA[
+		WHERE RNUM >= #startRow# AND RNUM <= #endRow#
+		]]>
+	</select>
+	
+	<insert id="insertBuyer" parameterClass="buyerVO">
+		INSERT INTO Buyer (
+		   	buyer_id,
+			buyer_name,
+			buyer_lgu,
+			buyer_bank,
+			buyer_bankno,
+			buyer_bankname,
+			buyer_zip,
+			buyer_add1,
+			buyer_add2,
+			buyer_comtel,
+			buyer_fax,
+			buyer_mail,
+			buyer_charger
+		) VALUES (
+		    #buyer_id#,
+			#buyer_name#,
+			#buyer_lgu#,
+			#buyer_bank#,
+			#buyer_bankno#,
+			#buyer_bankname#,
+			#buyer_zip#,
+			#buyer_add1#,
+			#buyer_add2#,
+			#buyer_comtel#,
+			#buyer_fax#,
+			#buyer_mail#,
+			#buyer_charger#
+		)
+		
+	</insert>
+	
+	<update id="updateBuyer" parameterClass="buyerVO">
+		UPDATE Buyer SET 
+		BUYER_NAME= #buyer_name#,
+		BUYER_LGU= #buyer_lgu#,
+		BUYER_BANK= #buyer_bank#,
+		BUYER_BANKNO= #buyer_bankno#,
+		BUYER_BANKNAME= #buyer_bankname#,
+		BUYER_ZIP= #buyer_zip#,
+		BUYER_ADD1= #buyer_add1#,
+		BUYER_ADD2= #buyer_add2#,
+		BUYER_COMTEL= #buyer_comtel#,
+		BUYER_FAX= #buyer_fax#,
+		BUYER_MAIL= #buyer_mail#,
+		BUYER_CHARGER= #buyer_charger#,
+		BUYER_TELEXT= #buyer_telext#
+		where BUYER_ID= #buyer_id#
+	</update>
+	
+	<delete id="deleteBuyer" parameterClass="string">
+      delete from
+      buyer
+       where buyer_id = #buyer_id#
+   </delete>
+</sqlMap>
