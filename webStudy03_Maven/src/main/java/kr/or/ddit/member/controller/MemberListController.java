@@ -24,13 +24,20 @@ public class MemberListController implements ICommandHandler {
 		// 1. 요청과의 Mapping 설정
 		// 2. 요청 분석(주소, 파라미터, 메소드, 헤더들...)
 		// 3. B.L.L 와의 의존관계 형성
+		String searchWord = req.getParameter("searchWord");
+		String searchType = req.getParameter("searchType");
+		
 		int currentPage = 1;
 		String page = req.getParameter("page");
+		
 		if(StringUtils.isNumeric(page)) {
 			currentPage = Integer.parseInt(page);
 		}
-		PagingInfoVO pagingVO = new PagingInfoVO(5,2);
+		
+		PagingInfoVO<MemberVO> pagingVO = new PagingInfoVO(5,2);
 		pagingVO.setCurrentPage(currentPage);
+		pagingVO.setSearchWord(searchWord);
+		pagingVO.setSearchType(searchType);
 		
 		IMemberService service =  new MemberServiceImpl();
 		// 4. 로직 선택

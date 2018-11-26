@@ -4,37 +4,78 @@
 <sqlMap namespace="Buyer">
 	<sql id = "selectBuyerFrag">
 		SELECT                
-		buyer_id,
-		buyer_name,
-		buyer_lgu,
-		buyer_bank,
-		buyer_bankno,
-		buyer_bankname,
-		buyer_zip,
-		buyer_add1,
-		buyer_add2,
-		buyer_comtel,
-		buyer_fax,
-		buyer_mail,
+		buyer_id,buyer_name,buyer_lgu,
+		buyer_bank,buyer_bankno,buyer_bankname,
+		buyer_zip,buyer_add1,buyer_add2,
+		buyer_comtel,buyer_fax,buyer_mail,
 		buyer_charger
 		FROM buyer 
+	</sql>
+	
+	<sql id="searchFrag">
+		<dynamic prepend=" WHERE ">
+			<isNotEmpty property="searchWord">
+				<isEqual property="searchType" compareValue="name">
+					buyer_name like '%'||#searchWord#||'%'
+				</isEqual>
+
+				<isEqual property="searchType" compareValue="all">
+					buyer_name like '%'||#searchWord#||'%'
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
 	</sql>
 	
 	<select id="selectTotalRecord" resultClass="Long">
 		SELECT COUNT(*)
 		FROM buyer
+		<include refid="Buyer.searchFrag"/>
 	</select>
 	
-	<select id="selectBuyer" parameterClass="String" resultClass="buyerVO">
-		<include refid="Buyer.selectBuyerFrag"/>    
-		where buyer_id = #buyer_id#                       
+	<resultMap class="lprodVO" id="LprodMap">
+		<result property="lprod_id" column="LPROD_ID"/>
+		<result property="lprod_gu" column="LPROD_GU"/>
+		<result property="lprod_nm" column="LPROD_NM"/>
+	</resultMap>
+	
+	<resultMap class="buyerVO" id="buyerMap">
+		<result property="buyer_id" column="BUYER_ID"/>
+		<result property="buyer_name" column="BUYER_NAME"/>
+		<result property="buyer_lgu" column="BUYER_LGU"/>
+		<result property="buyer_bank" column="BUYER_BANK"/>
+		<result property="buyer_bankno" column="BUYER_BANKNO"/>
+		<result property="buyer_bankname" column="BUYER_BANKNAME"/>
+		<result property="buyer_zip" column="BUYER_ZIP"/>
+		<result property="buyer_add1" column="BUYER_ADD1"/>
+		<result property="buyer_add2" column="BUYER_ADD2"/>
+		<result property="buyer_comtel" column="BUYER_COMTEL"/>
+		<result property="buyer_fax" column="BUYER_FAX"/>
+		<result property="buyer_mail" column="BUYER_MAIL"/>
+		<result property="buyer_charger" column="BUYER_CHARGER"/>
+		
+		<result property="lprod" resultMap="Buyer.LprodMap"/>	
+	</resultMap>
+	
+	<select id="selectBuyer" parameterClass="String" resultMap="Buyer.buyerMap">
+		SELECT                
+		buyer_id,buyer_name,buyer_lgu,
+		buyer_bank,buyer_bankno,buyer_bankname,
+		buyer_zip,buyer_add1,buyer_add2,
+		buyer_comtel,buyer_fax,buyer_mail,
+		buyer_charger,
+        lprod_id,
+        lprod_gu,
+        lprod_nm
+		FROM buyer  inner join lprod on(buyer_lgu = lprod_gu)
+        where buyer_id = #buyer_id#                     
 	</select>	
 	
 	<select id="selectBuyerList" resultClass="buyerVO" parameterClass="pagingVO">
 			SELECT B.* 
 			FROM (
 			SELECT ROWNUM RNUM, A.* FROM(
-			<include refid="Buyer.selectBuyerFrag"/>  
+			<include refid="Buyer.selectBuyerFrag"/> 
+			<include refid="Buyer.searchFrag"/>
 			ORDER BY ROWID DESC
 		) A ) B
 		<![CDATA[
@@ -44,32 +85,15 @@
 	
 	<insert id="insertBuyer" parameterClass="buyerVO">
 		INSERT INTO Buyer (
-		   	buyer_id,
-			buyer_name,
-			buyer_lgu,
-			buyer_bank,
-			buyer_bankno,
-			buyer_bankname,
-			buyer_zip,
-			buyer_add1,
-			buyer_add2,
-			buyer_comtel,
-			buyer_fax,
-			buyer_mail,
-			buyer_charger
+		   	buyer_id,buyer_name,buyer_lgu,
+			buyer_bank,buyer_bankno,buyer_bankname,
+			buyer_zip,buyer_add1,buyer_add2,
+			buyer_comtel,buyer_fax,buyer_mail,buyer_charger
 		) VALUES (
-		    #buyer_id#,
-			#buyer_name#,
-			#buyer_lgu#,
-			#buyer_bank#,
-			#buyer_bankno#,
-			#buyer_bankname#,
-			#buyer_zip#,
-			#buyer_add1#,
-			#buyer_add2#,
-			#buyer_comtel#,
-			#buyer_fax#,
-			#buyer_mail#,
+		    #buyer_id#,#buyer_name#,#buyer_lgu#,
+			#buyer_bank#,#buyer_bankno#,#buyer_bankname#,
+			#buyer_zip#,#buyer_add1#,#buyer_add2#,
+			#buyer_comtel#,#buyer_fax#,#buyer_mail#,
 			#buyer_charger#
 		)
 		

@@ -28,6 +28,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 	crossorigin="anonymous"></script>
+	
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -56,7 +57,7 @@
 	<jsp:useBean id="error" class="java.util.LinkedHashMap" scope="request"></jsp:useBean>
 
 	<form method="post">
-		<table>
+		<table class = "table">
 			<tr>
 				<th>상품 ID</th>
 				<td><input type="text" name="buyer_id"

@@ -29,7 +29,7 @@
    String idChecked = request.getParameter("idChecked");
 
    String goPage = null;
-
+   
    boolean redirect = false;
    if (mem_id == null || mem_id.trim().length() == 0 || mem_pass == null || mem_pass.trim().length() == 0) {
       goPage = "/login/loginForm.jsp";
@@ -38,6 +38,7 @@
    } else {
       IAuthenticateService service = new AuthenticateServiceImpl();
       Object result = service.authenticate(new MemberVO(mem_id,mem_pass));
+     
       if (result instanceof MemberVO) {
          goPage = "/";
          redirect = true;

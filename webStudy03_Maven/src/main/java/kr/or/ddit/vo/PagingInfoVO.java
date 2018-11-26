@@ -3,18 +3,16 @@ package kr.or.ddit.vo;
 import java.util.List;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
- * totalRecord 와 currentPage 를 결정하면, 나머지 속성들이 연산됨
- * setTotalRecord/ setCurrentPage 호출 필요. 
+ *	 totalRecord 와 currentPage 를 결정하면, 나머지 속성들이 연산됨.
+ *   setTotalRecord/setCurrentPage 호출 필요. 
+ *
  */
 @Data
 @NoArgsConstructor
-public class PagingInfoVO {
+public class PagingInfoVO<T> {
+	
 	
 	public PagingInfoVO(int screenSize, int blockSize) {
 		super();
@@ -31,52 +29,60 @@ public class PagingInfoVO {
 	private long endPage;
 	private long startRow;
 	private long endRow;
-	private List<MemberVO> dataList;
+	private List<T> dataList;
+	private T searchVO;
+	private String searchWord;
+	private String searchType;
+	private String funcName = "paging";
 	
-	public long getTotalRecord() {
-		return totalRecord;
-	}
 	public void setTotalRecord(long totalRecord) {
 		this.totalRecord = totalRecord;
-		totalPage = totalRecord%screenSize == 0?
-					totalRecord/screenSize :
-					totalRecord/screenSize+1;
+		totalPage = totalRecord%screenSize==0?totalRecord/screenSize
+							:totalRecord/screenSize + 1;
 	}
 	
 	public void setCurrentPage(long currentPage) {
 		this.currentPage = currentPage;
 		endRow = currentPage * screenSize;
-		startRow = endRow-(screenSize-1);
+		startRow = endRow - (screenSize-1);
 		startPage = (currentPage-1)/blockSize * blockSize + 1;
 		endPage = startPage + (blockSize - 1);
 	}
 	
 	public String getPagingHTML() {
-		String pattern = " <li class='page-item %s'><a class='page-link' href='?page=%d'>%s</a></li>";
-		
+		String pattern = "<li class='page-item %s'><a class='page-link' href='javascript:"+funcName+"(%d);'>%s</a></li>";
 		StringBuffer html = new StringBuffer();
 		html.append("<ul class='pagination'>");
 		if(startPage>1) {
-			html.append(String.format(pattern,"", (startPage-1),"이전"));
+			html.append(String.format(pattern, "", (startPage-1), "이전"));
 		}
-		
 		if(endPage > totalPage) endPage = totalPage; 
 		for(long page = startPage; page <= endPage; page++) {
-			 String active = "";
-			 String pageStr = page+"";
-			
-			 if(currentPage == page) {
+			String active = "";
+			String pageStr = page+"";
+			if(page == currentPage) {
 				active = "active";
-				pageStr += " <span class='sr-only'>(current)</span>";
+				pageStr += " <span class=\"sr-only\">(current)</span>";
 			}
-			html.append(String.format(pattern ,active, page , pageStr));
+			html.append(String.format(pattern, active, page, pageStr));
 		}
-		
-		if(endPage < totalPage) {
-			html.append(String.format(pattern,"",endPage, "다음"));
+		if(endPage<totalPage) {
+			html.append(String.format(pattern, "", endPage+1, "다음"));
 		}
-		
 		html.append("</ul>");
-		return html.toString();
+		return html.toString();		
 	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,8 +6,6 @@
     pageEncoding="UTF-8"%>
     
 <%
-
-	
 	MemberVO authMember = (MemberVO) session.getAttribute("authMember");
 	String cmdParam = request.getParameter("command");
 	int statusCode = 0;
@@ -45,13 +43,10 @@
 <body>
 <div id="top">
 	<jsp:include page="/includee/header.jsp"></jsp:include>
-<%-- 	<iframe src="<%=request.getContextPath() %>/includee/header.jsp"></iframe> --%>
 </div>
 
 <div id="left">
 	<jsp:include page="/includee/left.jsp"></jsp:include>
-<%-- 	<iframe src="<%=request.getContextPath() %>/includee/left.jsp"></iframe> --%>
-
 </div>
 <div id="body">
 <!-- parameter가 없을 떄  -->

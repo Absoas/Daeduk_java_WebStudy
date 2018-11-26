@@ -27,22 +27,25 @@ public class BuyerListController implements ICommandHandler{
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int currentPage = 1;
 		String page = req.getParameter("page");
+		String searchType = req.getParameter("searchType");
+		String searchWord = req.getParameter("searchWord");
+		
 		if(StringUtils.isNumeric(page)) {
 			currentPage = Integer.parseInt(page);
 		}
-		PagingInfoVO pagingVO = new PagingInfoVO(5,2);
+		PagingInfoVO<BuyerVO> pagingVO = new PagingInfoVO(5,2);
 		pagingVO.setCurrentPage(currentPage);
+		pagingVO.setSearchType(searchType);
+		pagingVO.setSearchWord(searchWord);
 		
 		IBuyerService service =  new BuyerServiceImpl();
 		// 4. 로직 선택
 		// 5. 컨텐츠(Model) 확보 
 		long totalRecord = service.retrieveBuyerCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
-		
 		List<BuyerVO> buyerList =  service.retrieveBuyerList(pagingVO);
 		
-		pagingVO.setBuyerList(buyerList);
-//		req.setAttribute("memberList", memberList);
+		pagingVO.setDataList(buyerList);
 		req.setAttribute("pagingVO", pagingVO);
 		
 		String view = "buyer/buyerList";
