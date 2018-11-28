@@ -19,40 +19,55 @@ import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingInfoVO;
 
 public class MemberListController implements ICommandHandler {
-		@Override
-		public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 1. 요청과의 Mapping 설정
-		// 2. 요청 분석(주소, 파라미터, 메소드, 헤더들...)
-		// 3. B.L.L 와의 의존관계 형성
+	
+	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		1. 요청과의 매핑 설정
+//		2. 요청 분석(주소, 파라미터, 메소드, 헤더들...)
 		String searchWord = req.getParameter("searchWord");
 		String searchType = req.getParameter("searchType");
-		
 		int currentPage = 1;
 		String page = req.getParameter("page");
-		
 		if(StringUtils.isNumeric(page)) {
 			currentPage = Integer.parseInt(page);
 		}
-		
-		PagingInfoVO<MemberVO> pagingVO = new PagingInfoVO(5,2);
+		PagingInfoVO<MemberVO> pagingVO = new PagingInfoVO<>(5, 2);
 		pagingVO.setCurrentPage(currentPage);
 		pagingVO.setSearchWord(searchWord);
 		pagingVO.setSearchType(searchType);
 		
-		IMemberService service =  new MemberServiceImpl();
-		// 4. 로직 선택
-		// 5. 컨텐츠(Model) 확보 
+//		3. B.L.L 와의 의존관계 형성
+		IMemberService service = new MemberServiceImpl();
+//		4. 로직 선택
+//		5. 컨텐츠(Model) 확보
 		long totalRecord = service.retrieveMemberCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
-		List<MemberVO> memberList =  service.retrieveMemberList(pagingVO);
-		
+		List<MemberVO> memberList = service.retrieveMemberList(pagingVO);
 		pagingVO.setDataList(memberList);
-		// 6. V.L 를 선택 
+//		6. V.L 를 선택
 		String view = "member/memberList";
+//		7. Scope 를 통해 Model 공유
 //		req.setAttribute("memberList", memberList);
 		req.setAttribute("pagingVO", pagingVO);
 		
 		return view;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

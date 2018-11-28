@@ -1,6 +1,7 @@
 package kr.or.ddit.vo;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
@@ -19,7 +20,4 @@ public class BuyerVO implements Serializable{
 	private String buyer_mail;
 	private String buyer_charger;
 	private String buyer_telext;
-	
-	private LprodVO lprod;
-	
 }

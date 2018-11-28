@@ -8,87 +8,79 @@ import kr.or.ddit.member.dao.IMemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingInfoVO;
-import sun.text.normalizer.ICUBinary.Authenticate;
 
 public class MemberServiceImpl implements IMemberService {
-   // 의존 객체를 직접 생성하는 방식 : 결합력 최상
-   IMemberDAO memberDAO = new MemberDAOImpl();
-   
-   
-   
-
-@Override
-   public ServiceResult registMember(MemberVO member) {
-      ServiceResult result = null;
-      if(memberDAO.selectMember(member.getMem_id())==null) {
-         int rowCnt = memberDAO.insertMember(member);
-         if(rowCnt>0) {
-            result = ServiceResult.OK;
-         }else {
-            result = ServiceResult.FAILED;
-         }
-      }else {
-         result = ServiceResult.PKDUPLICATED;
-      }
-      return result;
-   }
+	// 의존 객체를 직접 생성하는 방식 : 결합력 최상
+	IMemberDAO memberDAO = new MemberDAOImpl();
+	
+	@Override
+	public ServiceResult registMember(MemberVO member) {
+		ServiceResult result = null;
+		if(memberDAO.selectMember(member.getMem_id())==null) {
+			int rowCnt = memberDAO.insertMember(member);
+			if(rowCnt>0) {
+				result = ServiceResult.OK;
+			}else {
+				result = ServiceResult.FAILED;
+			}
+		}else {
+			result = ServiceResult.PKDUPLICATED;
+		}
+		return result;		
+	}
 
 	@Override
 	public long retrieveMemberCount(PagingInfoVO pagingVO) {
 		return memberDAO.selectTotalRecord(pagingVO);
 	}
+	
+	@Override
+	public List<MemberVO> retrieveMemberList(PagingInfoVO pagingVO) {
+		List<MemberVO> memberList = memberDAO.selectMemberList(pagingVO);
+		return memberList;
+	}
 
 	@Override
-    public List<MemberVO> retrieveMemberList(PagingInfoVO pagingVO) {
-      List<MemberVO> memberList = memberDAO.selectMemberList(pagingVO);
-      return memberList;
-   }
-
-   @Override
-   public MemberVO retrieveMember(String mem_id) {
-	   MemberVO member = memberDAO.selectMember(mem_id);
-	   if(member == null) {
-		   throw new CommonException();
-	   }
-	   return member;
-   }
-
-   @Override
-   public ServiceResult modifyMember(MemberVO member) {
-		MemberVO savedMember = retrieveMember(member.getMem_id());
-		ServiceResult result = null;
-		if(savedMember != null) {
-			if(savedMember.getMem_pass().equals(member.getMem_pass())) {
-				int cnt = memberDAO.updateMember(member);
-				if (cnt > 0) {
-					result = ServiceResult.OK;
-				} else {
-					result = ServiceResult.FAILED;
-				}
-			}else {
-				result = ServiceResult.INVALIDPASSWORD;
-			}
+	public MemberVO retrieveMember(String mem_id) {
+		MemberVO member = memberDAO.selectMember(mem_id);
+		if(member == null) {
+			throw new CommonException(mem_id+"에 해당하는 회원이 없음.");
 		}
-	   return result;
-   }
+		return member;
+	}
 
-   @Override
-   public ServiceResult removeMember(MemberVO member) {
-	   MemberVO savedMember = retrieveMember(member.getMem_id());
+	@Override
+	public ServiceResult modifyMember(MemberVO member) {
 		ServiceResult result = null;
-		if(savedMember != null) {
-			if(savedMember.getMem_pass().equals(member.getMem_pass())) {
-				int cnt = memberDAO.deleteMember(member.getMem_id());
-				if (cnt > 0) {
-					result = ServiceResult.OK;
-				} else {
-					result = ServiceResult.FAILED;
-				}
+		MemberVO check = retrieveMember(member.getMem_id());
+		if(check.getMem_pass().equals(member.getMem_pass())) {
+			int rowCnt = memberDAO.updateMember(member);
+			if(rowCnt>0) {
+				result = ServiceResult.OK;
 			}else {
-				result = ServiceResult.INVALIDPASSWORD;
+				result = ServiceResult.FAILED;
 			}
+		}else {
+			result = ServiceResult.INVALIDPASSWORD;
 		}
-	   return result;
-   }
-   
+		return result;	
+	}
+
+	@Override
+	public ServiceResult removeMember(MemberVO member) {
+		ServiceResult result = null;
+		MemberVO check = retrieveMember(member.getMem_id());
+		if(check.getMem_pass().equals(member.getMem_pass())) {
+			int rowCnt = memberDAO.deleteMember(member.getMem_id());
+			if(rowCnt>0) {
+				result = ServiceResult.OK;
+			}else {
+				result = ServiceResult.FAILED;
+			}
+		}else {
+			result = ServiceResult.INVALIDPASSWORD;
+		}
+		return result;
+	}
+
 }

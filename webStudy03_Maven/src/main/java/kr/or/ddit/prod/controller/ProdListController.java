@@ -1,6 +1,7 @@
 package kr.or.ddit.prod.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ddit.mvc.ICommandHandler;
 import kr.or.ddit.prod.dao.IOtherDAO;
@@ -48,9 +51,28 @@ public class ProdListController implements ICommandHandler {
 		pagingVO.setTotalRecord(totalRecord);
 		List<ProdVO> prodList = service.retrieveProdList(pagingVO);
 		pagingVO.setDataList(prodList);
-		req.setAttribute("pagingVO", pagingVO);
 		
-		return "prod/prodList";
+		String accept = req.getHeader("Accept");
+		if(StringUtils.containsIgnoreCase(accept, "json")) {
+			// JSON
+			resp.setContentType("application/json;charset=UTF-8");
+			ObjectMapper mapper = new ObjectMapper();
+			try(
+				PrintWriter out = resp.getWriter();
+			){
+				mapper.writeValue(out, pagingVO);				
+			}
+			return null;
+		}else {
+			// HTML
+			req.setAttribute("pagingVO", pagingVO);
+			return "prod/prodList";
+		}
+		// Accept 헤더를 통해 동기 / 비동기 요청 여부를 확인하고,
+		// 동기요청이라면, View Layer 를 통해 응답이 전송
+		// 비동기 요청이라면, PagingVO 를 marshalling 한 JSON 응답이 전송되도록.
+		
+		
 	}
 
 }

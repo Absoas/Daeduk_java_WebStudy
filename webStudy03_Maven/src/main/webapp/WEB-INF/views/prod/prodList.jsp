@@ -25,8 +25,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	function <%=pagingVO.getFuncName() %>(page){
-		document.searchForm.page.value=page;
-		document.searchForm.submit();
+		$("[name='searchForm']").find("[name='page']").val(page);
+// 		document.searchForm.page.value=page;
+		$("[name='searchForm']").submit();
+// 		document.searchForm.submit();
 	}
 	$(function(){
 		var prod_lguTag = $("[name='prod_lgu']");
@@ -45,9 +47,46 @@
 			}
 			
 		});
-		$("#listBody").on("click", "tr" ,function(){
+		var listBody = $("#listBody");
+		listBody.on("click", "tr" ,function(){
 			var prod_id = $(this).find("td:first").text();
 			location.href = "<%=request.getContextPath()%>/prod/prodView.do?what="+prod_id;
+		});
+		
+		$("[name='searchForm']").on("submit", function(event){
+			event.preventDefault();
+			var data = $(this).serialize(); // queryString 생성
+			$.ajax({
+				data:data,
+				dataType:"json",
+				success:function(resp){
+					var prodList = resp.dataList;
+					var html = "";
+					if(prodList){
+						$.each(prodList, function(idx, prod){
+							html += "<tr>";
+							html += "<td>"+prod.prod_id+"</td>";
+							html += "<td>"+prod.prod_name+"</td>";
+							html += "<td>"+prod.lprod_nm+"</td>";
+							html += "<td>"+prod.buyer_name+"</td>";
+							html += "<td>"+prod.prod_cost+"</td>";
+							html += "<td>"+prod.prod_outline+"</td>";
+							html += "<td>"+prod.prod_mileage+"</td>";
+							html += "</tr>";
+						});
+						
+					}else{
+						html += "<tr><td colspan='7'>상품이 엄슴.</td></tr>";
+					}
+					listBody.html(html);
+					$("#pagingArea").html(resp.pagingHTML);
+					$("[name='page']").val("");
+				},
+				error:function(){
+					
+				}
+			});
+			return false;
 		});
 	});
 </script>
@@ -55,8 +94,8 @@
 <body>
 <!-- 스크린사이즈 7 -->
 <!-- 블럭사이즈 4  -->
-<form name="searchForm">
-	<input type="hidden" name="page" />
+<form name="searchForm" >
+	<input type="text" name="page" />
 	<select name="prod_lgu">
 		<option value="">분류선택</option>
 		<%
@@ -80,6 +119,9 @@
 	<input type="text" name="prod_name" value="${pagingVO.searchVO.prod_name }" />
 	<input type="submit" value="검색" />
 </form>
+<input type="button" class="btn btn-info" value="신규상품등록" 
+	onclick="location.href='<%=request.getContextPath() %>/prod/prodInsert.do';"
+/>
 <table class="table">
 	<thead>
 		<tr>
@@ -120,7 +162,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="7">
-				<nav aria-label="Page navigation example">
+				<nav aria-label="Page navigation example" id="pagingArea">
 					<%=pagingVO.getPagingHTML() %>
 				</nav>
 			</td>
@@ -128,4 +170,21 @@
 	</tfoot>
 </table>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>

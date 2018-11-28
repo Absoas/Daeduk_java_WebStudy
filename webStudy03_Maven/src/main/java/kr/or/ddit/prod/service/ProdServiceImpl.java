@@ -15,8 +15,14 @@ public class ProdServiceImpl implements IProdService {
 	
 	@Override
 	public ServiceResult createProd(ProdVO prod) {
-		// TODO Auto-generated method stub
-		return null;
+		String pk = prodDAO.insertProd(prod);
+		ServiceResult result = null;
+		if(pk==null) {
+			result = ServiceResult.FAILED;
+		}else {
+			result = ServiceResult.OK;
+		}
+		return result;
 	}
 
 	@Override
