@@ -9,13 +9,11 @@ import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 
 public class CustomSqlMapClientBuilder {
 	private static SqlMapClient sqlMapClient;
-
 	static {
-		//sqlmapconfig xml을 통해서 객체 
-		try (
-			Reader reader =  Resources.getResourceAsReader("kr/or/ddit/db/ibatis/SqlMapConfig.xml");
-		){
-			sqlMapClient =  SqlMapClientBuilder.buildSqlMapClient(reader);
+		try(
+			Reader reader = Resources.getResourceAsReader("kr/or/ddit/db/ibatis/SqlMapConfig.xml");
+		) {
+			 sqlMapClient = SqlMapClientBuilder.buildSqlMapClient(reader);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

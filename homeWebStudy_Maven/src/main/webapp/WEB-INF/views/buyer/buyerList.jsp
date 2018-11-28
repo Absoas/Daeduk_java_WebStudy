@@ -1,3 +1,4 @@
+<%@page import="java.util.Objects"%>
 <%@page import="kr.or.ddit.vo.PagingInfoVO"%>
 <%@page import="kr.or.ddit.vo.BuyerVO"%>
 <%@page import="java.util.List"%>
@@ -8,8 +9,8 @@
     
      
 <%
- 	PagingInfoVO pagingVO = (PagingInfoVO)request.getAttribute("pagingVO");
-	List<BuyerVO> buyerList = pagingVO.getBuyerList();
+ 	PagingInfoVO<BuyerVO> pagingVO = (PagingInfoVO)request.getAttribute("pagingVO");
+	List<BuyerVO> buyerList = pagingVO.getDataList();
 %>
     
 <!DOCTYPE html>
@@ -24,6 +25,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <title>buyer/buyerList.jsp</title>
+<script>
+	function <%=pagingVO.getFuncName()%>(page){
+		document.searchForm.page.value = page;
+		document.searchForm.submit();
+	}
+</script>
+
 </head>
 <body>
 <h4> 상품 목록 </h4>
@@ -77,6 +85,21 @@
 				<nav aria-label="Page navigation example">
 					<%=pagingVO.getPagingHTML()%>
 				</nav>
+				
+				<form action = "" name="searchForm">
+					<input type = "hidden" name = "page"/>
+					<select name="searchType">
+						<option value="all">전체</option>
+						<option value="name">거래처이름</option>
+					</select>
+					
+						<script type="text/javascript">
+							document.searchForm.searchType.value = "<%=Objects.toString(pagingVO.getSearchType(),"all")%>";							
+						</script>
+						
+					<input type="text" name="searchWord" value="<%=Objects.toString(pagingVO.getSearchWord(),"")%>"/>
+					<input type="submit" value="검색" />
+				</form>
 			</td>
 		</tr>
 	</tfoot>

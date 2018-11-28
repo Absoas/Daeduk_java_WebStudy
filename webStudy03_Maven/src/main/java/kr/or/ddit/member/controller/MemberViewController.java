@@ -8,11 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.sun.xml.internal.ws.client.ResponseContext;
 
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
@@ -21,21 +18,35 @@ import kr.or.ddit.vo.MemberVO;
 
 public class MemberViewController implements ICommandHandler{
 	
-	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String mem_id = req.getParameter("who");
-		
 		if(StringUtils.isBlank(mem_id)) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
-		MemberVO member = null;
 		IMemberService service = new MemberServiceImpl();
-		member = service.retrieveMember(mem_id);
-		req.setAttribute("member", member);
+		MemberVO member = service.retrieveMember(mem_id);
 		String view = "member/memberView";
-		
+		req.setAttribute("member", member);
 		return view;
-		
-	}	
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

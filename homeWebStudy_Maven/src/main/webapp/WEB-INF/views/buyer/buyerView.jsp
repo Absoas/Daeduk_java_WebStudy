@@ -79,21 +79,92 @@ $( function() {
 		}
 	%>
 	<h4>상품관리 상세 조회 및 수정폼</h4>
-		<table>
-			<tr><th>상품 ID</th><td><input type="text" name="buyer_id" value="<%=buyer.getBuyer_id() %>" /><span class="error"><%=errors.get("buyer_id") %></span></td></tr>
-			<tr><th>상품 이름</th><td><input type="text" name="buyer_name" value="<%=buyer.getBuyer_name() %>" /><span class="error"><%=errors.get("buyer_name") %></span></td></tr>
-			<tr><th>상품 분휴</th><td><input type="text" name="buyer_lgu" value="<%=buyer.getBuyer_lgu() %>" /><span class="error"><%=errors.get("buyer_lgu") %></span></td></tr>
-			<tr><th>은행</th><td><input type="text" name="buyer_bank" value="<%=buyer.getBuyer_bank() %>" /><span class="error"><%=errors.get("buyer_bank") %></span></td></tr>
-			<tr><th>계좌번호</th><td><input type="text" name="buyer_bankno" value="<%=buyer.getBuyer_bankno() %>" /><span class="error"><%=errors.get("buyer_bankno") %></span></td></tr>
-			<tr><th>계좌주</th><td><input type="text" name="buyer_bankname" value="<%=buyer.getBuyer_bankname() %>" /><span class="error"><%=errors.get("buyer_bankname") %></span></td></tr>
-			<tr><th>우편번호</th><td><input type="text" name="buyer_zip" value="<%=buyer.getBuyer_zip() %>" /><span class="error"><%=errors.get("buyer_zip") %></span></td></tr>
-			<tr><th>주소1</th><td><input type="text" name="buyer_add1" value="<%=buyer.getBuyer_add1() %>" /><span class="error"><%=errors.get("buyer_add1") %></span></td></tr>
-			<tr><th>주소2</th><td><input type="text" name="buyer_add2" value="<%=buyer.getBuyer_add2() %>" /><span class="error"><%=errors.get("buyer_add2") %></span></td></tr>
-			<tr><th>전화번호</th><td><input type="text" name="buyer_comtel" value="<%=buyer.getBuyer_comtel() %>" /><span class="error"><%=errors.get("buyer_comtel") %></span></td></tr>
-			<tr><th>팩스번호</th><td><input type="text" name="buyer_fax" value="<%=buyer.getBuyer_fax() %>" /><span class="error"><%=errors.get("buyer_fax") %></span></td></tr>
-			<tr><th>메일</th><td><input type="text" name="buyer_mail" value="<%=buyer.getBuyer_mail() %>" /><span class="error"><%=errors.get("buyer_mail") %></span></td></tr>
-			<tr><th>Charger</th><td><input type="text" name="buyer_charger" value="<%=buyer.getBuyer_charger() %>" /><span class="error"><%=errors.get("buyer_charger") %></span></td></tr>
-			
+		<table class = "table">
+			<tr>
+				<th>상품 ID</th>
+				<td><input type="text" name="buyer_id"
+					value="<%=buyer.getBuyer_id()%>" /><span class="error"><%=errors.get("buyer_id")%></span></td>
+			</tr>
+			<tr>
+				<th>상품 이름</th>
+				<td><input type="text" name="buyer_name"
+					value="<%=buyer.getBuyer_name()%>" /><span class="error"><%=errors.get("buyer_name")%></span></td>
+			</tr>
+			<tr>
+				<th>상품 분류</th>
+				<td><input type="text" name="buyer_lgu"
+					value="<%=buyer.getBuyer_lgu()%>" /><span class="error"><%=errors.get("buyer_lgu")%></span></td>
+					
+				<td>
+					<table>
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>gu</th>
+								<th>nm</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><%=buyer.getLprod().getLprod_id() %></td>
+								<td><%=buyer.getLprod().getLprod_gu() %></td>
+								<td><%=buyer.getLprod().getLprod_nm() %></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<th>은행</th>
+				<td><input type="text" name="buyer_bank"
+					value="<%=buyer.getBuyer_bank()%>" /><span class="error"><%=errors.get("buyer_bank")%></span></td>
+			</tr>
+			<tr>
+				<th>계좌번호</th>
+				<td><input type="text" name="buyer_bankno"
+					value="<%=buyer.getBuyer_bankno()%>" /><span class="error"><%=errors.get("buyer_bankno")%></span></td>
+			</tr>
+			<tr>
+				<th>계좌주</th>
+				<td><input type="text" name="buyer_bankname"
+					value="<%=buyer.getBuyer_bankname()%>" /><span class="error"><%=errors.get("buyer_bankname")%></span></td>
+			</tr>
+			<tr>
+				<th>우편번호</th>
+				<td><input type="text" name="buyer_zip"
+					value="<%=buyer.getBuyer_zip()%>" /><span class="error"><%=errors.get("buyer_zip")%></span></td>
+			</tr>
+			<tr>
+				<th>주소1</th>
+				<td><input type="text" name="buyer_add1"
+					value="<%=buyer.getBuyer_add1()%>" /><span class="error"><%=errors.get("buyer_add1")%></span></td>
+			</tr>
+			<tr>
+				<th>주소2</th>
+				<td><input type="text" name="buyer_add2"
+					value="<%=buyer.getBuyer_add2()%>" /><span class="error"><%=errors.get("buyer_add2")%></span></td>
+			</tr>
+			<tr>
+				<th>전화번호</th>
+				<td><input type="text" name="buyer_comtel"
+					value="<%=buyer.getBuyer_comtel()%>" /><span class="error"><%=errors.get("buyer_comtel")%></span></td>
+			</tr>
+			<tr>
+				<th>팩스번호</th>
+				<td><input type="text" name="buyer_fax"
+					value="<%=buyer.getBuyer_fax()%>" /><span class="error"><%=errors.get("buyer_fax")%></span></td>
+			</tr>
+			<tr>
+				<th>메일</th>
+				<td><input type="text" name="buyer_mail"
+					value="<%=buyer.getBuyer_mail()%>" /><span class="error"><%=errors.get("buyer_mail") %></span></td>
+			</tr>
+			<tr>
+				<th>Charger</th>
+				<td><input type="text" name="buyer_charger"
+					value="<%=buyer.getBuyer_charger() %>" /><span class="error"><%=errors.get("buyer_charger") %></span></td>
+			</tr>
+
 			<tr>
 				<td colspan="2">
 					<input type="button" value="뒤로 가기"

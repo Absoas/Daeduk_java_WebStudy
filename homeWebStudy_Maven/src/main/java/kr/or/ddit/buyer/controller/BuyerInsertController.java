@@ -93,7 +93,6 @@ public class BuyerInsertController implements ICommandHandler {
 	
 	public boolean validate(BuyerVO buyer, Map<String, String> errors){
 		boolean valid = true;
-		if(StringUtils.isBlank(buyer.getBuyer_id())){valid = false;errors.put("buyer_id", " 누락");}
 		if(StringUtils.isBlank(buyer.getBuyer_name())){valid = false;errors.put("buyer_name", " 누락");}
 		if(StringUtils.isBlank(buyer.getBuyer_lgu())){valid = false;errors.put("buyer_lgu", " 누락");}
 		if(StringUtils.isBlank(buyer.getBuyer_comtel())){valid = false;errors.put("buyer_comtel", " 누락");}
