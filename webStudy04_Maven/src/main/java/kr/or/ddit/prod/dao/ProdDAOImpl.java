@@ -1,12 +1,8 @@
 package kr.or.ddit.prod.dao;
 
-import java.sql.SQLException;
 import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-
-import kr.or.ddit.member.dao.IMemberDAO;
 import kr.or.ddit.mybatis.CustomSqlSessionFactoryBuilder;
 import kr.or.ddit.vo.PagingInfoVO;
 import kr.or.ddit.vo.ProdVO;
