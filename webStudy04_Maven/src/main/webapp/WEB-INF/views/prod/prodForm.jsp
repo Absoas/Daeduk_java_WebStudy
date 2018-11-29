@@ -4,13 +4,7 @@
 <%@page import="org.apache.commons.lang3.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	List<Map<String,Object>> lprodList = (List) request.getAttribute("lprodList");
-%>	
-
-<jsp:useBean id="prod" class="kr.or.ddit.vo.ProdVO" scope="request" />
-<jsp:useBean id="errors" class="java.util.HashMap" scope="request" />
-	
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,17 +29,16 @@
 	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 	crossorigin="anonymous"></script>
 	
-
+	
 <script type="text/javascript">
-	$(function(){
-		<%
-			String message = (String)request.getAttribute("message");
-			if(StringUtils.isNotBlank(message)){
-				%>
-				alert("${requestScope.message}");
-				<%
-			}
-		%>
+	$(function() {
+	
+		<c:set var="message" value="${message}"/>
+		<c:if test="${not empty message}">
+			alert("${message}");
+		</c:if>
+		
+		
 		$("[name$='date']").datepicker({
 			dateFormat:"yy-mm-dd"
 		});
@@ -70,6 +63,7 @@
 						options += pattern.replace("%V", buyer.buyer_id)
 										  .replace("%T", buyer.buyer_name);
 					});
+					console.log(options);
 					prod_buyerTag.html(options);
 					prod_buyerTag.val("${prod.prod_buyer}");
 				},
@@ -78,15 +72,12 @@
 				}
 			});
 		});
-		
 		prod_lguTag.val("${prod.prod_lgu}");
 		prod_lguTag.trigger("change");
-		
 	});
 </script>
 </head>
 <body>
-	
 	<form method="post">
 	<input type="hidden" name="prod_id" value="${requestScope.prod.prod_id}"/>
 	<table>
@@ -100,19 +91,16 @@
 				</div></td>
 		</tr>
 		
+		
 		<tr>
 			<th>분류코드</th>
 			<td><div class="input-group">
 					<select name="prod_lgu">
 						<option value="">분류선택</option>
-						<%
-							for(Map<String,Object> lprod : lprodList){
-								pageContext.setAttribute("lprod", lprod);
-								%>
-								<option value="${lprod['LPROD_GU']}">${lprod['lprod_nm']}</option>
-								<%
-							}
-						%>
+						<c:set var="lprodList" value="${lprodList}" />
+						<c:forEach items="${lprodList}" var="lprod" >
+								<option value="${lprod.get('LPROD_GU')}">${lprod.get('lprod_nm')}</option>
+						</c:forEach>
 					</select>
 					<span class="input-group-text error">${requestScope.errors.prod_lgu}</span>
 				</div></td>
@@ -121,7 +109,6 @@
 		<tr>
 			<th>거래처코드</th>
 			<td><div class="input-group">
-					
 					<select name="prod_buyer">
 					
 					</select>

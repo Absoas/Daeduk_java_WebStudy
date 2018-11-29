@@ -97,7 +97,7 @@
 		<select name="prod_lgu">
 			<option value="">분류선택</option>
 			<c:forEach items="${lprodList }" var="lprod">
-				<option value="${lprod.get('LPROD_GU')}">${lprod[lprod_nm]}</option>
+				<option value="${lprod[PROD_GU]}">${lprod[lprod_nm]}</option>
 			</c:forEach>
 		</select>
 		
