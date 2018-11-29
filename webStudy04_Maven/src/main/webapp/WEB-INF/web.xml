@@ -50,6 +50,7 @@
     <servlet-name>CalculateServlet</servlet-name>
     <url-pattern>/calculate</url-pattern>
   </servlet-mapping>
+  
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>kr.or.ddit.mvc.FrontController</servlet-class>
@@ -59,6 +60,7 @@
 		</init-param>
 		<load-on-startup>0</load-on-startup>
 	</servlet>  
+	
 	<servlet-mapping>
 		<servlet-name>FrontController</servlet-name>
 		<url-pattern>*.do</url-pattern>
