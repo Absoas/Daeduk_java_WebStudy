@@ -20,6 +20,7 @@ import kr.or.ddit.mvc.ICommandHandler;
 import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingInfoVO;
+import kr.or.ddit.vo.ProdVO;
 
 public class BuyerListController implements ICommandHandler{
 	
@@ -30,13 +31,16 @@ public class BuyerListController implements ICommandHandler{
 		String searchType = req.getParameter("searchType");
 		String searchWord = req.getParameter("searchWord");
 		
+		BuyerVO searchVO = new BuyerVO();
+		searchVO.setBuyer_name(req.getParameter("buyer_name"));
+		
+		
 		if(StringUtils.isNumeric(page)) {
 			currentPage = Integer.parseInt(page);
 		}
 		PagingInfoVO<BuyerVO> pagingVO = new PagingInfoVO(5,2);
 		pagingVO.setCurrentPage(currentPage);
-		pagingVO.setSearchType(searchType);
-		pagingVO.setSearchWord(searchWord);
+		pagingVO.setSearchVO(searchVO);
 		
 		IBuyerService service =  new BuyerServiceImpl();
 		// 4. 로직 선택

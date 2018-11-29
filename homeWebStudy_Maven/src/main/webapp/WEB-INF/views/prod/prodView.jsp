@@ -94,12 +94,10 @@
 			<th>입고일</th>
 			<td>${requestScope.prod.prod_insdate}</td>
 		</tr>
-		
 		<tr>
 			<th>적정재고</th>
 			<td>${requestScope.prod.prod_properstock}</td>
 		</tr>
-		
 		<tr>
 			<th>상품크기</th>
 			<td>${requestScope.prod.prod_size}</td>

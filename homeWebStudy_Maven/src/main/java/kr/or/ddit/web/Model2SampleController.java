@@ -15,21 +15,34 @@ import kr.or.ddit.web.model2.SampleModelGenerator;
 public class Model2SampleController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//1. 요청 분석
-		//2. 의존 객체 생성
+		// 1. 요청 분석
+		// 2. 의존 객체 생성
 		SampleModelGenerator generator = new SampleModelGenerator();
-		
-		//3. 로직 메소드를 호출
+		// 3. 로직 메소드를 호출
 		String model = generator.generate();
-		
-		//4. 데이터 공유
+		// 4. 데이터 공유
 		req.setAttribute("model", model);
-		
-		//5. 뷰 레이어를 선택
+		// 5. 뷰레이어를 선택
 		String view = "/WEB-INF/views/model2SampleView.jsp";
-		
-		//6. 이동
+		// 6. 이동		
 		RequestDispatcher rd = req.getRequestDispatcher(view);
 		rd.forward(req, resp);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,13 +4,15 @@ public enum SystemType {
 	DESKTOP(new String[] {"windows nt", "linux"}, "데스크탑"), 
 	MOBILE(new String[] {"android", "iphone"}, "모바일"),
 	OTHER(new String[] {}, "기타등등");
-	
 	private String[] keywords;
 	private String systemName;
-	
 	private SystemType(String[] keywords, String systemName) {
 		this.keywords = keywords;
 		this.systemName = systemName;
+	}
+	
+	public String getSystemName() {
+		return systemName;
 	}
 	
 	public boolean matches(String userAgent){
@@ -21,10 +23,6 @@ public enum SystemType {
 			if(result) break;
 		}
 		return result;
-	}
-	
-	public  String getSystemName() {
-		return systemName;
 	}
 	
 	public static SystemType getSystemType(String userAgent){
@@ -38,3 +36,15 @@ public enum SystemType {
 		return result;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

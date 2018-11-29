@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value = "/song")
+@WebServlet("/song")
 public class MusicLyricsServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +26,6 @@ public class MusicLyricsServlet extends HttpServlet {
 		}
 		File folder = (File)getServletContext().getAttribute("contentFolder");
 		File songFile = new File(folder, song);
-		
 		if(!songFile.exists()) {
 			status = HttpServletResponse.SC_NOT_FOUND;
 			message = "해당 곡은 가사가 없슴다.";
@@ -56,3 +55,14 @@ public class MusicLyricsServlet extends HttpServlet {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

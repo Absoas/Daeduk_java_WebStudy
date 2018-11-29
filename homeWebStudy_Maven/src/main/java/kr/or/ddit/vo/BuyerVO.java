@@ -9,6 +9,7 @@ import lombok.Data;
 @Alias("buyerVO")
 @Data
 public class BuyerVO implements Serializable{
+	private long rnum;
 	private String buyer_id;
 	private String buyer_name;
 	private String buyer_lgu;
@@ -23,6 +24,6 @@ public class BuyerVO implements Serializable{
 	private String buyer_mail;
 	private String buyer_charger;
 	private String buyer_telext;
-	
 	private LprodVO lprod;
+	
 }

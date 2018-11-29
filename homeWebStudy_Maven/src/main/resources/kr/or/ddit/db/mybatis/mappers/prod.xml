@@ -53,7 +53,7 @@
 		WHERE CART_PROD = #{prod_id}
 	</select>
 	
-	<select id="selectProd" parameterType="string" resultMap="prodMap">
+	<select id="selectProd" parameterType="string" resultMap="kr.or.ddit.prod.dao.IProdDAO.prodMap">
 		SELECT
 		    PROD_ID,    PROD_NAME,    PROD_LGU,
 		    PROD_BUYER,    PROD_COST,    PROD_PRICE,
@@ -71,8 +71,8 @@
 	
 	<insert id="insertProd" parameterType="prodVO">
 		<selectKey resultType="string" keyProperty="prod_id" order="BEFORE">
-<!-- 	PK 생성 쿼리 
-
+<!-- 	
+	PK 생성 쿼리 
 -->
 			SELECT #{prod_lgu}||LPAD(NVL(TO_NUMBER(SUBSTR(MAX(PROD_ID), 5)), 0) + 1, 6, '0')
 			FROM PROD

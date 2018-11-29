@@ -1,10 +1,6 @@
 package kr.or.ddit;
 
 public enum ServiceResult {
-	PKNOTFOUND,
-	INVALIDPASSWORD,
-	OK,
-	FAILED,
-	PKDUPLICATED
-	
+	 PKNOTFOUND, INVALIDPASSWORD,
+	 OK, FAILED, PKDUPLICATED
 }

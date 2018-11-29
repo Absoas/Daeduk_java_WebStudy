@@ -1,8 +1,9 @@
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@page import="kr.or.ddit.web.modulize.ServiceType"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%
 	MemberVO authMember =(MemberVO) session.getAttribute("authMember");
 	String cmdParam = request.getParameter("command");

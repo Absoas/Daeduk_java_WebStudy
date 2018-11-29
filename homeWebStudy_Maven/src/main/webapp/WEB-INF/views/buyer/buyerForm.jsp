@@ -59,11 +59,6 @@
 	<form method="post">
 		<table class = "table">
 			<tr>
-				<th>상품 ID</th>
-				<td><input type="text" name="buyer_id"
-					value="<%=buyer.getBuyer_id()%>" /><span class="error"><%=error.get("buyer_id")%></span></td>
-			</tr>
-			<tr>
 				<th>상품 이름</th>
 				<td><input type="text" name="buyer_name"
 					value="<%=buyer.getBuyer_name()%>" /><span class="error"><%=error.get("buyer_name")%></span></td>
