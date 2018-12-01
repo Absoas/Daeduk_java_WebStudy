@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -24,6 +25,8 @@ import kr.or.ddit.buyer.service.IBuyerService;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.mvc.ICommandHandler;
+import kr.or.ddit.prod.dao.IOtherDAO;
+import kr.or.ddit.prod.dao.OtherDAOImpl;
 import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 
@@ -33,6 +36,11 @@ public class BuyerInsertController implements ICommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String method = req.getMethod();
 		String view = null;
+		
+		IOtherDAO otherDAO = new OtherDAOImpl();
+		List<Map<String, Object>> lprodList = otherDAO.selectLprodList();
+		req.setAttribute("lprodList", lprodList);
+
 		
 		if("get".equalsIgnoreCase(method)) {
 			view = doGet(req, resp);
@@ -64,7 +72,7 @@ public class BuyerInsertController implements ICommandHandler {
 		String goPage = null;
 		String message = null;
 		Map<String, String> errors = new LinkedHashMap<>();
-		req.setAttribute("errors2", errors);
+		req.setAttribute("errors", errors);
 		boolean valid = validate(buyer, errors);
 
 		if (valid) {

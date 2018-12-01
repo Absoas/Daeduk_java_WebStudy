@@ -32,7 +32,6 @@
 	
 <script type="text/javascript">
 	$(function() {
-	
 		<c:set var="message" value="${message}"/>
 		<c:if test="${not empty message}">
 			alert("${message}");
@@ -44,7 +43,6 @@
 		});
 		
 		var pattern = "<option value='%V'>%T</option>";
-	
 		var prod_buyerTag = $("[name='prod_buyer']");
 		var prod_lguTag = $("[name='prod_lgu']");
 		

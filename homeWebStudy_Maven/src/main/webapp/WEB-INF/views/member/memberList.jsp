@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.vo.PagingInfoVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -37,8 +38,7 @@
       </tr>
    </thead>
    <tbody>
-   
-   		<c:set var = "memberList" value="${pagingVO.dataList }" />
+   		<c:set var="memberList" value="${pagingVO.dataList }" />
    		<c:if test="${not empty memberList }">
 			<c:forEach items="${memberList }" var="member" >
 	            <tr>

@@ -53,6 +53,7 @@ public class BuyerServiceImpl implements IBuyerService {
 		return buyer;
 	}
 
+	
 	@Override
 	public ServiceResult modifyBuyer(BuyerVO buyer) {
 		BuyerVO savedBuyer = retrieveBuyer(buyer.getBuyer_id());

@@ -29,8 +29,9 @@
 // 		document.searchForm.submit();
 	}
 	$(function(){
-		var prod_lguTag = $("[name='prod_lgu']");
 		var prod_buyerTag = $("[name='prod_buyer']");
+		var prod_lguTag = $("[name='prod_lgu']");
+		
 		prod_lguTag.val("${pagingVO.searchVO.prod_lgu }");
 		prod_buyerTag.val("${pagingVO.searchVO.prod_buyer }");
 		prod_lguTag.on("change", function(){
@@ -85,6 +86,7 @@
 			});
 			return false;
 		});
+		
 	});
 </script>
 </head>
@@ -93,13 +95,13 @@
 	<!-- 블럭사이즈 4  -->
 	<form name="searchForm" >
 		<input type="text" name="page" />
-			<c:set var="lprodList" value="${lprodList} "/>
-		<select name="prod_lgu">
+			<select name="prod_lgu">
 			<option value="">분류선택</option>
-			<c:forEach items="${lprodList }" var="lprod">
-				<option value="${lprod[PROD_GU]}">${lprod[lprod_nm]}</option>
-			</c:forEach>
-		</select>
+				<c:set var="lprodList" value="${lprodList}" />
+				<c:forEach items="${lprodList}" var="lprod" >
+					<option value="${lprod.get('LPROD_GU')}">${lprod.get('lprod_nm')}</option>
+				</c:forEach>
+			</select>
 		
 		<select name="prod_buyer">
 			<option value="">거래처선택</option>

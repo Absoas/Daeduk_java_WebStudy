@@ -130,10 +130,9 @@
 			<td>${requestScope.prod.prod_mileage}</td>
 		</tr>
 	</table>
-	<c:set var="authorized" value="false"/>
-	<c:set var="authMember" value="${sessionScope.authMember }"/>
-	<c:set var="authorized" value="${not empty authMember and 'ROLE_ADMIN' eq authMember.mem_auth }" />
-	<c:if test="authorized">
+	
+	<c:set var="authorized" value="${not empty sessionScope.authMember or 'ROLE_ADMIN' eq sessionScope.authMember.mem_auth }" />
+	<c:if test="${authorized }">
 		<input type="button" value="상품수정" 
 			onclick = "location.href='${pageContext.request.contextPath}/prod/prodUpdate.do?what=${requestScope.prod.prod_id}'"
 		/>
