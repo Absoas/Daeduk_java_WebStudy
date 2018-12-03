@@ -29,15 +29,15 @@
 	<table class= "table">
 		<tr>
 			<th>상품코드</th>
-			<td>${requestScope.prod.prod_id}</td>
+			<td>${prod.prod_id}</td>
 		</tr>
 		<tr>
 			<th>상품명</th>
-			<td>${requestScope.prod.prod_name}</td>
+			<td>${prod.prod_name}</td>
 		</tr>
 		<tr>
 			<th>분류명</th>
-			<td>${requestScope.prod.lprod_nm}</td>
+			<td>${prod.lprod_nm}</td>
 		</tr>
 		<tr>
 			<th>거래처정보</th>
@@ -53,10 +53,10 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>${requestScope.prod.buyer.buyer_name}</td>
-							<td>${requestScope.prod.buyer.buyer_add1}</td>
-							<td>${requestScope.prod.buyer.buyer_charger}</td>
-							<td>${requestScope.prod.buyer.buyer_comtel}</td>
+							<td>${prod.buyer.buyer_name}</td>
+							<td>${prod.buyer.buyer_add1}</td>
+							<td>${prod.buyer.buyer_charger}</td>
+							<td>${prod.buyer.buyer_comtel}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -64,70 +64,72 @@
 		</tr>
 		<tr>
 			<th>구매가</th>
-			<td>${requestScope.prod.prod_cost}</td>
+			<td>${prod.prod_cost}</td>
 		</tr>
 		<tr>
 			<th>판매가</th>
-			<td>${requestScope.prod.prod_price}</td>
+			<td>${prod.prod_price}</td>
 		</tr>
 		<tr>
 			<th>특판가</th>
-			<td>${requestScope.prod.prod_sale}</td>
+			<td>${prod.prod_sale}</td>
 		</tr>
 		<tr>
 			<th>상품개요</th>
-			<td>${requestScope.prod.prod_outline}</td>
+			<td>${prod.prod_outline}</td>
 		</tr>
 		<tr>
 			<th>상세정보</th>
-			<td>${requestScope.prod.prod_detail}</td>
+			<td>${prod.prod_detail}</td>
 		</tr>
 		<tr>
 			<th>이미지경로</th>
-			<td>${requestScope.prod.prod_img}</td>
+			<td>
+				<img src ="<c:url value='/prodImages/${prod.prod_img}'/>"/>
+			</td>
 		</tr>
 		<tr>
 			<th>재고량</th>
-			<td>${requestScope.prod.prod_totalstock}</td>
+			<td>${prod.prod_totalstock}</td>
 		</tr>
 		<tr>
 			<th>입고일</th>
-			<td>${requestScope.prod.prod_insdate}</td>
+			<td>${prod.prod_insdate}</td>
 		</tr>
 		<tr>
 			<th>적정재고</th>
-			<td>${requestScope.prod.prod_properstock}</td>
+			<td>${prod.prod_properstock}</td>
 		</tr>
 		<tr>
 			<th>상품크기</th>
-			<td>${requestScope.prod.prod_size}</td>
+			<td>${prod.prod_size}</td>
 		</tr>
 		
 		<tr>
 			<th>상품색상</th>
-			<td>${requestScope.prod.prod_color}</td>
+			<td>${prod.prod_color}</td>
 		</tr>
 		
 		<tr>
 			<th>배송방법</th>
-			<td>${requestScope.prod.prod_delivery}</td>
+			<td>${prod.prod_delivery}</td>
 		</tr>
 		
 		<tr>
 			<th>단위</th>
-			<td>${requestScope.prod.prod_unit}</td>
+			<td>${prod.prod_unit}</td>
 		</tr>
 		<tr>
 			<th>입고량</th>
-			<td>${requestScope.prod.prod_qtyin}</td>
+			<td>${prod.prod_qtyin}</td>
 		</tr>
 		<tr>
 			<th>판매량</th>
-			<td>${requestScope.prod.prod_qtysale}</td>
+			<td>${prod.prod_qtysale}</td>
 		</tr>
 		<tr>
 			<th>마일리지</th>
-			<td>${requestScope.prod.prod_mileage}</td>
+			<td>${prod.prod_mileage}</td>
 		</tr>
 	</table>
 	<c:set var="authorized" value="false"/>

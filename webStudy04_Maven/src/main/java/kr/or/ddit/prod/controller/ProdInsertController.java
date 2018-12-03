@@ -1,19 +1,25 @@
 package kr.or.ddit.prod.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import kr.or.ddit.ServiceResult;
+import kr.or.ddit.filter.wrapper.FileUploadRequestWrapper;
 import kr.or.ddit.mvc.ICommandHandler;
 import kr.or.ddit.prod.dao.IOtherDAO;
 import kr.or.ddit.prod.dao.OtherDAOImpl;
@@ -33,6 +39,7 @@ public class ProdInsertController implements ICommandHandler {
 		if ("get".equalsIgnoreCase(method)) {
 			return "prod/prodForm";
 		} else if ("post".equalsIgnoreCase(method)) {
+			
 			ProdVO prod = new ProdVO();
 			req.setAttribute("prod", prod);
 			try {
@@ -45,6 +52,23 @@ public class ProdInsertController implements ICommandHandler {
 			boolean valid = validate(prod, errors);
 			String view = null;
 			if (valid) {
+				if(req instanceof FileUploadRequestWrapper) {
+					String prodImagesUrl = "/prodImages";
+					String prodImagesPath = req.getServletContext().getRealPath(prodImagesUrl);
+					File prodImagesFolder = new File(prodImagesPath);
+					FileItem fileItem = ((FileUploadRequestWrapper) req).getFileItem("prod_image");
+					if(fileItem!=null) {
+						String savename = UUID.randomUUID().toString();
+						File saveFile = new File(prodImagesFolder, savename);
+						try(
+							InputStream in = fileItem.getInputStream();
+						){
+							FileUtils.copyInputStreamToFile(in, saveFile);
+							prod.setProd_img(savename);
+						}
+					}
+				}
+				
 				IProdService service = new ProdServiceImpl();
 				ServiceResult result = service.createProd(prod);
 				if (ServiceResult.OK.equals(result)) {
@@ -65,6 +89,10 @@ public class ProdInsertController implements ICommandHandler {
 
 	private boolean validate(ProdVO prod, Map<String, String> errors) {
 		boolean valid = true;
+//		if (StringUtils.isBlank(prod.getProd_id())) {
+//			valid = false;
+//			errors.put("prod_id", "상품코드 누락");
+//		}
 		if (StringUtils.isBlank(prod.getProd_name())) {
 			valid = false;
 			errors.put("prod_name", "상품명 누락");
@@ -93,10 +121,7 @@ public class ProdInsertController implements ICommandHandler {
 			valid = false;
 			errors.put("prod_outline", "상품개요 누락");
 		}
-		if (StringUtils.isBlank(prod.getProd_img())) {
-			valid = false;
-			errors.put("prod_img", "이미지경로 누락");
-		}
+		
 		if (prod.getProd_totalstock()==null) {
 			valid = false;
 			errors.put("prod_totalstock", "재고량 누락");

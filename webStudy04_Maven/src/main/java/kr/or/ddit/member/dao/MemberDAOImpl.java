@@ -19,8 +19,6 @@ public class MemberDAOImpl implements IMemberDAO {
 		try (
 			SqlSession session = SqlSessionFactory.openSession();
 		){
-//			return session.selectOne("kr.or.ddit.member.dao.IMemberDAO.selectTotalRecord",pagingVO);
-//			int cnt = session.insert("kr.or.ddit.member.dao.IMemberDAO.insertMember",member);
 			IMemberDAO mapper = session.getMapper(IMemberDAO.class);
 			int cnt = mapper.insertMember(member);
 			if(cnt>0) session.commit();
@@ -31,9 +29,8 @@ public class MemberDAOImpl implements IMemberDAO {
 	@Override
 	public long selectTotalRecord(PagingInfoVO pagingVO) {
 		try (
-				SqlSession session = SqlSessionFactory.openSession();
+			SqlSession session = SqlSessionFactory.openSession();
 		){
-//			return session.selectOne("kr.or.ddit.member.dao.IMemberDAO.selectTotalRecord",pagingVO);
 			IMemberDAO mapper = session.getMapper(IMemberDAO.class);
 			return mapper.selectTotalRecord(pagingVO);
 		}
@@ -83,7 +80,4 @@ public class MemberDAOImpl implements IMemberDAO {
 			return cnt;
 		}
 	}
-
-	
-
 }
