@@ -22,7 +22,7 @@
 </head>
 <body>
 <h4> 회원 목록 </h4>
-<input type="button" class="btn btn-success" value="신규등록" 
+<input type="button" class="btn btn-danger" value="신규등록" 
    onclick="location.href='${pageContext.request.contextPath }/member/memberInsert.do';"
 />
 <table class="table">

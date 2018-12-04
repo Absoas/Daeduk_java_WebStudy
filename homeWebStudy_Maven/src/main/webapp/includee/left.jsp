@@ -7,6 +7,7 @@
       form.submit();
    }
 </script>
+
 <ul>
    <li><a href="javascript:goIndex('gugudan');">구구단</a></li>
    <li><a href="javascript:goIndex('lyrics');">가사파일</a></li>

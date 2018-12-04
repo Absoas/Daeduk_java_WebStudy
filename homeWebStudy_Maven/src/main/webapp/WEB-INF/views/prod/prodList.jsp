@@ -127,7 +127,7 @@
 		<input type="submit" value="검색" />
 	</form>
 
-	<input type="button" class="btn btn-info" value="신규상품등록" 
+	<input type="button" class="btn btn-danger" value="신규상품등록" 
 		onclick="location.href='${pageContext.request.contextPath}/prod/prodInsert.do';"
 	/>
 			
