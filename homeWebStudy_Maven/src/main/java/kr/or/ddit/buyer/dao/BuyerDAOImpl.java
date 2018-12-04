@@ -16,22 +16,22 @@ public class BuyerDAOImpl implements IBuyerDAO {
 	SqlSessionFactory sqlSessionFactory = CustomSqlSessionFactoryBuilder.getSqlSessionFactory();
 
 	@Override
-	public BuyerVO selectBuyer(String Buyer_id) {
+	public BuyerVO selectBuyer(String buyer_id) {
 		try (
 			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IBuyerDAO mapper = session.getMapper(IBuyerDAO.class);
-			return mapper.selectBuyer(Buyer_id);
+			return mapper.selectBuyer(buyer_id);
 		}
 	}
 
 	@Override
-	public int insertBuyer(BuyerVO Buyer) {
+	public int insertBuyer(BuyerVO buyer) {
 		try (
 			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IBuyerDAO mapper = session.getMapper(IBuyerDAO.class);
-			return mapper.insertBuyer(Buyer);
+			return mapper.insertBuyer(buyer);
 		}
 	}
 
@@ -46,24 +46,24 @@ public class BuyerDAOImpl implements IBuyerDAO {
 	}
 
 	@Override
-	public int updateBuyer(BuyerVO Buyer) {
+	public int updateBuyer(BuyerVO buyer) {
 		try (
 			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IBuyerDAO mapper = session.getMapper(IBuyerDAO.class);
-			int rowCnt = mapper.updateBuyer(Buyer);
+			int rowCnt = mapper.updateBuyer(buyer);
 			session.commit();
 			return rowCnt;
 		}
 	}
 
 	@Override
-	public int deleteBuyer(String Buyer_id) {
+	public int deleteBuyer(String buyer_id) {
 		try (
 			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IBuyerDAO mapper = session.getMapper(IBuyerDAO.class);
-			int rowCnt = mapper.deleteBuyer(Buyer_id);
+			int rowCnt = mapper.deleteBuyer(buyer_id);
 			session.commit();
 			return rowCnt;
 		}

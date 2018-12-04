@@ -31,16 +31,14 @@ public class BuyerListController implements ICommandHandler{
 		String searchType = req.getParameter("searchType");
 		String searchWord = req.getParameter("searchWord");
 		
-		BuyerVO searchVO = new BuyerVO();
-		searchVO.setBuyer_name(req.getParameter("buyer_name"));
-		
 		
 		if(StringUtils.isNumeric(page)) {
 			currentPage = Integer.parseInt(page);
 		}
-		PagingInfoVO<BuyerVO> pagingVO = new PagingInfoVO(5,2);
+		PagingInfoVO<BuyerVO> pagingVO = new PagingInfoVO<>(5,2);
 		pagingVO.setCurrentPage(currentPage);
-		pagingVO.setSearchVO(searchVO);
+		pagingVO.setSearchWord(searchWord);
+		pagingVO.setSearchType(searchType);
 		
 		IBuyerService service =  new BuyerServiceImpl();
 		// 4. 로직 선택

@@ -33,7 +33,9 @@ public class PagingInfoVO<T> {
 	private long endPage;
 	private long startRow;
 	private long endRow;
+	
 	private List<T> dataList;
+	
 	private T searchVO;
 	private String searchWord;
 	private String searchType;

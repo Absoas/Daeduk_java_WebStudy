@@ -9,7 +9,11 @@
     pageEncoding="UTF-8"%>
     
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%> 
  
+<c:url value="/prod/prodView.do" var="prodView"/>
+
+
   
 <!DOCTYPE html>
 <html>
@@ -47,7 +51,7 @@
 		var listBody = $("#listBody");
 		listBody.on("click", "tr" ,function(){
 			var prod_id = $(this).find("td:first").text();
-			location.href = "${pageContext.request.contextPath}/prod/prodView.do?what="+prod_id;
+			location.href = "${prodView}?what="+prod_id;
 		});
 		
 		$("[name='searchForm']").on("submit", function(event){
@@ -87,18 +91,28 @@
 		});
 	});
 </script>
+<style>
+	input[type = 'image']{
+			width: 50px;
+			height: 50px;
+		}
+</style>
+	
 </head>
 	<body>
 	<!-- 스크린사이즈 7 -->
 	<!-- 블럭사이즈 4  -->
 	<form name="searchForm" >
 		<input type="text" name="page" />
-			<c:set var="lprodList" value="${lprodList} "/>
+			
+			<c:set var="lprodlist" value="${lprodList} "/>
+	
 		<select name="prod_lgu">
 			<option value="">분류선택</option>
-			<c:forEach items="${lprodList }" var="lprod">
-				<option value="${lprod[PROD_GU]}">${lprod[lprod_nm]}</option>
-			</c:forEach>
+			<c:set var="lprodList" value="${lprodList}" />
+				<c:forEach items="${lprodList}" var="lprod" >
+					<option value="${lprod.get('LPROD_GU')}">${lprod.get('lprod_nm')}</option>
+				</c:forEach>
 		</select>
 		
 		<select name="prod_buyer">
@@ -112,21 +126,35 @@
 		<input type="text" name="prod_name" value="${pagingVO.searchVO.prod_name}" />
 		<input type="submit" value="검색" />
 	</form>
+
 	<input type="button" class="btn btn-info" value="신규상품등록" 
 		onclick="location.href='${pageContext.request.contextPath}/prod/prodInsert.do';"
 	/>
+			
+		<input type="image" src='<c:url value = "/images/korea.png" />' 
+			onclick = "location.href='?locale=ko';"/>
+		<input type="image" src='<c:url value = "/images/america.png" />'
+			onclick = "location.href='?locale=en';"/>
+			
+		<c:if test="${not empty param.locale }">
+			<fmt:setLocale value="${param.locale}"/>
+		</c:if>
+		
+	
 	<table class="table">
 		<thead>
 			<tr>
-				<th>상품코드</th>
-				<th>상품명</th>
-				<th>분류명</th>
-				<th>거래처명</th>
-				<th>판매가</th>
-				<th>상품개요</th>
-				<th>마일리지</th>
+			<fmt:bundle basename="kr.or.ddit.msgs.message">
+			 <th><fmt:message key="prod.prod_id"/></th>
+	         <th><fmt:message key="prod.prod_name"/></th>
+	         <th><fmt:message key="prod.prod_lgu"/></th>
+	         <th><fmt:message key="prod.prod_buyer"/></th>
+	         <th><fmt:message key="prod.prod_price"/></th>
+	         <th><fmt:message key="prod.prod_outline"/></th>
+	         </fmt:bundle>
 			</tr>
 		</thead>
+		
 		<tbody id="listBody">
 		
 		<c:set var="prodList" value="${pagingVO.dataList}"/>
@@ -134,6 +162,7 @@
 			<c:when  test="${not empty prodList}">
 				<c:forEach items="${prodList}" var="prod">
 					<tr>
+					
 						<td>${prod.prod_id }</td>
 						<td>${prod.prod_name }</td>
 						<td>${prod.lprod_nm }</td>
@@ -141,6 +170,7 @@
 						<td>${prod.prod_price }</td>
 						<td>${prod.prod_outline }</td>
 						<td>${prod.prod_mileage }</td>
+					
 					</tr>
 				</c:forEach>
 			</c:when>

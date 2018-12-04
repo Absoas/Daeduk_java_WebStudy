@@ -62,7 +62,6 @@ public class ProdVO implements Serializable{
 	private Long prod_mileage;
 	
 	private BuyerVO buyer;
-	
 	private List<MemberVO> customers;
 }
 
