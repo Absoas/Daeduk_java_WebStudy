@@ -51,7 +51,6 @@ public class FrontController extends HttpServlet {
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
 		String uri = req.getRequestURI();
 //		/member/memberList.do
 		int cpLength = req.getContextPath().length();

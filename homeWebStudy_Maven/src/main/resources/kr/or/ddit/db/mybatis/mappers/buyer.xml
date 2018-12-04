@@ -4,9 +4,9 @@
 <mapper namespace="kr.or.ddit.buyer.dao.IBuyerDAO">
 	<sql id="searchFrag">
 		<where>
-			<if test = "searchVO !=null" >
-				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchVO.buyer_name)">
-					AND buyer_name like '%'||#{searchVO.buyer_name}||'%'
+			<if test = "@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)" >
+				<if test="searchType.equals('name')">
+					AND buyer_name like '%'||#{searchWord}||'%'
 				</if>
 				
 			</if>
@@ -23,7 +23,14 @@
 	<resultMap type="buyerVO" id="buyerMap" autoMapping="true">
 		<id property="buyer_id" column="BUYER_ID"/>
 		<association property="lprod" autoMapping="true" javaType="lprodVO"/>
+		<collection property="prod" select="selectBuyerProdList" column="BUYER_ID" />
 	</resultMap>
+	
+	<select id="selectBuyerProdList" resultType="prodVO">
+		SELECT PROD_NAME,PROD_PRICE
+		FROM PROD INNER JOIN BUYER ON(BUYER_ID = PROD_BUYER)
+		WHERE PROD_BUYER = #{buyer_id}
+	</select>
 	
 	<select id="selectBuyer" parameterType="String" resultMap="buyerMap">
 		SELECT                
@@ -32,10 +39,10 @@
 		BUYER_ZIP,BUYER_ADD1,BUYER_ADD2,
 		BUYER_COMTEL,BUYER_FAX,BUYER_MAIL,
 		BUYER_CHARGER,
-        LPROD_ID,
-        LPROD_GU,
-        LPROD_NM
+        LPROD_ID,LPROD_GU,LPROD_NM,
+        PROD_NAME,PROD_PRICE
 		FROM BUYER  INNER JOIN LPROD ON(BUYER_LGU = LPROD_GU)
+					INNER JOIN PROD ON(BUYER_ID = PROD_BUYER)
         WHERE BUYER_ID = #{buyer_id}                     
 	</select>	
 	
@@ -58,41 +65,57 @@
 	
 	<insert id="insertBuyer" parameterType="buyerVO">
 		<selectKey resultType="string" keyProperty="buyer_id" order="BEFORE">
-		  SELECT #{buyer_lgu} ||LPAD(NVL(TO_NUMBER(SUBSTR(MAX(BUYER_ID), 5)), 0) + 1, 2, '0')
+		  SELECT #{buyer_lgu} || LPAD(NVL(TO_NUMBER(SUBSTR(MAX(BUYER_ID), 5)), 0) + 1, 2, '0')
 			FROM BUYER
 			WHERE BUYER_lGU = #{buyer_lgu}
 		</selectKey>
 		INSERT INTO BUYER (
-		   	BUYER_ID,BUYER_NAME,BUYER_LGU,
-			BUYER_BANK,BUYER_BANKNO,BUYER_BANKNAME,
-			BUYER_ZIP,BUYER_ADD1,BUYER_ADD2,
-			BUYER_COMTEL,BUYER_FAX,BUYER_MAIL,BUYER_CHARGER
+		   	BUYER_ID,
+		   	BUYER_NAME,
+		   	BUYER_LGU,
+			BUYER_BANK,
+			BUYER_BANKNO,
+			BUYER_BANKNAME,
+			BUYER_ZIP,
+			BUYER_ADD1,
+			BUYER_ADD2,
+			BUYER_COMTEL,
+			BUYER_FAX,
+			BUYER_MAIL,
+			BUYER_CHARGER
 		) VALUES (
-		    #{buyer_id},#{buyer_name},#{buyer_lgu},
-			#{buyer_bank},#{buyer_bankno},#{buyer_bankname},
-			#{buyer_zip},#{buyer_add1},#{buyer_add2},
-			#{buyer_comtel},#{buyer_fax},#{buyer_mail},
+		    #{buyer_id},
+		    #{buyer_name},
+		    #{buyer_lgu},
+			#{buyer_bank},
+			#{buyer_bankno},
+			#{buyer_bankname},
+			#{buyer_zip},
+			#{buyer_add1},
+			#{buyer_add2},
+			#{buyer_comtel},
+			#{buyer_fax},
+			#{buyer_mail},
 			#{buyer_charger}
 		)
-		
 	</insert>
 	
 	<update id="updateBuyer" parameterType="buyerVO">
-		UPDATE Buyer SET 
-		BUYER_NAME= #{buyer_name},
-		BUYER_LGU= #{buyer_lgu},
-		BUYER_BANK= #{buyer_bank},
-		BUYER_BANKNO= #{buyer_bankno},
-		BUYER_BANKNAME= #{buyer_bankname},
-		BUYER_ZIP= #{buyer_zip},
-		BUYER_ADD1= #{buyer_add1},
-		BUYER_ADD2= #{buyer_add2},
-		BUYER_COMTEL= #{buyer_comtel},
-		BUYER_FAX= #{buyer_fax},
-		BUYER_MAIL= #{buyer_mail},
-		BUYER_CHARGER= #{buyer_charger},
-		BUYER_TELEXT= #{buyer_telext}
-		where BUYER_ID= #{buyer_id}
+		UPDATE BUYER
+		 SET 
+			BUYER_NAME= #{buyer_name},
+			BUYER_LGU= #{buyer_lgu},
+			BUYER_BANK= #{buyer_bank},
+			BUYER_BANKNO= #{buyer_bankno},
+			BUYER_BANKNAME= #{buyer_bankname},
+			BUYER_ZIP= #{buyer_zip},
+			BUYER_ADD1= #{buyer_add1},
+			BUYER_ADD2= #{buyer_add2},
+			BUYER_COMTEL= #{buyer_comtel},
+			BUYER_FAX= #{buyer_fax},
+			BUYER_MAIL= #{buyer_mail},
+			BUYER_CHARGER= #{buyer_charger}
+		WHERE BUYER_ID = #{buyer_id}
 	</update>
 	
 	<delete id="deleteBuyer" parameterType="string">

@@ -33,10 +33,14 @@ public class FileUploadCheckFilter implements Filter {
 		
 		// 요청 필터링
 		String contentType = request.getContentType();
+		//값을 가지고있으면서 multipart로 시작
 		if(contentType!=null && contentType.startsWith("multipart/")) {
+			//원본요청
 			HttpServletRequest req = (HttpServletRequest) request;
 			int sizeThreshold = 10240;
 			File repository = new File("d:/temp");
+			
+			//원본요청-> wrapper로 변환
 			FileUploadRequestWrapper wrapper = new FileUploadRequestWrapper(req, sizeThreshold, repository );
 			logger.info("{}에서 multipart request 가 {} 로 변경됨.", 
 							getClass().getSimpleName(), wrapper.getClass().getSimpleName());

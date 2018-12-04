@@ -1,6 +1,7 @@
 package kr.or.ddit.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -24,6 +25,9 @@ public class BuyerVO implements Serializable{
 	private String buyer_mail;
 	private String buyer_charger;
 	private String buyer_telext;
+	
 	private LprodVO lprod;
+	private List<ProdVO> prod;
+	
 	
 }

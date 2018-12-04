@@ -53,7 +53,6 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 				
 		ServletFileUpload handler = new ServletFileUpload(fileItemFactory);
 		// 3.  핸들러 객체를 이용해 현재 요청 파싱 (Part -> FileItem)
-		req.setCharacterEncoding("UTF-8");
 		try {
 			List<FileItem> fileItems = handler.parseRequest(req);
 			// 4. FileItem 들을 대상으로 반복 실행
@@ -61,8 +60,14 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 				for(FileItem item : fileItems) {
 					String partname = item.getFieldName();
 					if(item.isFormField()) {
+						
+						String parameterValue= null;
+						if(req.getCharacterEncoding()!=null) {
+							parameterValue = item.getString(req.getCharacterEncoding());
+						}else {
+							parameterValue = item.getString();
+						}
 						// 5. 일반 문자열 기반의 FileItem 에 대한 처리와
-						String parameterValue = item.getString(req.getCharacterEncoding());
  						String[] alreadyValues = parameterMap.get(partname);
  						String[] values = null;
  						if(alreadyValues==null) {
@@ -84,12 +89,9 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper {
 						if(alreadyItems==null) {
 							alreadyItems = new ArrayList<>();
 						}
-						
 						alreadyItems.add(item);
-						
 						fileItemMap.put(partname, alreadyItems);
 					}
-					
 				} // for end
 			} // if end
 		} catch (FileUploadException e) {

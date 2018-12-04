@@ -6,8 +6,6 @@
     pageEncoding="UTF-8"%>
     
 <%
-
-	
 	MemberVO authMember = (MemberVO) session.getAttribute("authMember");
 	String cmdParam = request.getParameter("command");
 	int statusCode = 0;
