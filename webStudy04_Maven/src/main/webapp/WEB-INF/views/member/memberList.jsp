@@ -70,11 +70,13 @@
             </nav>
             <form name="searchForm">
                <input type="text" name="page" />
+              
                <select name="searchType">
                   <option value="all">전체</option>
                   <option value="name">이름</option>
                   <option value="address">지역</option>
-               </select>         
+               </select>   
+                     
                <script type="text/javascript">
                   document.searchForm.searchType.value = "${empty pagingVO.searchType ? 'all' : pagingVO.searchType}";
                </script>

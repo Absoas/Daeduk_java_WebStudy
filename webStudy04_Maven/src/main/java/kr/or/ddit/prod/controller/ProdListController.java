@@ -26,11 +26,15 @@ public class ProdListController implements ICommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		
+		//검색 코드
 		ProdVO searchVO = new ProdVO();
 		searchVO.setProd_lgu(req.getParameter("prod_lgu"));
 		searchVO.setProd_buyer(req.getParameter("prod_buyer"));
 		searchVO.setProd_name(req.getParameter("prod_name"));
 		
+		
+		//페이징
  		String page = req.getParameter("page");
 		int currentPage = 1;
 		if(StringUtils.isNumeric(page)) {
@@ -40,10 +44,13 @@ public class ProdListController implements ICommandHandler {
 		pagingVO.setCurrentPage(currentPage);
 		pagingVO.setSearchVO(searchVO);
 		
-		IProdService service = new ProdServiceImpl();
-		IOtherDAO otherDAO = new OtherDAOImpl();
-		List<Map<String, Object>> lprodList = otherDAO.selectLprodList();
 		
+		// 우리가한부분
+		IProdService service = new ProdServiceImpl();
+		
+		IOtherDAO otherDAO = new OtherDAOImpl();
+		
+		List<Map<String, Object>> lprodList = otherDAO.selectLprodList();
 		List<BuyerVO> buyerList = otherDAO.selectBuyerList(null);
 		req.setAttribute("lprodList", lprodList);
 		req.setAttribute("buyerList", buyerList);

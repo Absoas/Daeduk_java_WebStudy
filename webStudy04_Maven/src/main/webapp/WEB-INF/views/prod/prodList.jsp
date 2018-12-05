@@ -26,12 +26,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
 	function ${pagingVO.funcName }(page){
 		$("[name='searchForm']").find("[name='page']").val(page);
 // 		document.searchForm.page.value=page;
 		$("[name='searchForm']").submit();
 // 		document.searchForm.submit();
 	}
+	
 	$(function(){
 		var prod_lguTag = $("[name='prod_lgu']");
 		var prod_buyerTag = $("[name='prod_buyer']");
@@ -156,13 +158,11 @@
 		</thead>
 		
 		<tbody id="listBody">
-		
 		<c:set var="prodList" value="${pagingVO.dataList}"/>
 		<c:choose>
 			<c:when  test="${not empty prodList}">
 				<c:forEach items="${prodList}" var="prod">
 					<tr>
-					
 						<td>${prod.prod_id }</td>
 						<td>${prod.prod_name }</td>
 						<td>${prod.lprod_nm }</td>
@@ -170,7 +170,6 @@
 						<td>${prod.prod_price }</td>
 						<td>${prod.prod_outline }</td>
 						<td>${prod.prod_mileage }</td>
-					
 					</tr>
 				</c:forEach>
 			</c:when>
@@ -181,7 +180,6 @@
 				</tr>
 			</c:otherwise>
 		</c:choose>
-		
 		</tbody>
 		<tfoot>
 			<tr>

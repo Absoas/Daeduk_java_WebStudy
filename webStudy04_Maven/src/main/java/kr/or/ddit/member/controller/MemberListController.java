@@ -49,7 +49,7 @@ public class MemberListController implements ICommandHandler {
 //		7. Scope 를 통해 Model 공유
 //		req.setAttribute("memberList", memberList);
 		req.setAttribute("pagingVO", pagingVO);
-		
+
 		return view;
 	}
 }

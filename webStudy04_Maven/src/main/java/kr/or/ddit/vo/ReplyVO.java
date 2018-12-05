@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class ReplyVO implements Serializable{
 	private Long rep_no;
 	private Long bo_no;
-	private String rep_write;
+	private String rep_writer;
 	private String rep_ip;
-	private String req_pass;
+	private String rep_pass;
 	private String rep_content;
 	private String rep_date;
 }

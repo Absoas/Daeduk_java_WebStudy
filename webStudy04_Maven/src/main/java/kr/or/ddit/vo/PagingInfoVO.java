@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PagingInfoVO<T> {
 	
-	
 	public PagingInfoVO(int screenSize, int blockSize) {
 		super();
 		this.screenSize = screenSize;

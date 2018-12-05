@@ -20,14 +20,12 @@ public class ReplyServiceImpl implements IReplyService {
 
 	@Override
 	public long retriveReplyCount(PagingInfoVO<ReplyVO> pagingVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return replyDAO.selectTotalRecord(pagingVO);
 	}
 
 	@Override
 	public List<ReplyVO> retriveReplyList(PagingInfoVO<ReplyVO> pagingVO) {
-		// TODO Auto-generated method stub
-		return null;
+		return replyDAO.selectReplyList(pagingVO);
 	}
 
 	@Override

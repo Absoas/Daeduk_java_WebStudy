@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.board.dao.IBoardDAO">
-
+	
+	<sql id="searchFrag">
+		<where>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
+				
+				<if test="searchType.equals('bo_title')">
+					BO_TITLE LIKE '%'||#{searchWord}||'%'
+				 </if>
+				 
+				<if test="searchType.equals('bo_content')">
+					BO_CONTENT LIKE '%'||#{searchWord}||'%'
+				 </if>
+			
+				<if test="searchType.equals('bo_writer')">
+					BO_WRITER LIKE '%'||#{searchWord}||'%'
+				 </if>
+			</if>		
+		</where>
+	</sql>
+	
+	<select id="selectBoardList" resultType="boardVO" parameterType="pagingVO">
+		SELECT B.*
+			FROM(
+				SELECT ROWNUM RNUM , A.*
+					FROM(
+					SELECT
+					   	bo_no, bo_writer,bo_pass,
+					    bo_ip, bo_mail, bo_title,
+					    to_char(bo_date,'YYYY-MM-DD') bo_date,  bo_hit, bo_rcmd
+					FROM
+					    board
+					<include refid="searchFrag"/>
+				order by BO_NO DESC
+		) A ) B
+	
+		<![CDATA[		  
+		WHERE RNUM BETWEEN #{startRow} AND  #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectTotalRecord" resultType="long" parameterType="pagingVO">
+		SELECT COUNT(*) FROM BOARD
+		<include refid="searchFrag"/>
+	</select>
+	
+	<resultMap type="boardVO" id="replyMap" autoMapping="true">
+		<id property="bo_no" column="BO_NO"/>
+		<collection property="replyList"  autoMapping="true" javaType="java.util.List" ofType="replyVO" />
+	</resultMap>
+	
+	
+	<select id = "selectBoard" resultMap="replyMap" parameterType="Long">
+	 	select bo_no, bo_writer, bo_pass,
+			bo_ip,bo_mail, bo_title, bo_content,
+			to_char(bo_date,'YYYY-MM-DD') bo_date,  bo_hit, bo_rcmd
+	           from board
+				where bo_no = #{bo_no}
+	</select>
+	
+	<update id = "incrementHit" parameterType="Long">
+	 	 update board set
+		  bo_hit = bo_hit+1
+		  where bo_no = #{bo_no}
+	</update>
+	
 </mapper>

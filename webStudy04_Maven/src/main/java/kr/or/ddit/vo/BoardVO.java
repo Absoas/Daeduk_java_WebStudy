@@ -8,10 +8,12 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Alias("boardVO")
 @Data
 @NoArgsConstructor
-@Alias("boardVO")
+
 public class BoardVO implements Serializable {
+	private long rnum;
 	private Long bo_no;
 	private String bo_writer;
 	private String bo_pass;

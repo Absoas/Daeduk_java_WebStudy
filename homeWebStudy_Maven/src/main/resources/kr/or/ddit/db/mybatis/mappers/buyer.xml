@@ -23,14 +23,8 @@
 	<resultMap type="buyerVO" id="buyerMap" autoMapping="true">
 		<id property="buyer_id" column="BUYER_ID"/>
 		<association property="lprod" autoMapping="true" javaType="lprodVO"/>
-		<collection property="prod" select="selectBuyerProdList" column="BUYER_ID" />
+		<collection property="prod" autoMapping="true" javaType="java.util.List" ofType="prodVO" />
 	</resultMap>
-	
-	<select id="selectBuyerProdList" resultType="prodVO">
-		SELECT PROD_NAME,PROD_PRICE
-		FROM PROD INNER JOIN BUYER ON(BUYER_ID = PROD_BUYER)
-		WHERE PROD_BUYER = #{buyer_id}
-	</select>
 	
 	<select id="selectBuyer" parameterType="String" resultMap="buyerMap">
 		SELECT                
