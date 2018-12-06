@@ -20,6 +20,8 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public ServiceResult createBoard(BoardVO board) {
 		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 

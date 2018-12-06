@@ -5,7 +5,6 @@
 	<sql id="searchFrag">
 		<where>
 			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
-				
 				<if test="searchType.equals('bo_title')">
 					BO_TITLE LIKE '%'||#{searchWord}||'%'
 				 </if>

@@ -20,5 +20,54 @@
 		)A )B
 		where rnum between #{startRow} and #{endRow}
 	</select>
+	
+	<insert id="insertReply" parameterType="replyVO">
+		<selectKey keyProperty="rep_no" resultType="Long" order="BEFORE">
+			select reply_seq.nextval from dual
+		</selectKey>
+		INSERT INTO REPLY (
+			    REP_NO,
+			    BO_NO,
+			    REP_WRITER,
+			    REP_IP,
+			    REP_PASS,
+			    REP_CONTENT,
+			    REP_DATE
+			) VALUES (
+			    #{rep_no},
+			    #{bo_no},
+			    #{rep_writer},
+			    #{rep_ip},
+			    #{rep_pass},
+			    #{rep_content},
+			    sysdate
+			)	
+	</insert>
+	
+	<delete id="deleteReply" parameterType="long">
+		delete from reply where rep_no = #{rep_no}
+	</delete>
+	
+	<select id="selectReply" parameterType="Long" resultType="replyVO">
+		SELECT
+		 	REP_NO,
+		    BO_NO,
+		    REP_WRITER,
+		    REP_IP,
+		    REP_PASS,
+		    REP_DATE
+		FROM
+		    REPLY 
+		where rep_no = #{rep_no}
+	</select>
+	
+	<update id="updateReply" parameterType="replyVO">
+		UPDATE reply
+	    SET
+	        rep_writer = #{rep_writer},
+	        rep_content = #{rep_content}
+		WHERE
+		    rep_no = #{rep_no}
+	</update>
 
 </mapper>
