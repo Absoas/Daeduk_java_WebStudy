@@ -48,9 +48,9 @@
 				<th>회원아이디</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_id"
-							value="${requestScope.member.mem_id}" />
+							value="${member.mem_id}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_id}</span>
+							<span class="error">${errors.mem_id}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -58,9 +58,9 @@
 				<th>비밀번호</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_pass"
-							value="${requestScope.member.mem_pass}" />
+							value="${member.mem_pass}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_pass}</span>
+							<span class="error">${errors.mem_pass}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -68,9 +68,9 @@
 				<th>회원명</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_name"
-							value="${requestScope.member.mem_name}" />
+							value="${member.mem_name}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_name}</span>
+							<span class="error">${errors.mem_name}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -84,13 +84,13 @@
 				<th>주민번호</th>
 				<td><div class="input-group">
 						<input class="form-control col-md-3" type="text" name="mem_regno1"
-							value="${requestScope.member.mem_regno1}" />
+							value="${member.mem_regno1}" />
 						<span class="input-group-text">-</span>	
 						<input class="form-control col-md-3" type="text" name="mem_regno2"
-							value="${requestScope.member.mem_regno2}" />
+							value="${member.mem_regno2}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_regno1}</span>
-							<span class="error">${requestScope.errors.mem_regno2}</span>
+							<span class="error">${errors.mem_regno1}</span>
+							<span class="error">${errors.mem_regno2}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -98,9 +98,9 @@
 				<th>생일</th>
 				<td><div class="input-group">
 						<input class="form-control" type="date" name="mem_bir"
-							value="${requestScope.member.mem_bir}" />
+							value="${member.mem_bir}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_bir}</span>
+							<span class="error">${errors.mem_bir}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -108,9 +108,9 @@
 				<th>우편번호</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_zip"
-							value="${requestScope.member.mem_zip}" />
+							value="${member.mem_zip}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_zip}</span>
+							<span class="error">${errors.mem_zip}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -118,9 +118,9 @@
 				<th>주소1</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_add1"
-							value="${requestScope.member.mem_add1}" />
+							value="${member.mem_add1}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_add1}</span>
+							<span class="error">${errors.mem_add1}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -128,9 +128,9 @@
 				<th>주소2</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_add2"
-							value="${requestScope.member.mem_add2}" />
+							value="${member.mem_add2}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_add2}</span>
+							<span class="error">${errors.mem_add2}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -138,9 +138,9 @@
 				<th>집전번</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_hometel"
-							value="${requestScope.member.mem_hometel}" />
+							value="${member.mem_hometel}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_hometel}</span>
+							<span class="error">${errors.mem_hometel}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -148,9 +148,9 @@
 				<th>회사전번</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_comtel"
-							value="${requestScope.member.mem_comtel}" />
+							value="${member.mem_comtel}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_comtel}</span>
+							<span class="error">${errors.mem_comtel}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -158,9 +158,9 @@
 				<th>휴대폰</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_hp"
-							value="${requestScope.member.mem_hp}" />
+							value="${member.mem_hp}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_hp}</span>
+							<span class="error">${errors.mem_hp}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -168,9 +168,9 @@
 				<th>이메일</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_mail"
-							value="${requestScope.member.mem_mail}" />
+							value="${member.mem_mail}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_mail}</span>
+							<span class="error">${errors.mem_mail}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -178,9 +178,9 @@
 				<th>직업</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_job"
-							value="${requestScope.member.mem_job}" />
+							value="${member.mem_job}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_job}</span>
+							<span class="error">${errors.mem_job}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -188,9 +188,9 @@
 				<th>취미</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_like"
-							value="${requestScope.member.mem_like}" />
+							value="${member.mem_like}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_like}</span>
+							<span class="error">${errors.mem_like}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -198,9 +198,9 @@
 				<th>기념일</th>
 				<td><div class="input-group">
 						<input class="form-control" type="text" name="mem_memorial"
-							value="${requestScope.member.mem_memorial}" />
+							value="${member.mem_memorial}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_memorial}</span>
+							<span class="error">${errors.mem_memorial}</span>
 						</div>
 					</div></td>
 			</tr>
@@ -208,9 +208,9 @@
 				<th>기념일자</th>
 				<td><div class="input-group">
 						<input class="form-control" type="date" name="mem_memorialday"
-							value="${requestScope.member.mem_memorialday}" />
+							value="${member.mem_memorialday}" />
 						<div class="input-group-text">
-							<span class="error">${requestScope.errors.mem_memorialday}</span>
+							<span class="error">${errors.mem_memorialday}</span>
 						</div>
 					</div></td>
 			</tr>

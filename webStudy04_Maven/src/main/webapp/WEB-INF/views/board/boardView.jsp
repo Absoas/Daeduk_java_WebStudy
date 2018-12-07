@@ -72,6 +72,20 @@
 			<td>${board.bo_title}</td>
 		</tr>
 		<tr>
+			<th>첨부파일</th>
+			<td>
+				<c:forEach items="${board.pdsList }" var="pds" varStatus="vs">
+					
+<!-- 					쿼리스트링 만드는 코드 -->
+					<c:url var="downloadURL" value="/board/download.do">
+						<c:param name="what" value="${pds.pds_no}"></c:param>
+					</c:url>
+					<a href="${downloadURL}"> ${pds.pds_filename } </a> 
+					<c:if test="${vs.last }">&nbsp;|&nbsp;</c:if>
+				</c:forEach>
+			</td>
+		</tr>
+		<tr>
 			<th>내용</th>
 			<td>${board.bo_content}</td>
 		</tr>

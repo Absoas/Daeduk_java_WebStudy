@@ -19,49 +19,48 @@
 
 <script>
 
+
 	function ${pagingVO.funcName }(page){
 		$("[name='searchForm']").find("[name='page']").val(page);
-	//		document.searchForm.page.value=page;
 		$("[name='searchForm']").submit();
-	//		document.searchForm.submit();
 	}
 	
-	function createBody(resp){
-		var listBody = $("#bodylist");
-        var boardList = resp.dataList;
-		var html = "";
-		if(boardList){
-			$.each(boardList, function(idx, bo){
-				html += "<tr>";
-				html += "<td>"+bo.rnum+"</td>";
-				html += "<td>"+bo.bo_no+"</td>";
-				html += "<td>"+bo.bo_writer+"</td>";
-				html += "<td>"+bo.bo_title+"</td>";
-				html += "<td>"+bo.bo_date+"</td>";
-				html += "</tr>";
-			});
-			
-		}else{
-			html += "<tr><td colspan='7'>게시글이 엄슴.</td></tr>";
-		}
-		listBody.html(html);
-		$("#pagingArea").html(resp.pagingHTML);
-	}
-
+	
+	
 	$(function(){
-	    $("[name='searchForm']").ajaxForm({
-	    	dataType : "json",
-	        success : createBody
-	     });
-	    
-	    
-	    $("#bodylist").on("click","tr",function(){
-	    	var what =  $(this).find("td:nth-child(2)").text();
-	    	location.href = "${boardView}?what="+what;
-		});
-	});
-
-		    	  
+		var navTag = $('#navtag');
+	var bodyTag = $('#bodylist');
+	 $('[name="searchForm"]').ajaxForm({ 
+	       dataType:  'json', 
+	       success:  function (data){
+			var body="";
+			var boardList = data.dataList;
+			if(boardList){
+				$.each(boardList,function(i, board){
+					body+="<tr><td>"+board.rnum+"</td>";
+					body+="<td>"+board.bo_no+"</td>";
+					body+="<td>"+board.bo_title+"</td>";
+					body+="<td>"+board.bo_writer+"</td>";
+					body+="<td>"+board.bo_date+"</td>";
+					body+="<td>"+board.bo_hit+"</td>";
+					body+="<td>"+board.bo_rcmd+"</td></tr>";
+				})
+			}else{
+				body+="<tr><td colspan='7'>데이터없음</td></tr>";
+			}
+			navTag.html(data.pagingHTML);
+			bodyTag.html(body);
+			$('[name="page"]').val("");
+		},
+	 });
+	 
+	 <c:url value="/board/boardView.do" var="boardView" />
+	 $("#bodylist").on("click", "tr",function(){
+		var what = $(this).find("td:nth-child(2)").text();
+		location.href="${boardView}?what="+what;
+	 });
+	})
+   	  
 </script>
 <body>
 
@@ -112,7 +111,7 @@
 </table>
 
 <form name = "searchForm">
-	<input type = "text" name = "page"/>
+	<input type = "hidden" name = "page"/>
 	
 	<select name = "searchType">
 		<option value = "bo_title">제목</option>
@@ -127,6 +126,8 @@
 	<input type="text" name="searchWord" 
                 value="${pagingVO.searchWord}"/>
 	<input type="submit" value="검색" />
+	<c:url value="/board/boardInsert.do" var="boardInsert" />
+	<input type="button" value="새글 쓰기"  onclick="location.href='${boardInsert}'"/>
 	
 </form>
 
