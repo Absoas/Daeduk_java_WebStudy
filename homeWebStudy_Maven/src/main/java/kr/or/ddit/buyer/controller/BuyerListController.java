@@ -1,6 +1,7 @@
 package kr.or.ddit.buyer.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,20 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.or.ddit.buyer.service.BuyerServiceImpl;
 import kr.or.ddit.buyer.service.IBuyerService;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ICommandHandler;
+import kr.or.ddit.mvc.annotation.CommandHandler;
+import kr.or.ddit.mvc.annotation.URIMapping;
+import kr.or.ddit.mvc.annotation.URIMapping.HttpMethod;
 import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingInfoVO;
 import kr.or.ddit.vo.ProdVO;
 
-public class BuyerListController implements ICommandHandler{
+@CommandHandler
+public class BuyerListController{
 	
-	@Override
-	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	@URIMapping(value="/buyer/buyerList.do", method=HttpMethod.GET)
+	public String getProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int currentPage = 1;
 		String page = req.getParameter("page");
 		String searchType = req.getParameter("searchType");
@@ -48,10 +54,23 @@ public class BuyerListController implements ICommandHandler{
 		List<BuyerVO> buyerList =  service.retrieveBuyerList(pagingVO);
 		
 		pagingVO.setDataList(buyerList);
-		req.setAttribute("pagingVO", pagingVO);
 		
-		String view = "buyer/buyerList";
-		return view;
+		String accept = req.getHeader("Accept");
+		if(StringUtils.containsIgnoreCase(accept, "json")) {
+			// JSON
+			resp.setContentType("application/json;charset=UTF-8");
+			ObjectMapper mapper = new ObjectMapper();
+			try(
+				PrintWriter out = resp.getWriter();
+			){
+				mapper.writeValue(out, pagingVO);				
+			}
+			return null;
+		}else {
+			// HTML
+			req.setAttribute("pagingVO", pagingVO);
+			return "buyer/buyerList";
+		}
 		
 	}
 }

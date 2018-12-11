@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -23,13 +24,36 @@ import kr.or.ddit.buyer.service.BuyerServiceImpl;
 import kr.or.ddit.buyer.service.IBuyerService;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ICommandHandler;
+import kr.or.ddit.mvc.annotation.CommandHandler;
+import kr.or.ddit.mvc.annotation.URIMapping;
+import kr.or.ddit.mvc.annotation.URIMapping.HttpMethod;
+import kr.or.ddit.prod.dao.IOtherDAO;
+import kr.or.ddit.prod.dao.OtherDAOImpl;
 import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 
-public class BuyerUpdateController implements ICommandHandler{
-	@Override
-	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+@CommandHandler
+public class BuyerUpdateController{
+	IOtherDAO otherDAO = new OtherDAOImpl();
+	IBuyerService service = new BuyerServiceImpl();
+	
+	public void makeLprodList(HttpServletRequest req){
+		List<Map<String, Object>> lprodList = otherDAO.selectLprodList();
+		req.setAttribute("lprodList", lprodList);
+	}
+	@URIMapping(value="/buyer/buyerUpdate.do", method=HttpMethod.GET)
+	public String getProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		makeLprodList(req);
+		String buyer_id = req.getParameter("what");
+		BuyerVO buyer = new BuyerVO();
+		buyer = service.retrieveBuyer(buyer_id);
+		req.setAttribute("buyer", buyer);
+		return "buyer/buyerForm";
+	}
+	
+	@URIMapping(value="/buyer/buyerUpdate.do", method=HttpMethod.POST)
+	public String postProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		makeLprodList(req);
 		BuyerVO buyer = new BuyerVO();
 		req.setAttribute("buyer", buyer);
 		
@@ -48,7 +72,6 @@ public class BuyerUpdateController implements ICommandHandler{
 		boolean valid = validate(buyer, errors);
 
 		if (valid) {
-			IBuyerService service = new BuyerServiceImpl();
 			ServiceResult result = service.modifyBuyer(buyer);
 			System.err.println(result.toString());
 			switch (result) {
@@ -57,7 +80,7 @@ public class BuyerUpdateController implements ICommandHandler{
 				message = "서버 오류로 인한 실패, 잠시 후 다시 시도";
 				break;
 			case OK:
-				goPage = "redirect:/buyer/buyerList.do";
+				goPage = "redirect:/buyer/buyerView.do?who="+buyer.getBuyer_id();
 				break;
 			}
 			req.setAttribute("message", message);

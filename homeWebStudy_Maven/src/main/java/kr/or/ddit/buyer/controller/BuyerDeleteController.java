@@ -24,15 +24,17 @@ import kr.or.ddit.buyer.service.BuyerServiceImpl;
 import kr.or.ddit.buyer.service.IBuyerService;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ICommandHandler;
+import kr.or.ddit.mvc.annotation.CommandHandler;
+import kr.or.ddit.mvc.annotation.URIMapping;
+import kr.or.ddit.mvc.annotation.URIMapping.HttpMethod;
 import kr.or.ddit.vo.MemberVO;
 
-public class BuyerDeleteController implements ICommandHandler{
+@CommandHandler
+public class BuyerDeleteController{
 	
-	@Override
-	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
-		String buyer_id = req.getParameter("buyer_id");
+	@URIMapping(value="/buyer/buyerDelete.do", method=HttpMethod.GET)
+	public String getProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String buyer_id = req.getParameter("what");
 
 		if(StringUtils.isBlank(buyer_id)) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -42,21 +44,22 @@ public class BuyerDeleteController implements ICommandHandler{
 		IBuyerService service = new BuyerServiceImpl();
 		ServiceResult result = service.removeBuyer(buyer_id);
 		String goPage = null;
-		String message = null;
-		
+		Map<String, Object> map = new LinkedHashMap<>();
+		System.out.println("asdsad");
 		switch (result) {
 		case FAILED:
-			goPage = "redirect:/buyer/buyerView.do";
-			message = "서버 오류";
+			goPage = "redirect:/buyer/buyerView.do?who="+buyer_id;
+			map.put("message", "서버오류");
 			break;
 			
 		case OK:
-			goPage = "redirect:/buyer.buyerList.do";
+			goPage = "redirect:/buyer/buyerList.do";
+			break;
+
+		default:
 			break;
 		}
-		req.getSession().setAttribute("message", message);
 		
 		return goPage;
 	}
-
 }

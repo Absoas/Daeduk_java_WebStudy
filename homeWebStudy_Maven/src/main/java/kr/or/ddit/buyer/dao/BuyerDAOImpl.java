@@ -31,7 +31,9 @@ public class BuyerDAOImpl implements IBuyerDAO {
 			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IBuyerDAO mapper = session.getMapper(IBuyerDAO.class);
-			return mapper.insertBuyer(buyer);
+			int rowCnt = mapper.insertBuyer(buyer);
+			session.commit();
+			return rowCnt;
 		}
 	}
 

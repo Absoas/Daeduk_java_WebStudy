@@ -16,9 +16,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+	<c:if test="${not empty message }">
+		alert('${message}');
+	</c:if>
 </script>
-
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -104,9 +105,15 @@
 		 />
 		<c:set var="authorized" value="${not empty sessionScope.authMember or 'ROLE_ADMIN' eq sessionScope.authMember.mem_auth }" />
 		<c:if test="${authorized }">
+	
+		<c:url value="buyerUpdate.do" var="updateBuyer">
+			<c:param name="what" value="${buyer.buyer_id}"></c:param>
+		</c:url>
+		
 		<input type="button" value="거래처수정" 
-			onclick = "location.href='${pageContext.request.contextPath}/buyer/buyerUpdate.do?what=${requestScope.buyer.buyer_id}'"
+			onclick = "location.href='${updateBuyer}';"
 		/>
+		
 		
 		<h4>구매한 사람의 상품 목록</h4>
 		<table class="table">

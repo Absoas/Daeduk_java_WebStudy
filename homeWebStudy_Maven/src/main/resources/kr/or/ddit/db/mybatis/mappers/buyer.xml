@@ -114,8 +114,8 @@
 	</update>
 	
 	<delete id="deleteBuyer" parameterType="string">
-      delete from
-      buyer
-       where buyer_id = #{buyer_id}
+      DELETE FROM
+      BUYER
+      WHERE BUYER_ID = #{buyer_id}
    </delete>
 </mapper>

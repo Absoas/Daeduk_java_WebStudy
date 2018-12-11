@@ -50,7 +50,7 @@
 			<tr>
 				<th>상품 이름</th>
 				<td><input type="text" name="buyer_name"
-					value="${buyer.buyer_name}" /><span class="error">${errors.buyer_name}</span></td>
+					value="${buyer.buyer_name}" /><span class="error">${errors["buyer_name"]}</span></td>
 			</tr>
 			
 			<tr>
@@ -58,8 +58,8 @@
 				<td>
 				<select name="buyer_lgu">
 					<c:set var="lprodList" value="${lprodList}" />
-					<c:forEach items="${lprodList }" var="lprod">			
-						<option value="${lprod.get('LPROD_GU')}">${lprod.get('lprod_nm')}</option>
+					<c:forEach items="${lprodList}" var="lprod" >
+							<option value="${lprod.get('LPROD_GU')}">${lprod.get('lprod_nm')}</option>
 					</c:forEach>
 				</select>
 				</td>
@@ -68,57 +68,68 @@
 			<tr>
 				<th>은행</th>
 				<td><input type="text" name="buyer_bank"
-					value="${buyer.buyer_bank}" /><span class="error">${errors.buyer_bank}</span></td>
+					value="${buyer.buyer_bank}" /></td>
 			</tr>
+			
 			<tr>
 				<th>계좌번호</th>
 				<td><input type="text" name="buyer_bankno"
-					value="${buyer.buyer_bankno}" /><span class="error">${errors.buyer_bankno}</span></td>
+					value="${buyer.buyer_bankno}" /></td>
 			</tr>
+			
 			<tr>
 				<th>계좌주</th>
 				<td><input type="text" name="buyer_bankname"
-					value="${buyer.buyer_bankname}" /><span class="error">${errors.buyer_bankname}</span></td>
+					value="${buyer.buyer_bankname}" /></td>
 			</tr>
+			
 			<tr>
 				<th>우편번호</th>
 				<td><input type="text" name="buyer_zip"
-					value="${buyer.buyer_zip}" /><span class="error">${errors.buyer_zip}</span></td>
+					value="${buyer.buyer_zip}" /></td>
 			</tr>
+			
 			<tr>
 				<th>주소1</th>
 				<td><input type="text" name="buyer_add1"
-					value="${buyer.buyer_add1}" /><span class="error">${errors.buyer_add1}</span></td>
+					value="${buyer.buyer_add1}" /></td>
 			</tr>
+			
 			<tr>
 				<th>주소2</th>
 				<td><input type="text" name="buyer_add2"
-					value="${buyer.buyer_add2}" /><span class="error">${errors.buyer_add2}</span></td>
+					value="${buyer.buyer_add2}" /></td>
 			</tr>
+			
 			<tr>
 				<th>전화번호</th>
 				<td><input type="text" name="buyer_comtel"
-					value="${buyer.buyer_comtel}" /><span class="error">${errors.buyer_comtel}</span></td>
+					value="${buyer.buyer_comtel}" /><span class="error">${errors["buyer_comtel"]}</span></td>
 			</tr>
+			
 			<tr>
 				<th>팩스번호</th>
 				<td><input type="text" name="buyer_fax"
-					value="${buyer.buyer_fax}" /><span class="error">${errors.buyer_fax}</span></td>
+					value="${buyer.buyer_fax}" /><span class="error">${errors["buyer_fax"]}</span></td>
 			</tr>
+			
 			<tr>
 				<th>메일</th>
 				<td><input type="text" name="buyer_mail"
-					value="${buyer.buyer_mail}" /><span class="error">${errors.buyer_mail}</span></td>
+					value="${buyer.buyer_mail}" /><span class="error">${errors["buyer_mail"]}</span></td>
 			</tr>
+			
 			<tr>
 				<th>Charger</th>
 				<td><input type="text" name="buyer_charger"
-					value="${buyer.buyer_charger}" /><span class="error">${errors.buyer_charger}</span></td>
+					value="${buyer.buyer_charger}" /></td>
 			</tr>
+			
 			<tr>
 				<td colspan="2"><input type="submit" value="등록" /> <input
 					type="reset" value="취소" /></td>
 			</tr>
+			
 		</table>
 	</form>
 </body>

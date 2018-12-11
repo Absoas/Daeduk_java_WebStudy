@@ -18,20 +18,24 @@ import kr.or.ddit.buyer.service.BuyerServiceImpl;
 import kr.or.ddit.buyer.service.IBuyerService;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
-import kr.or.ddit.mvc.ICommandHandler;
+import kr.or.ddit.mvc.annotation.CommandHandler;
+import kr.or.ddit.mvc.annotation.URIMapping;
+import kr.or.ddit.mvc.annotation.URIMapping.HttpMethod;
 import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 
-public class BuyerViewController implements ICommandHandler{
+@CommandHandler
+public class BuyerViewController{
 	
-	@Override
-	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	@URIMapping(value="/buyer/buyerView.do", method=HttpMethod.GET)
+	public String getProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String buyer_id = req.getParameter("who");
 		
 		if(StringUtils.isBlank(buyer_id)) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return null;
 		}
+		
 		BuyerVO buyer = null;
 		IBuyerService service = new BuyerServiceImpl();
 		buyer = service.retrieveBuyer(buyer_id);

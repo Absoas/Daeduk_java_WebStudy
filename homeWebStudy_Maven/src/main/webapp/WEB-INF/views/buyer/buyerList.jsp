@@ -64,7 +64,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="6">
-				<nav aria-label="Page navigation example">
+				<nav id="page" aria-label="Page navigation example">
 					${pagingVO.pagingHTML }
 				</nav>
 				
