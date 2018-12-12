@@ -14,9 +14,5 @@ public interface IVisitorDAO {
 	public List<VisitorVO> selectVisitorList(PagingInfoVO<VisitorVO> pagingVO);
 	public VisitorVO selectVisitor(@Param("vt_no") long vt_no);
 	public int updateVisitor(VisitorVO visitor, SqlSession session);
-<<<<<<< HEAD
 	public int deleteVisitor(long vt_no, SqlSession session);
-=======
-	public int deleteVisitor(long bo_no, SqlSession session);
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 }

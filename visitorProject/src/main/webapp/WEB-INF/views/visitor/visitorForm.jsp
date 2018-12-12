@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<<<<<<< HEAD
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-=======
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,19 +18,12 @@
 		insertBtn = $("[name='insertBtn']");
 		cardInsert= $("#cardInsert");
 		pagingArea = $("#pagingArea");
-<<<<<<< HEAD
 		var delModal = $("#visitorDeleteModal");
  		
-=======
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 		
 		insertBtn.on("click",function(){
 			vtForm.submit();
 		});
-<<<<<<< HEAD
-=======
-			
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 		
 		vtForm.ajaxForm({
  			dataType:'json',
@@ -42,7 +32,6 @@
  				alert(resp.status);
  			}
  		});
-<<<<<<< HEAD
 		pagingVisitor(1);
 	});
 	
@@ -54,12 +43,6 @@
 		document.deleteForm.vt_pass.value=vt_pass;
 		document.deleteForm.submit();
 	}
-=======
-		
-		pagingVisitor(1);
-	
-	});
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 	
 	
 	function pagingVisitor(page){
@@ -80,7 +63,6 @@
 		if (resp.error) {
 			alert(resp.message); 					
 		} else { // 등록 성공
-<<<<<<< HEAD
 			console.log(resp);
 			var html = "";
 			if(resp.dataList){
@@ -88,22 +70,11 @@
 // 					.../100px180/
 					html += "<div class='card' style='width: 18rem; display: inline-block;'>";
 					html += " <img class='card-img-top' src='' alt='이미지 등록'>";
-=======
-			var html = "";
-			if(resp.dataList){
-				$.each(resp.dataList, function(idx, visit){
-					html += "<div class='card' style='width: 18rem; display: inline-block;'>";
-					html += " <img class='card-img-top' src='.../100px180/' alt='이미지 등록'>";
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 					html += "  <div class='card-body'>";
 					html += "    <h6 class='card-title'>"+visit.vt_writer+" 님이 등록하신 방명록입니다. </h6>";
 					html += "   	<p class='card-text'>"+visit.vt_content+"</p>";
 					html += "   	<p class='card-text'>"+visit.vt_date+"</p>";
-<<<<<<< HEAD
 					html += "    <button  class='btn btn-primary' onclick='deleteFunc("+visit.vt_no+");''>삭제 버튼</button>";
-=======
-					html += "    <a href='#' class='btn btn-primary'>요긴 미정</a>";
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 					html += "    <hr>";
 					html += "    <h6 class='card-title'>답글 목록</h6>";
 					html += "    <div></div>";
@@ -124,14 +95,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< HEAD
 	<form name="deleteForm" action="<c:url value ='/visitor/visitorDelete.do'/>" method="post">
 		<input type="hidden" name="vt_no" />
 		<input type="hidden" name="vt_pass" />
 	</form>
 	
-=======
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 	<div class="jumbotron">
 	  <h1 class="display-4">Hello, world!</h1>
 		  <p class="lead">요기는 방명록을 작성하는 곳입니다.</p>
@@ -181,7 +149,6 @@
 	</div>
 	
 	<div aria-label="Page navigation" id="pagingArea"></div>
-<<<<<<< HEAD
 
 
 	<div class="modal fade" id="visitorDeleteModal" tabindex="-1"
@@ -211,7 +178,5 @@
 		</div>
 	</div>
 
-=======
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 </body>
 </html>

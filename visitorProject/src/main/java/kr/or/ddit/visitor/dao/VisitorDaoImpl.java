@@ -42,17 +42,12 @@ public class VisitorDaoImpl implements IVisitorDAO {
 
 	@Override
 	public VisitorVO selectVisitor(long vt_no) {
-<<<<<<< HEAD
 		try(
 			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IVisitorDAO mapper = session.getMapper(IVisitorDAO.class);
 			return mapper.selectVisitor(vt_no);
 		}
-=======
-		// TODO Auto-generated method stub
-		return null;
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 	}
 
 	@Override
@@ -62,14 +57,8 @@ public class VisitorDaoImpl implements IVisitorDAO {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public int deleteVisitor(long vt_no, SqlSession session) {
 		return session.insert("kr.or.ddit.visitor.dao.IVisitorDAO.deleteVisitor", vt_no);
-=======
-	public int deleteVisitor(long bo_no, SqlSession session) {
-		// TODO Auto-generated method stub
-		return 0;
->>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 	}
 
 }
