@@ -104,18 +104,13 @@
 			boardForm.append(inputTag.replace("%v", pds_no));
 		});
 		CKEDITOR.replace('bo_content', {
-
 		      extraAllowedContent: 'h3{clear};h2{line-height};h2 h3{margin-left,margin-top}',
-
 		      // Adding drag and drop image upload.
 		      extraPlugins: 'uploadimage',
 		      uploadUrl: '${pageContext.request.contextPath}/board/uploadImage.do',
-
 		      // Configure your file manager integration. This example uses CKFinder 3 for PHP.
 		      filebrowserImageUploadUrl: '${pageContext.request.contextPath}/board/uploadImage.do',
-
 		      height: 560,
-
 		      removeDialogTabs: 'image:advanced;link:advanced'
 	    });
 	</script>

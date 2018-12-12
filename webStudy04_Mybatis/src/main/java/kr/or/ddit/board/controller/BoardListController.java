@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.ddit.board.dao.IBoardDAO;
 import kr.or.ddit.board.service.BoardServiceImpl;
 import kr.or.ddit.board.service.IBoardService;
 import kr.or.ddit.mvc.annotation.CommandHandler;
@@ -23,6 +24,7 @@ import kr.or.ddit.web.calculate.Mime;
 @CommandHandler
 public class BoardListController{
 	IBoardService service = new BoardServiceImpl();
+	IBoardDAO dao;
 	
 	@URIMapping("/board/boardList.do")
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.visitor.dao.IVisitorDAO">
+	
+	<insert id="insertVisitor" parameterType="visitorVO">
+		
+		<selectKey keyProperty="vt_no" resultType="Long" order="BEFORE">
+			SELECT VISIT_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	
+		INSERT INTO VISITOR (
+			    VT_NO,
+			    VT_CONTENT,
+			    VT_WRITER,
+			    VT_PASS,
+			    VT_IP,
+			    VT_DATE
+			) VALUES (
+			    #{vt_no},
+			    #{vt_content},
+			    #{vt_writer},
+			    #{vt_pass},
+			    #{vt_ip},
+			    sysdate
+			)
+	</insert>
+	
+	<select id="selectVisitorList" parameterType="pagingVO" resultType="visitorVO">
+		select B.*
+		from (
+			SELECT ROWNUM RNUM, A.*
+			FROM(
+			SELECT
+			    VT_NO,
+			    VT_CONTENT,
+			    VT_WRITER,
+			    VT_PASS,
+			    VT_IP,
+			    VT_DATE
+			FROM
+			    VISITOR
+			ORDER BY VT_NO DESC
+			) A
+		) B
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="selectTotalRecord" parameterType="pagingVO" resultType="long">
+		SELECT NVL(COUNT(*), 0)
+		FROM VISITOR
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

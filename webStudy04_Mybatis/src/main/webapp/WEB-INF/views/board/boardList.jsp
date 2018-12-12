@@ -23,7 +23,6 @@
 	
 	
 $(function(){
-	
   	var navTag = $('#navtag');
 	var bodyTag = $('#bodylist');
 	var searchForm = $('[name="searchForm"]');

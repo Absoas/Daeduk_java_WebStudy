@@ -45,13 +45,14 @@ public class DownloadController{
 		}else {
 			fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
 		}
+		
 		resp.setHeader("Content-Disposition","attachment;filename=\""+fileName+"\"");
 		resp.setHeader("Content-Length", pds.getPds_size()+"");
 		File saveFolder = new File("d:/boardFiles");
 		File downloadFile = new File(saveFolder, pds.getPds_savename());
 		
 		try(
-				OutputStream out = resp.getOutputStream();
+			OutputStream out = resp.getOutputStream();
 		){
 			FileUtils.copyFile(downloadFile, out);
 		}
