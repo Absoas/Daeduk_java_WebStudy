@@ -23,6 +23,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="kr/or/ddit/db/mybatis/mappers/visitor.xml"/>	
+		<mapper resource="kr/or/ddit/db/mybatis/mappers/visitreply.xml"/>	
 	</mappers>
 </configuration>
 
