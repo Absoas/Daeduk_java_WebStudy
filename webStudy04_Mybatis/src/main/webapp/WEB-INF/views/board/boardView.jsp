@@ -166,7 +166,10 @@
     </div>
   </div>
 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 <script type="text/javascript">
 	function paging(page){
 		pagingReply(page, ${board.bo_no});

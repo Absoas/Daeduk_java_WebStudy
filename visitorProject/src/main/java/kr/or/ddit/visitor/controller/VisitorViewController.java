@@ -34,16 +34,25 @@ public class VisitorViewController {
 			currentPage = Long.parseLong(page);
 		}
 		
+<<<<<<< HEAD
 		PagingInfoVO<VisitorVO> pagingVO = new PagingInfoVO<>(5,2);
+=======
+		PagingInfoVO<VisitorVO> pagingVO = new PagingInfoVO<>();
+>>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 		pagingVO.setCurrentPage(currentPage);
 		
 		long totalRecord = service.retriveVisitorCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 
+<<<<<<< HEAD
 		List<VisitorVO> visitorList = service.retriveVisitorList(pagingVO);
 		req.setAttribute("visitorList", visitorList);
 		
 		pagingVO.setDataList(visitorList);
+=======
+		List<VisitorVO> boardList = service.retriveVisitorList(pagingVO);
+		pagingVO.setDataList(boardList);
+>>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 		
 		resp.setContentType("application/json;charset=UTF-8"); 
 		ObjectMapper mapper = new ObjectMapper();

@@ -49,6 +49,7 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM VISITOR
 	</select>
+<<<<<<< HEAD
 	
 	<delete id="deleteVisitor" parameterType="long">
 		DELETE FROM VISITOR
@@ -58,6 +59,8 @@
 	<select id="selectVisitor" parameterType="long" resultType="visitorVO">
 		select * from visitor where vt_no = #{vt_no} 
 	</select>
+=======
+>>>>>>> 64313d8565fb6e23b59dccc790c86ae00d160013
 </mapper>
 
 
