@@ -49,7 +49,7 @@ public class ReplyDAOImpl implements IReplyDAO {
 	@Override
 	public VisitReplyVO selectReply(long rep_no) {
 		try(
-				SqlSession session = sqlSessionFactory.openSession();
+			SqlSession session = sqlSessionFactory.openSession();
 		){
 			IReplyDAO mapper = session.getMapper(IReplyDAO.class);
 			return mapper.selectReply(rep_no);

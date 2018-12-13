@@ -53,12 +53,20 @@
 	});
 	
 
-	function deleteFunc(vt_no){
+	function deleteFunc(rep_no){
 		var vt_pass = prompt("비밀번호 입력");
 		if(!vt_pass) return;
-		document.deleteForm.vt_no.value=vt_no;
+		document.deleteForm.rep_no.value=rep_no;
 		document.deleteForm.vt_pass.value=vt_pass;
 		document.deleteForm.submit();
+	}
+	
+	function replyDelete(rep_no){
+		var rep_pass = prompt("비밀번호 입력");
+		if(!rep_pass) return;
+		document.replydeleteForm.rep_no.value=rep_no;
+		document.replydeleteForm.rep_pass.value=rep_pass;
+		document.replydeleteForm.submit();
 	}
 	
 	function replyFunc(vt_no){
@@ -90,6 +98,7 @@
 			var html = "";
 			if(resp.dataList){
 				$.each(resp.dataList, function(idx, visit){
+					console.log(visit);
 // 					.../100px180/
 					html += "<div class='card' style='width: 18rem; display: inline-block;'>";
 					html += " <img class='card-img-top' src='' alt='이미지 등록'>";
@@ -103,7 +112,14 @@
 					html += "    <h6 class='card-title'>답글 목록</h6>";
 					html += "    <div>";
 					html += "   <table class = 'table'>";
-					html += "   	<tbody id='listBody'></tbody>";
+					html += "   	<tbody id='listBody'>";
+							$.each(visit.replyList,function(idx,list){
+								if(list.rep_writer != null){
+									html += " <tr><th>작성자</th><td>"+list.rep_writer+"</td><th>날짜</th><td>"+list.rep_date+"</td></tr>";
+									html += " <tr><th>내용</th><td>"+list.rep_content+"</td><td><button onclick='replyDelete("+list.rep_no+")'>삭제</button></td></tr>";
+								}
+							});
+					html += "   	</tbody>";
 					html += "   </table>";
 					html += "    <div></div>";
 					html += "  </div>";
@@ -144,9 +160,23 @@
 
 </script>
 
+<style type="text/css">
+	#listBody{
+		font-size: 11px;
+	}
+	
+</style>
+
 <title>Insert title here</title>
 </head>
 <body>
+		
+		
+	<form name="replydeleteForm" action="<c:url value ='/reply/replyDelete.do'/>" method="post">
+		<input type="hidden" name="rep_pass" />
+		<input type="hidden" name="rep_no" />
+	</form>
+	
 	<form name="deleteForm" action="<c:url value ='/visitor/visitorDelete.do'/>" method="post">
 		<input type="hidden" name="vt_no" />
 		<input type="hidden" name="vt_pass" />
@@ -168,7 +198,7 @@
 		<input type="hidden" name="rep_content" value=""/>
 	</form>
 	
-	<form name="vtForm" method="post" enctype="multipart/form-data">
+	<form name="vtForm" method="post" >
 		<input type ="hidden" name="page" value=""/>
 		<input type="hidden" value="${pageContext.request.remoteAddr }" name="vt_ip" /> 
 		<input type="hidden" value="" name="vt_no" /> 

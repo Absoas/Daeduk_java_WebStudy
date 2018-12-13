@@ -49,21 +49,30 @@
 			)
 	</insert>
 	
-	<select id="selectVisitorList" parameterType="pagingVO" resultType="visitorVO">
+	<resultMap type="visitorVO" id="visitorMap" autoMapping="true">
+		<id property="vt_no" column="VT_NO"/>
+		<collection property="replyList" ofType="vReplyVO" autoMapping="true" />
+	</resultMap>
+	
+	<select id="selectVisitorList" parameterType="pagingVO" resultMap="visitorMap">
 		select B.*
 		from (
 			SELECT ROWNUM RNUM, A.*
 			FROM(
 			SELECT
-			    VT_NO,
+				VISITOR.VT_NO,
 			    VT_CONTENT,
 			    VT_WRITER,
 			    VT_PASS,
 			    VT_IP,
-			    VT_DATE
+			    TO_CHAR(VT_DATE,'YY-MM-DD') vt_date,
+			    REP_NO,
+			    REP_CONTENT,
+			    REP_WRITER,
+			    TO_CHAR(REP_DATE,'YY-MM-DD') rep_date
 			FROM
-			    VISITOR
-			ORDER BY VT_NO DESC
+			    VISITOR LEFT OUTER JOIN VISITREPLY ON (VISITOR.VT_NO = VISITREPLY.VT_NO)
+			ORDER BY VISITOR.VT_NO DESC
 			) A
 		) B
 		WHERE RNUM BETWEEN #{startRow} AND #{endRow}

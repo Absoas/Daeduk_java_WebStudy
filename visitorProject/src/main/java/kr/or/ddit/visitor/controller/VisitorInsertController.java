@@ -52,7 +52,6 @@ public class VisitorInsertController {
 		Map<String, Object> message= new LinkedHashMap<>();
 		req.setAttribute("errors", errors);
 		boolean valid = validator(visitor);
-		
 		String view = null;
 		
 		if(valid) {
@@ -71,7 +70,6 @@ public class VisitorInsertController {
 				message.put("message", "실패");
 			}
 		}else {
-			System.out.println("asdasdasd");
 			message.put("message", "검증 실패");
 		}
 		

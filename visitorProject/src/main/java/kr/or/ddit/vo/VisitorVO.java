@@ -23,4 +23,6 @@ public class VisitorVO implements Serializable{
 	private String vt_ip;
 	private String vt_date;
 	private FileItem item;
+	
+	private List<VisitReplyVO> replyList;
 }
