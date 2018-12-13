@@ -41,8 +41,7 @@ public class ReplyInsertController{
 		if(valid) {
 			ServiceResult result = service.createReply(reply);
 			if(ServiceResult.OK.equals(result)) {
-				// 성공  
-//				return "redirect:/reply/replyList.do?bo_no=" + reply.getBo_no();
+				return "redirect:/visitor/visitorView.do";
 			}else {
 				// 실패
 				errors.put("error", "true");

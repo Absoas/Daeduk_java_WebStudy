@@ -27,8 +27,6 @@ public class VisitorViewController {
 	public String process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String page = req.getParameter("page");
 		
-		VisitorVO visitorVO = new VisitorVO();
-		
 		long currentPage = 1;
 		if(StringUtils.isNumeric(page)) {
 			currentPage = Long.parseLong(page);

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.ddit.vo.PagingInfoVO;
+import kr.or.ddit.vo.VPdsVO;
 import kr.or.ddit.vo.VisitorVO;
 
 public interface IVisitorDAO {
@@ -15,4 +16,5 @@ public interface IVisitorDAO {
 	public VisitorVO selectVisitor(@Param("vt_no") long vt_no);
 	public int updateVisitor(VisitorVO visitor, SqlSession session);
 	public int deleteVisitor(long vt_no, SqlSession session);
+	public int insertFile(VPdsVO pdsVO, SqlSession session);
 }

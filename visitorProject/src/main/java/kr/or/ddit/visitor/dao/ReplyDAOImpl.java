@@ -17,7 +17,7 @@ public class ReplyDAOImpl implements IReplyDAO {
 	@Override
 	public int insertReply(VisitReplyVO reply) {
 		try(
-				SqlSession session = sqlSessionFactory.openSession(false);
+			SqlSession session = sqlSessionFactory.openSession(false);
 			){
 			IReplyDAO mapper = session.getMapper(IReplyDAO.class);
 			int rowCnt = mapper.insertReply(reply);

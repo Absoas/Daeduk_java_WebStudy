@@ -17,9 +17,10 @@
 		vtForm = $("[name='vtForm']");
 		insertBtn = $("[name='insertBtn']");
 		cardInsert= $("#cardInsert");
+		listBody= $("#listBody");
 		pagingArea = $("#pagingArea");
-		var delModal = $("#visitorDeleteModal");
- 		
+		replyModal = $("#visitorReplyModal");
+		replyForm = $("[name = 'replyForm']");
 		
 		insertBtn.on("click",function(){
 			vtForm.submit();
@@ -32,7 +33,23 @@
  				alert(resp.status);
  			}
  		});
+		
 		pagingVisitor(1);
+		
+		
+		$("#modalBtn").on("click", function(){
+ 			var rep_writer = replyModal.find("#rep_writer").val();
+ 			var rep_content = replyModal.find("#rep_content").val();
+ 			var rep_pass = replyModal.find("#rep_pass").val();
+ 			replyForm.find("[name='rep_writer']").val(rep_writer);
+ 			replyForm.find("[name='rep_content']").val(rep_content);
+ 			replyForm.find("[name='rep_pass']").val(rep_pass);
+ 			replyForm.submit();
+ 			vtForm[0].reset();
+ 			$("#modalForm")[0].reset(); 			
+ 			replyModal.modal("hide");
+ 		});
+		
 	});
 	
 
@@ -44,6 +61,10 @@
 		document.deleteForm.submit();
 	}
 	
+	function replyFunc(vt_no){
+		replyForm.find("[name='vt_no']").val(vt_no);
+		replyModal.modal("show");
+	}
 	
 	function pagingVisitor(page){
 		$.ajax({
@@ -54,10 +75,12 @@
 			dataType:"json",
 			success:visitorListMaker,
 			error:function(resp){
-				console.log(resp.status);
+				alert(resp.message);
+				pagingVisitor(1);
 			}
 		});
 	}
+
 		
 	function visitorListMaker(resp) {
 		if (resp.error) {
@@ -74,21 +97,50 @@
 					html += "    <h6 class='card-title'>"+visit.vt_writer+" 님이 등록하신 방명록입니다. </h6>";
 					html += "   	<p class='card-text'>"+visit.vt_content+"</p>";
 					html += "   	<p class='card-text'>"+visit.vt_date+"</p>";
-					html += "    <button  class='btn btn-primary' onclick='deleteFunc("+visit.vt_no+");''>삭제 버튼</button>";
+					html += "    <button  class='btn btn-primary' onclick='replyFunc("+visit.vt_no+");''>답글 등록</button>";
+					html += "    <button  class='btn btn-danger' onclick='deleteFunc("+visit.vt_no+");''>삭제 버튼</button>";
 					html += "    <hr>";
 					html += "    <h6 class='card-title'>답글 목록</h6>";
+					html += "    <div>";
+					html += "   <table class = 'table'>";
+					html += "   	<tbody id='listBody'></tbody>";
+					html += "   </table>";
 					html += "    <div></div>";
 					html += "  </div>";
 					html += "</div>";
 				});
 			}else{
-				html += "<tr><td colspan='4'>데이터 없음.</td></tr>";
+				html += "";
 			}
 			pagingArea.html(resp.pagingHTML);	
 			cardInsert.html(html);
 			vtForm[0].reset();
 		}
 	}
+	
+// 	function replyListMaker(resp) {
+// 		if (resp.error) {
+// 			alert(resp.message); 					
+// 		} else { // 등록 성공
+// 			var html = "";
+// 			if(resp.dataList){
+// 				$.each(resp.dataList, function(idx, reply){
+// 					html += "<tr id='TR_"+reply.rep_no+"'>";
+// 					html += "<td>"+reply.rep_writer+"</td>";
+// 					html += "<td>"+reply.rep_ip+"</td>";
+// 					html += "<td>"+reply.rep_content+"</td>";
+// 					html += "<td>"+reply.rep_date+"&nbsp;<span data-toggle='modal' class='replyDelBtn'>[삭제]</span></td>";
+// 					html += "</tr>";
+// 				});
+// 			}else{
+// 				html += "<tr><td colspan='4'>데이터 없음.</td></tr>";
+// 			}
+// // 			pagingArea.html(resp.pagingHTML);	
+// 			listBody.html(html);
+// 			vtForm[0].reset();
+// 		}
+// 	}
+
 
 </script>
 
@@ -108,16 +160,27 @@
 	  <a class="btn btn-primary btn-lg" href="#" role="button">홈으로 가기</a>
 	</div>
 
-	<form name="vtForm" method="post">
+	<form name="replyForm" method="post" action="<c:url value ='/reply/replyInsert.do'/>">
+		<input type="hidden" value="${pageContext.request.remoteAddr }" name="rep_ip" /> 
+		<input type="hidden" value="" name="vt_no" /> 
+		<input type="hidden" name="rep_writer" value=""/>
+		<input type="hidden" name="rep_pass" value=""/>
+		<input type="hidden" name="rep_content" value=""/>
+	</form>
+	
+	<form name="vtForm" method="post" enctype="multipart/form-data">
+		<input type ="hidden" name="page" value=""/>
 		<input type="hidden" value="${pageContext.request.remoteAddr }" name="vt_ip" /> 
+		<input type="hidden" value="" name="vt_no" /> 
 		<table>
 			<tr>
 				<td>
 					<div class="input-group mb-3">
-					  <div class="input-group-prepend">
+					  <div class="input-group-prepend" >
 					    <span class="input-group-text" id="basic-addon1">작성자&nbsp;&nbsp;&nbsp;</span>
 					  </div>
 					  <input type="text" class="form-control" name="vt_writer" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+					  <input type="file" class="form-control" name="vt_file"  aria-label="Username" aria-describedby="basic-addon1">
 					</div>
 					
 					<div class="input-group mb-3">
@@ -148,10 +211,11 @@
 		
 	</div>
 	
-	<div aria-label="Page navigation" id="pagingArea"></div>
+	<div aria-label="Page navigation" id="pagingArea">
+	</div>
 
 
-	<div class="modal fade" id="visitorDeleteModal" tabindex="-1"
+	<div class="modal fade" id="visitorReplyModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -164,15 +228,28 @@
 				</div>
 				<div class="modal-body">
 					<form onsubmit="return false;" id="modalForm">
-						<input type="hidden" id="bo_no" value="${board.bo_no }" /> <input
-							type="text" id="rep_no" /> 비밀번호 : <input type="text"
-							id="rep_pass" />
+						<table>
+							<tr>
+								<td>작성자 	:</td>
+								<td><input type="text" id="rep_writer" /></td>
+							</tr>
+							<tr>
+								<td>패스워드	:</td>
+								<td><input type="text" id="rep_pass" /></td>
+							</tr>
+							<tr>
+								<td>내용	:</td>
+								<td><textarea id="rep_content"></textarea></td>
+							</tr>
+
+						</table>
 					</form>
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="modalBtn">삭제</button>
+					<button type="button" class="btn btn-primary" id="modalBtn">등록</button>
 				</div>
 			</div>
 		</div>

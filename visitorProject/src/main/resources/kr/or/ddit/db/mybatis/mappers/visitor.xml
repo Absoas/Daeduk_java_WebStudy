@@ -3,7 +3,6 @@
 <mapper namespace="kr.or.ddit.visitor.dao.IVisitorDAO">
 	
 	<insert id="insertVisitor" parameterType="visitorVO">
-		
 		<selectKey keyProperty="vt_no" resultType="Long" order="BEFORE">
 			SELECT VISIT_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
@@ -22,6 +21,31 @@
 			    #{vt_pass},
 			    #{vt_ip},
 			    sysdate
+			)
+	</insert>
+	
+	
+	<insert id="insertFile" parameterType="kr.or.ddit.vo.VPdsVO">
+		<selectKey keyProperty="vpds_no" resultType="Long" order="BEFORE">
+			SELECT VREP_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	
+		INSERT INTO vpds (
+			    VPDS_NO,
+			    VT_NO,
+			    VPDS_FILENAME,
+			    VPDS_SAVENAME,
+			    VPDS_MIME,
+			    VPDS_SIZE,
+			    VPDS_FANCYSIZE
+			) VALUES (
+			    #{vpds_no},
+			    #{vt_no},
+			    #{vpds_filename},
+			    #{vpds_savename},
+			    #{vpds_mime},
+			    #{vpds_size},
+			    #{vpds_fancysize}
 			)
 	</insert>
 	
@@ -58,6 +82,7 @@
 	<select id="selectVisitor" parameterType="long" resultType="visitorVO">
 		select * from visitor where vt_no = #{vt_no} 
 	</select>
+	
 </mapper>
 
 

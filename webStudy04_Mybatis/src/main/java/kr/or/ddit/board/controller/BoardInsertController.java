@@ -41,6 +41,7 @@ public class BoardInsertController{
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
+		
 		GeneralValidator validator = new GeneralValidator();
 		Map<String, List<CharSequence>> errors = new LinkedHashMap<>();
 		req.setAttribute("errors", errors);

@@ -6,19 +6,6 @@ import kr.or.ddit.ServiceResult;
 import kr.or.ddit.vo.PagingInfoVO;
 import kr.or.ddit.vo.VisitReplyVO;
 
-/**
- * @author sem
- * @since 2018. 12. 4.
- * @version 1.0
- * @see javax.servlet.http.HttpServlet
- * <pre>
- * [[개정이력(Modification Information)]]
- * 수정일                          수정자               수정내용
- * --------     --------    ----------------------
- * 2018. 12. 4.      작성자명       덧글 관리용 Business Logic Layer
- * Copyright (c) 2018 by DDIT All right reserved
- * </pre>
- */
 public interface IReplyService {
 	/**
 	 * 덧글 작성

@@ -48,13 +48,11 @@ public class VisitorDeleteController {
 		if (ServiceResult.OK.equals(result)) {
 			view = "visitor/visitorForm";
 			return view;
-		
 		}else if(ServiceResult.INVALIDPASSWORD.equals(result)){
 			message.put("message", "비밀번호 실패");
 		}else {
 			message.put("message", "실패");
 		}
-		
 		
 		resp.setContentType("application/json;charset=UTF-8");
 		ObjectMapper mapper = new ObjectMapper();

@@ -123,15 +123,33 @@
 		
 		<dependency>
 			<groupId>kr.or.ddit</groupId>
-			<artifactId>ybframework2</artifactId>
+			<artifactId>annotation</artifactId>
 			<version>1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>kr.or.ddit</groupId>
-			<artifactId>ybframework1</artifactId>
+			<artifactId>ybframework</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>kr.or.ddit</groupId>
+			<artifactId>myvalidator</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>kr.or.ddit</groupId> -->
+<!-- 			<artifactId>ybframework2</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>kr.or.ddit</groupId> -->
+<!-- 			<artifactId>ybframework</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 		</dependency> -->
 		
 		<dependency>
 			<groupId>junit</groupId>
