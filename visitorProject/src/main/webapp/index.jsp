@@ -9,16 +9,7 @@
 <title>/index.jsp</title>
 </head>
 <body>
-	<c:url var="insert" value="visitor/visitorInsert.do"/>
+	<c:url var="insert" value="visitor/visitorInsert.do"></c:url>
 	<a href="${insert}">방명록 쓰러가기</a>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
