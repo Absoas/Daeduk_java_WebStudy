@@ -6,172 +6,35 @@
 <head>
 <meta charset="UTF-8">
 
+<style type="text/css">
+	#listBody{
+		font-size: 11px;
+	}
+	
+	.card-div{
+		width: 350px;
+		display: inline-block;
+	}
+	
+</style>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script type="text/javascript" 
 	src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/visitorProcess.js"></script>
 <script type="text/javascript">
-	$(function(){
-		vtForm = $("[name='vtForm']");
-		insertBtn = $("[name='insertBtn']");
-		cardInsert= $("#cardInsert");
-		listBody= $("#listBody");
-		pagingArea = $("#pagingArea");
-		replyModal = $("#visitorReplyModal");
-		replyForm = $("[name = 'replyForm']");
-		
-		insertBtn.on("click",function(){
-			vtForm.submit();
-		});
-		
-		vtForm.ajaxForm({
- 			dataType:'json',
- 			success: visitorListMaker,
- 			error:function(resp){
- 				alert(resp.status);
- 			}
- 		});
-		
-		pagingVisitor(1);
-		
-		
-		$("#modalBtn").on("click", function(){
- 			var rep_writer = replyModal.find("#rep_writer").val();
- 			var rep_content = replyModal.find("#rep_content").val();
- 			var rep_pass = replyModal.find("#rep_pass").val();
- 			replyForm.find("[name='rep_writer']").val(rep_writer);
- 			replyForm.find("[name='rep_content']").val(rep_content);
- 			replyForm.find("[name='rep_pass']").val(rep_pass);
- 			replyForm.submit();
- 			vtForm[0].reset();
- 			$("#modalForm")[0].reset(); 			
- 			replyModal.modal("hide");
- 		});
-		
-	});
-	
-
-	function deleteFunc(rep_no){
-		var vt_pass = prompt("비밀번호 입력");
-		if(!vt_pass) return;
-		document.deleteForm.rep_no.value=rep_no;
-		document.deleteForm.vt_pass.value=vt_pass;
-		document.deleteForm.submit();
+	$.getContextPath = function(){
+		return "${pageContext.request.contextPath}";
 	}
-	
-	function replyDelete(rep_no){
-		var rep_pass = prompt("비밀번호 입력");
-		if(!rep_pass) return;
-		document.replydeleteForm.rep_no.value=rep_no;
-		document.replydeleteForm.rep_pass.value=rep_pass;
-		document.replydeleteForm.submit();
-	}
-	
-	function replyFunc(vt_no){
-		replyForm.find("[name='vt_no']").val(vt_no);
-		replyModal.modal("show");
-	}
-	
-	function pagingVisitor(page){
-		$.ajax({
-			url:"${pageContext.request.contextPath}/visitor/visitorView.do",
-			data:{
-				page:page
-			},
-			dataType:"json",
-			success:visitorListMaker,
-			error:function(resp){
-				alert(resp.message);
-				pagingVisitor(1);
-			}
-		});
-	}
-
-		
-	function visitorListMaker(resp) {
-		if (resp.error) {
-			alert(resp.message); 					
-		} else { // 등록 성공
-			console.log(resp);
-			var html = "";
-			if(resp.dataList){
-				$.each(resp.dataList, function(idx, visit){
-					console.log(visit);
-// 					.../100px180/
-					html += "<div class='card' style='width: 18rem; display: inline-block;'>";
-					html += " <img class='card-img-top' src='' alt='이미지 등록'>";
-					html += "  <div class='card-body'>";
-					html += "    <h6 class='card-title'>"+visit.vt_writer+" 님이 등록하신 방명록입니다. </h6>";
-					html += "   	<p class='card-text'>"+visit.vt_content+"</p>";
-					html += "   	<p class='card-text'>"+visit.vt_date+"</p>";
-					html += "    <button  class='btn btn-primary' onclick='replyFunc("+visit.vt_no+");''>답글 등록</button>";
-					html += "    <button  class='btn btn-danger' onclick='deleteFunc("+visit.vt_no+");''>삭제 버튼</button>";
-					html += "    <hr>";
-					html += "    <h6 class='card-title'>답글 목록</h6>";
-					html += "    <div>";
-					html += "   <table class = 'table'>";
-					html += "   	<tbody id='listBody'>";
-							$.each(visit.replyList,function(idx,list){
-								if(list.rep_writer != null){
-									html += " <tr><th>작성자</th><td>"+list.rep_writer+"</td><th>날짜</th><td>"+list.rep_date+"</td></tr>";
-									html += " <tr><th>내용</th><td>"+list.rep_content+"</td><td><button onclick='replyDelete("+list.rep_no+")'>삭제</button></td></tr>";
-								}
-							});
-					html += "   	</tbody>";
-					html += "   </table>";
-					html += "    <div></div>";
-					html += "  </div>";
-					html += "</div>";
-				});
-			}else{
-				html += "";
-			}
-			pagingArea.html(resp.pagingHTML);	
-			cardInsert.html(html);
-			vtForm[0].reset();
-		}
-	}
-	
-// 	function replyListMaker(resp) {
-// 		if (resp.error) {
-// 			alert(resp.message); 					
-// 		} else { // 등록 성공
-// 			var html = "";
-// 			if(resp.dataList){
-// 				$.each(resp.dataList, function(idx, reply){
-// 					html += "<tr id='TR_"+reply.rep_no+"'>";
-// 					html += "<td>"+reply.rep_writer+"</td>";
-// 					html += "<td>"+reply.rep_ip+"</td>";
-// 					html += "<td>"+reply.rep_content+"</td>";
-// 					html += "<td>"+reply.rep_date+"&nbsp;<span data-toggle='modal' class='replyDelBtn'>[삭제]</span></td>";
-// 					html += "</tr>";
-// 				});
-// 			}else{
-// 				html += "<tr><td colspan='4'>데이터 없음.</td></tr>";
-// 			}
-// // 			pagingArea.html(resp.pagingHTML);	
-// 			listBody.html(html);
-// 			vtForm[0].reset();
-// 		}
-// 	}
-
-
 </script>
 
-<style type="text/css">
-	#listBody{
-		font-size: 11px;
-	}
-	
-</style>
 
 <title>Insert title here</title>
 </head>
 <body>
-		
-		
 	<form name="replydeleteForm" action="<c:url value ='/reply/replyDelete.do'/>" method="post">
 		<input type="hidden" name="rep_pass" />
 		<input type="hidden" name="rep_no" />
@@ -198,7 +61,7 @@
 		<input type="hidden" name="rep_content" value=""/>
 	</form>
 	
-	<form name="vtForm" method="post" >
+	<form name="vtForm" method="post" enctype="multipart/form-data">
 		<input type ="hidden" name="page" value=""/>
 		<input type="hidden" value="${pageContext.request.remoteAddr }" name="vt_ip" /> 
 		<input type="hidden" value="" name="vt_no" /> 
@@ -242,8 +105,8 @@
 	</div>
 	
 	<div aria-label="Page navigation" id="pagingArea">
+	
 	</div>
-
 
 	<div class="modal fade" id="visitorReplyModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -285,5 +148,13 @@
 		</div>
 	</div>
 
+
+	<script>
+		function paging(page){
+			pagingVisitor(page);
+		}
+	
+		paging(1);
+	</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package kr.or.ddit.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.ibatis.type.Alias;
 
@@ -22,7 +23,15 @@ public class VisitorVO implements Serializable{
 	private String vt_pass;
 	private String vt_ip;
 	private String vt_date;
-	private FileItem item;
+	private byte[] vt_img;
+	
+	public String getVt_imgToBase64(){
+		if(vt_img==null) {
+			return null;
+		}else {
+			return Base64.encodeBase64String(vt_img);
+		}
+	}
 	
 	private List<VisitReplyVO> replyList;
 }

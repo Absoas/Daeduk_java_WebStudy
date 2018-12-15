@@ -33,30 +33,6 @@ public class VisitorServiceImpl implements IVisitorService {
 			ServiceResult result = ServiceResult.FAILED;
 			int rowCnt = visitorDAO.insertVisitor(visitor, session);
 			if(rowCnt>0) {
-				if(visitor.getItem()!=null) {
-					FileItem item =  visitor.getItem();
-					VPdsVO pdsVO = new VPdsVO();
-					pdsVO.setVt_no(visitor.getVt_no());
-					pdsVO.setVpds_filename(item.getName());
-					pdsVO.setVpds_savename(UUID.randomUUID().toString());
-					pdsVO.setVpds_mime(item.getContentType());
-					pdsVO.setVpds_size(item.getSize());
-					pdsVO.setVpds_fancysize(FileUtils.byteCountToDisplaySize(item.getSize()));
-					
-					File saveFolder = new File("d:/boardFiles");
-					if(!saveFolder.exists()) saveFolder.mkdirs();
-					
-					try(
-						InputStream in = item.getInputStream();	
-					){
-						FileUtils.copyInputStreamToFile(in, 
-								new File(saveFolder, pdsVO.getVpds_savename()));
-					}catch (IOException e) {
-						e.printStackTrace();
-					}
-					
-					visitorDAO.insertFile(pdsVO, session);
-				}
 				result = ServiceResult.OK;
 				session.commit();
 			}

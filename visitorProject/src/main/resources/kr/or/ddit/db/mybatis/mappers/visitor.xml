@@ -13,14 +13,16 @@
 			    VT_WRITER,
 			    VT_PASS,
 			    VT_IP,
-			    VT_DATE
+			    VT_DATE,
+			    VT_IMG
 			) VALUES (
 			    #{vt_no},
 			    #{vt_content},
 			    #{vt_writer},
 			    #{vt_pass},
 			    #{vt_ip},
-			    sysdate
+			    sysdate,
+			    #{vt_img,jdbcType=BLOB}
 			)
 	</insert>
 	
@@ -66,6 +68,7 @@
 			    VT_PASS,
 			    VT_IP,
 			    TO_CHAR(VT_DATE,'YY-MM-DD') vt_date,
+			    VT_IMG,
 			    REP_NO,
 			    REP_CONTENT,
 			    REP_WRITER,

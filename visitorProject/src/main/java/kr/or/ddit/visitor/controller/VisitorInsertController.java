@@ -58,7 +58,7 @@ public class VisitorInsertController {
 			if(req instanceof FileUploadRequestWrapper) {
 				FileItem fileItem = ((FileUploadRequestWrapper) req).getFileItem("vt_file");
 				if(fileItem!=null) {
-					visitor.setItem(fileItem);
+					visitor.setVt_img(fileItem.get());
 				}
 			}
 			ServiceResult result = service.createVisitor(visitor);

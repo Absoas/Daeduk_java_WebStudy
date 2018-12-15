@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.message.is-primary.is-weather-box-size {
+	display: inline-block;
+	width: 30%;
+	height: 150px;
+}
+
+.inline.div{
+	display: inline-block;
+	width: 30%;
+}
+
+.inline.right{
+	display: inline-block;
+	width: 70%;
+}

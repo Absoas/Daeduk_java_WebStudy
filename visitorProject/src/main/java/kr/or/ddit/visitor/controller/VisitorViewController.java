@@ -39,7 +39,6 @@ public class VisitorViewController {
 		pagingVO.setTotalRecord(totalRecord);
 
 		List<VisitorVO> visitorList = service.retriveVisitorList(pagingVO);
-		req.setAttribute("visitorList", visitorList);
 		
 		pagingVO.setDataList(visitorList);
 		
@@ -51,5 +50,10 @@ public class VisitorViewController {
 			mapper.writeValue(out, pagingVO);				
 			return null;
 		}
+		
+//		String view = "member/memberView";
+//		req.setAttribute("visit", visitorList);
+//		return view;
+		
 	}
 }
