@@ -1,6 +1,0 @@
-webStudy04_Maven/.settings
-homeWebStudy_Maven/.settings
-homeWebStudy_Maven/target
-homeWebStudy_Maven/.classpath
-homeWebStudy_Maven/.project
-homeWebStudy_Maven/src/main/resources/kr/or/ddit/db/dbInfo.properties
