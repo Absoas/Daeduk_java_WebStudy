@@ -57,8 +57,20 @@ public class VisitorServiceImpl implements IVisitorService {
 
 	@Override
 	public ServiceResult modifyVisitor(VisitorVO visitor) {
-		// TODO Auto-generated method stub
-		return null;
+		ServiceResult result = ServiceResult.FAILED;
+		
+		VisitorVO savedVisit =  retriveVisitor(visitor.getVt_no());
+		if(savedVisit.getVt_pass().equals(visitor.getVt_pass())) {
+			int rowCnt = visitorDAO.updateVisitor(visitor);
+			if(rowCnt>0) {
+				result = ServiceResult.OK;
+			}
+		}else {
+			result = ServiceResult.INVALIDPASSWORD;
+		}
+		
+		
+		return result;
 	}
 
 	@Override

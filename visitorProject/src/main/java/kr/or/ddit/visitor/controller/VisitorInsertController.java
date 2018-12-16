@@ -54,21 +54,30 @@ public class VisitorInsertController {
 		boolean valid = validator(visitor);
 		String view = null;
 		
+		ServiceResult result = null;
+		
 		if(valid) {
 			if(req instanceof FileUploadRequestWrapper) {
 				FileItem fileItem = ((FileUploadRequestWrapper) req).getFileItem("vt_file");
-				if(fileItem!=null) {
-					visitor.setVt_img(fileItem.get());
+				
+				System.out.println(fileItem.getContentType());
+				if (!fileItem.getContentType().contains("image/")) {
+					message.put("message", "이미지만 등록 가능합니다.");
+				} else {
+					if (fileItem != null) {
+						visitor.setVt_img(fileItem.get());
+						result = service.createVisitor(visitor);
+
+						if (ServiceResult.OK.equals(result)) {
+							view = "redirect:/visitor/visitorView.do";
+							return view;
+						} else {
+							message.put("message", "실패");
+						}
+					}
 				}
 			}
-			ServiceResult result = service.createVisitor(visitor);
 			
-			if(ServiceResult.OK.equals(result)) {
-				view = "redirect:/visitor/visitorView.do";
-				return view;
-			}else {
-				message.put("message", "실패");
-			}
 		}else {
 			message.put("message", "검증 실패");
 		}

@@ -16,6 +16,11 @@
 		display: inline-block;
 	}
 	
+	img{
+		width: 286px;
+		height: 180px;
+	}
+	
 </style>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -24,7 +29,6 @@
 <script src="http://malsup.github.com/jquery.form.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/visitorProcess.js"></script>
 <script type="text/javascript">
 	$.getContextPath = function(){
 		return "${pageContext.request.contextPath}";
@@ -36,13 +40,13 @@
 </head>
 <body>
 	<form name="replydeleteForm" action="<c:url value ='/reply/replyDelete.do'/>" method="post">
-		<input type="hidden" name="rep_pass" />
-		<input type="hidden" name="rep_no" />
+		<input type="hidden" name="rep_pass" value=""/>
+		<input type="hidden" name="rep_no" value=""/>
 	</form>
 	
 	<form name="deleteForm" action="<c:url value ='/visitor/visitorDelete.do'/>" method="post">
-		<input type="hidden" name="vt_no" />
-		<input type="hidden" name="vt_pass" />
+		<input type="hidden" name="vt_no" value=""/>
+		<input type="hidden" name="vt_pass" value=""/>
 	</form>
 	
 	<div class="jumbotron">
@@ -148,7 +152,7 @@
 		</div>
 	</div>
 
-
+	<script type="text/javascript" src="${pageContext.request.contextPath }/js/visitorProcess.js"></script>
 	<script>
 		function paging(page){
 			pagingVisitor(page);

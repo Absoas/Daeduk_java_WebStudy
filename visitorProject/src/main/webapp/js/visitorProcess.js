@@ -35,10 +35,10 @@ $(function(){
 	});
 	
 
-	function deleteFunc(rep_no){
+	function deleteFunc(vt_no){
 		var vt_pass = prompt("비밀번호 입력");
 		if(!vt_pass) return;
-		document.deleteForm.rep_no.value=rep_no;
+		document.deleteForm.vt_no.value=vt_no;
 		document.deleteForm.vt_pass.value=vt_pass;
 		document.deleteForm.submit();
 	}
@@ -56,6 +56,10 @@ $(function(){
 		replyModal.modal("show");
 	}
 	
+	function imageUpdate(vt_no){
+		console.log(vt_no);
+	}
+	
 	function pagingVisitor(page){
 		$.ajax({
 			url: $.getContextPath()+"/visitor/visitorView.do?page="+page,
@@ -69,23 +73,40 @@ $(function(){
 			}
 		});
 	}
+	
+	function updateVisitor(vt_no){
+		var vt_pass = prompt("비밀번호 입력");
+		if(!vt_pass) return;
+		
+		var action = vtForm.attr("action");
+		vtForm.attr("action", $.getContextPath()+"/visitor/visitorUpdate.do");
+		document.vtForm.vt_no.value=vt_no;
+		document.vtForm.vt_pass.value=vt_pass;
+		document.vtForm.submit();
+		vtForm.attr("action", action);
+		vtForm[0].reset();
+	}
 
 		
 	function visitorListMaker(resp) {
 		if (resp.error) {
-			alert(resp.message); 					
+			visitorListMaker(1);
 		} else { // 등록 성공
-			console.log(resp);
 			var html = "";
+			console.log(resp);
 			if(resp.dataList){
 				$.each(resp.dataList, function(idx, visit){
 // 					.../100px180/
 					html += "<div class='card' style='width: 18em; display: inline-block;'>";
-					html += " <img class='card-img-top' src='data:image/*;base64,"+visit.vt_img+"' alt='이미지 등록'>";
+					if(visit.vt_img){
+						html += " <img class='card-img-top' onclick='updateVisitor("+visit.vt_no+")' src='data:image/*;base64,"+visit.vt_img+"' alt=''>";
+					}else{
+						html += " <img class='card-img-top' onclick='updateVisitor("+visit.vt_no+")' src='"+$.getContextPath()+"/images/1.jpg' alt=''>";
+					}
 					html += "  <div class='card-body'>";
-					html += "    <h6 class='card-title'>"+visit.vt_writer+" 님이 등록하신 방명록입니다. </h6>";
-					html += "   	<p class='card-text'>"+visit.vt_content+"</p>";
-					html += "   	<p class='card-text'>"+visit.vt_date+"</p>";
+					html += "    <h6 class='card-title'> 작성자 : "+visit.vt_writer+" 님이 등록하신 방명록입니다. </h6>";
+					html += "   	<p class='card-text'> 내용 : "+visit.vt_content+"</p>";
+					html += "   	<p class='card-text'> 날짜 : "+visit.vt_date+"</p>";
 					html += "    <button  class='btn btn-primary' onclick='replyFunc("+visit.vt_no+");''>답글 등록</button>";
 					html += "    <button  class='btn btn-danger' onclick='deleteFunc("+visit.vt_no+");''>삭제 버튼</button>";
 					html += "    <hr>";

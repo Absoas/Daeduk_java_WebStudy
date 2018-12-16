@@ -52,8 +52,13 @@ public class VisitorDaoImpl implements IVisitorDAO {
 	}
 
 	@Override
-	public int updateVisitor(VisitorVO Visitor, SqlSession session) {
-		return 0;
+	public int updateVisitor(VisitorVO visitor) {
+		try(
+				SqlSession session = sqlSessionFactory.openSession();
+			){
+				IVisitorDAO mapper = session.getMapper(IVisitorDAO.class);
+				return mapper.updateVisitor(visitor);
+			}
 	}
 
 	@Override

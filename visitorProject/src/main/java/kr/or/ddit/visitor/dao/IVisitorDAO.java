@@ -14,7 +14,7 @@ public interface IVisitorDAO {
 	public long selectTotalRecord(PagingInfoVO<VisitorVO> pagingVO);
 	public List<VisitorVO> selectVisitorList(PagingInfoVO<VisitorVO> pagingVO);
 	public VisitorVO selectVisitor(@Param("vt_no") long vt_no);
-	public int updateVisitor(VisitorVO visitor, SqlSession session);
+	public int updateVisitor(VisitorVO visitor);
 	public int deleteVisitor(long vt_no, SqlSession session);
 	public int insertFile(VPdsVO pdsVO, SqlSession session);
 }

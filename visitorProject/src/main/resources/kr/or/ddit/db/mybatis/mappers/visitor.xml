@@ -26,6 +26,13 @@
 			)
 	</insert>
 	
+	<update id="updateVisitor" parameterType="visitorVO">
+		UPDATE VISITOR
+		SET
+		VT_IMG = #{vt_img}
+		WHERE VT_NO = #{vt_no}
+	</update>
+	
 	
 	<insert id="insertFile" parameterType="kr.or.ddit.vo.VPdsVO">
 		<selectKey keyProperty="vpds_no" resultType="Long" order="BEFORE">
