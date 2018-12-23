@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.alba.dao.IAlbaDAO">
+		<sql id="searchFrag">
+		<where>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
+				<if test="searchType.equals('name')">
+					alba_name LIKE '%'||#{searchWord}||'%'
+				</if>
+				<if test="searchType.equals('address')">
+					alba_address LIKE '%'||#{searchWord}||'%'
+				</if>
+				<if test="searchType.equals('all')">
+					alba_name LIKE '%'||#{searchWord}||'%'
+					 OR 
+					alba_address LIKE '%'||#{searchWord}||'%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectTotalRecord" parameterType="kr.or.ddit.vo.PagingInfoVO" resultType="long">
+		SELECT COUNT(*)
+		FROM ALBASENG
+		<include refid="searchFrag"/>
+	</select>
+	
+	<select id="selectAlba" parameterType="String" resultType="kr.or.ddit.vo.AlbaVO">
+		SELECT ALBA_CODE,
+			    ALBA_NAME,
+			    ALBA_AGE,
+			    ALBA_TEL,
+			    ALBA_ADDRESS,
+			    ALBA_GRADE,
+			    ALBA_GENDER,
+			    ALBA_CAREER 
+		FROM ALBASENG
+		WHERE ALBA_CODE = '${value}'
+	</select>
+	
+	<select id="selectAlbaList" resultType="kr.or.ddit.vo.AlbaVO" parameterType="kr.or.ddit.vo.PagingInfoVO">
+		SELECT B.*
+		FROM (
+				SELECT ROWNUM RNUM, A.*
+				FROM (
+				SELECT * FROM albaseng
+				<include refid="searchFrag"/>
+				
+				ORDER BY ROWID DESC 	) A   ) B
+		<![CDATA[			
+		WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}		
+		]]>		
+	</select>
+	
+	<insert id="insertAlba" parameterType="kr.or.ddit.vo.AlbaVO">
+		<selectKey resultType="string" keyProperty="alba_code" order="BEFORE">
+			SELECT 'alba_' || TO_CHAR(MAX(SUBSTR(ALBA_CODE,6))+1)
+    		FROM ALBASENG
+		</selectKey>
+	
+		INSERT INTO ALBASENG (
+		    ALBA_CODE,
+		    ALBA_NAME,
+		    ALBA_AGE,
+		    ALBA_TEL,
+		    ALBA_ADDRESS,
+		    ALBA_GRADE,
+		    ALBA_GENDER,
+		    ALBA_CAREER
+		    
+		) VALUES (
+		    #{alba_code},
+		    #{alba_name},
+		    #{alba_age},
+		    #{alba_tel},
+		    #{alba_address},
+		    #{alba_grade},
+		    #{alba_gender},
+		    #{alba_career}
+		)
+	</insert>
+
+	<delete id="deleteAlba" parameterType="String">
+		delete from albaseng where alba_code = '${value}'
+	</delete>
+	
+	<update id="updateAlba" parameterType="kr.or.ddit.vo.AlbaVO">
+		UPDATE  ALBASENG 
+		SET
+			alba_name = #{alba_name},
+			alba_age = #{alba_age},
+		   	alba_tel = #{alba_tel},
+		   	alba_address = #{alba_address},
+		   	alba_grade = #{alba_grade},
+		   	alba_career = #{alba_career}
+		
+		where alba_code = #{alba_code}
+		
+	</update>
+	
+	<insert id="licanseInsert">
+		
+	</insert>
+</mapper>
