@@ -83,8 +83,10 @@
 			<tr>
 				<th>알바생성별</th>
 				<td><div class="input-group">
-						<input type="text" name="alba_gender"
-							value="${alba.alba_gender}" />
+						<input type="radio" name="alba_gender"
+							value="M" /> 남자
+						<input type="radio" name="alba_gender"
+							value="F" /> 여자
 						<form:errors path="alba_gender" element="span"
 							cssClass="error input-group-text" />
 					</div></td>
@@ -103,7 +105,6 @@
 				<th>자격증</th>
 				<td><div class="input-group">
 						<select name="license" multiple="multiple">
-							<option value="">분류선택</option>
 							<c:forEach items="${licenseMap }" var="lic">
 								<option value="${lic['CODENAME'] }">${lic["CODEVALUE"] }</option>
 							</c:forEach>

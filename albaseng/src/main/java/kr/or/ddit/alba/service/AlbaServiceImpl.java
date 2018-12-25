@@ -5,10 +5,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.ddit.ServiceResult;
 import kr.or.ddit.alba.dao.IAlbaDAO;
 import kr.or.ddit.vo.AlbaVO;
+import kr.or.ddit.vo.LicenseVO;
 import kr.or.ddit.vo.PagingInfoVO;
 
 @Service
@@ -32,17 +34,24 @@ public class AlbaServiceImpl implements IAlbaService{
 		return albadao.selectAlbaList(pagingVO);
 	}
 
+	@Transactional
 	@Override
 	public ServiceResult createAlba(AlbaVO alba) {
 		ServiceResult result = ServiceResult.FAILED;
 		
 		int cnt = albadao.insertAlba(alba);
+		int check = 1;
+				
+		if(alba.getLicense()!= null && alba.getLicense().size()>0){
+			check = alba.getLicense().size();
+					
+			for(LicenseVO lic : alba.getLicense()){
+				lic.setAlba_code(alba.getAlba_code());
+				cnt += albadao.licanseInsert(lic);
+			}
+		}
 		
-//		if(alba.getLicense()!=null || alba.getLicense().length>0){
-//			albadao.licanseInsert(alba)
-//		}
-		
-		if(cnt>0){
+		if(cnt >= check){
 			result = ServiceResult.OK;
 		}
 		

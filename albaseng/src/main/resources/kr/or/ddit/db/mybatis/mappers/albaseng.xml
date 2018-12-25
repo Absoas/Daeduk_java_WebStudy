@@ -25,18 +25,25 @@
 		<include refid="searchFrag"/>
 	</select>
 	
+<!-- 	<resultMap type="kr.or.ddit.vo.AlbaVO" id="albaMap" autoMapping="true"> -->
+<!-- 		<id property="alba_code" column="ALBA_CODE"/> -->
+<!-- 		<collection property="license" ofType="kr.or.ddit.vo.LicenseVO" autoMapping="true"></collection> -->
+<!-- 	</resultMap> -->
+	
 	<select id="selectAlba" parameterType="String" resultType="kr.or.ddit.vo.AlbaVO">
 		SELECT ALBA_CODE,
 			    ALBA_NAME,
 			    ALBA_AGE,
 			    ALBA_TEL,
 			    ALBA_ADDRESS,
-			    ALBA_GRADE,
+			    CODEVALUE ALBA_GRADE,
 			    ALBA_GENDER,
-			    ALBA_CAREER 
-		FROM ALBASENG
-		WHERE ALBA_CODE = '${value}'
+			    ALBA_CAREER
+ 		FROM ALBASENG
+        INNER JOIN SIMPLECODE ON ALBA_GRADE = CODENAME
+		WHERE ALBASENG.ALBA_CODE = '${value}'
 	</select>
+	
 	
 	<select id="selectAlbaList" resultType="kr.or.ddit.vo.AlbaVO" parameterType="kr.or.ddit.vo.PagingInfoVO">
 		SELECT B.*
@@ -45,8 +52,8 @@
 				FROM (
 				SELECT * FROM albaseng
 				<include refid="searchFrag"/>
-				
-				ORDER BY ROWID DESC 	) A   ) B
+				ORDER BY ROWID DESC 
+			) A   ) B
 		<![CDATA[			
 		WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}		
 		]]>		
@@ -54,7 +61,7 @@
 	
 	<insert id="insertAlba" parameterType="kr.or.ddit.vo.AlbaVO">
 		<selectKey resultType="string" keyProperty="alba_code" order="BEFORE">
-			SELECT 'alba_' || TO_CHAR(MAX(SUBSTR(ALBA_CODE,6))+1)
+			SELECT 'alba_' || NVL(TO_CHAR(MAX(SUBSTR(ALBA_CODE,6))+1),'1')
     		FROM ALBASENG
 		</selectKey>
 	
@@ -78,6 +85,7 @@
 		    #{alba_gender},
 		    #{alba_career}
 		)
+		
 	</insert>
 
 	<delete id="deleteAlba" parameterType="String">
@@ -98,7 +106,12 @@
 		
 	</update>
 	
-	<insert id="licanseInsert">
-		
+	<insert id="licanseInsert" parameterType="kr.or.ddit.vo.LicenseVO">
+		INSERT INTO LICENSE (
+			ALBA_CODE , LIC_CODE
+		)
+		VALUES(
+			#{alba_code} , #{lic_code}
+		)
 	</insert>
 </mapper>

@@ -10,4 +10,11 @@
 	<select id="selectGrade" resultType="HashMap">
 		select * from simplecode where codename like 'G%'
 	</select>
+	
+	<select id="selectLicenseList" parameterType="String" resultType="HashMap">
+		select CODEVALUE 
+        from  license b, simplecode c
+        where '${value}' = b.alba_code
+        and b.lic_code = c.codename
+	</select>
 </mapper>

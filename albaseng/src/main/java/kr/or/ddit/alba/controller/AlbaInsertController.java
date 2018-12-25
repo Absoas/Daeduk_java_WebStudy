@@ -1,5 +1,6 @@
 package kr.or.ddit.alba.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import kr.or.ddit.ServiceResult;
 import kr.or.ddit.alba.dao.IOtherDAO;
 import kr.or.ddit.alba.service.IAlbaService;
 import kr.or.ddit.vo.AlbaVO;
+import kr.or.ddit.vo.LicenseVO;
 
 @Controller
 public class AlbaInsertController {
@@ -36,12 +38,27 @@ public class AlbaInsertController {
 			@ModelAttribute("alba") AlbaVO alba,
 			Errors errors,
 			@RequestParam(required=false) String[] license
-			){
+	){
 		boolean valid = !errors.hasErrors();
 		String view = null;
 		ModelAndView mav = new ModelAndView();
 		
-		if(valid){
+		if(license != null){
+			List<LicenseVO> licList = new ArrayList<>();
+			LicenseVO licVO = null;
+			for(String lic : license){
+				licVO = new LicenseVO();
+				licVO.setLic_code(lic);
+				licList.add(licVO);
+			}
+			alba.setLicense(licList);
+			
+			for(LicenseVO str : licList){
+				System.out.println(str.getLic_code());
+			}
+		}
+		
+//		if(valid){
 			ServiceResult result =  service.createAlba(alba);
 			switch (result) {
 			case OK:
@@ -55,22 +72,29 @@ public class AlbaInsertController {
 			default:
 				break;
 			}
-		}else{
-			view = "alba/albaForm";
-		}
-		
+//		}
+//		else{
+//			view = "alba/albaForm";
+//		}
 		mav.setViewName(view);
 		return mav;
 	}
 
 	@RequestMapping(value="/alba/albaInsert.do" , method=RequestMethod.GET)
 	public String getProcess(Model model){
-
-		List<Map<String, String>> gradeMap = otherDAO.selectGrade();
-		List<Map<String, String>> licenseMap = otherDAO.selectLicense();
-		model.addAttribute("gradeMap", gradeMap);
-		model.addAttribute("licenseMap", licenseMap);
-		
 		return "alba/albaForm";
+	}
+	
+	
+	@ModelAttribute("gradeMap")
+	public List<Map<String, Object>> gradeMapList(){
+		List<Map<String, Object>> gradeMap = otherDAO.selectGrade();
+		return gradeMap;
+	}
+	
+	@ModelAttribute("licenseMap")
+	public List<Map<String, Object>> licenseMapList(){
+		List<Map<String, Object>> licenseMap = otherDAO.selectLicense();
+		return licenseMap;
 	}
 }

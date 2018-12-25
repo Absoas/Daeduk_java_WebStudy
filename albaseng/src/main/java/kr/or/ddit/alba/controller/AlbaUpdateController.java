@@ -60,17 +60,23 @@ public class AlbaUpdateController {
 	}
 
 	@RequestMapping(value="/alba/albaUpdate.do" , method=RequestMethod.GET)
-	public String getProcess(@RequestParam(name="who", required=true) String alba_code,Model model){
-
-		AlbaVO alba = service.retrieveAlba(alba_code);
-		
+	public String getProcess(Model model
+			,@RequestParam(name="who", required=true)String alba_code){
+		AlbaVO alba =  service.retrieveAlba(alba_code);
 		model.addAttribute("alba", alba);
 		
-		List<Map<String, String>> gradeMap = otherDAO.selectGrade();
-		List<Map<String, String>> licenseMap = otherDAO.selectLicense();
-		model.addAttribute("gradeMap", gradeMap);
-		model.addAttribute("licenseMap", licenseMap);
-		
 		return "alba/albaForm";
+	}
+	
+	@ModelAttribute("gradeMap")
+	public List<Map<String, Object>> gradeMapList(){
+		List<Map<String, Object>> gradeMap = otherDAO.selectGrade();
+		return gradeMap;
+	}
+	
+	@ModelAttribute("licenseMap")
+	public List<Map<String, Object>> licenseMapList(){
+		List<Map<String, Object>> licenseMap = otherDAO.selectLicense();
+		return licenseMap;
 	}
 }

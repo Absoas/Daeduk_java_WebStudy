@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IOtherDAO {
-	public List<Map<String, String>> selectGrade();
-	public List<Map<String, String>> selectLicense();
+	public List<Map<String, Object>> selectGrade();
+	public List<Map<String, Object>> selectLicense();
+	
+	
+	public List<Map<String, Object>> selectLicenseList(String alba_code);
 }

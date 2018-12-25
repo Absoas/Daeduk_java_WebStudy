@@ -1,5 +1,7 @@
 package kr.or.ddit.vo;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -25,5 +27,5 @@ public class AlbaVO {
 	private String alba_gender;
 	private String alba_career;
 	
-	
+	private List<LicenseVO> license;
 }
