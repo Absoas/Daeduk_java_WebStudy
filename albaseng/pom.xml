@@ -31,6 +31,14 @@
 		</plugins>
 	</build>
 	<dependencies>
+<!-- 	 json 라이브러리 -->
+		<dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+	
+	
 		<!-- 스프링 모듈 의존성 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -225,6 +233,13 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>apache-cxf</artifactId>
+			<version>3.2.7</version>
+			<type>zip</type>
+			<classifier>src</classifier>
 		</dependency>
 	</dependencies>
 </project>

@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	시작하겠습니다.
-	<a href="${pageContext.request.contextPath}/alba/albaList.do">알바 리스트 보기</a>
+	인덱스 페이지
+	<a href="${pageContext.request.contextPath}/air/showAir.do">공기질 보기</a>
 </body>
 </html>

@@ -39,6 +39,12 @@
 	/>
 	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 	
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" 
+		p:definitions="classpath:kr/or/ddit/tiles/*-definitions.xml"
+	/>
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" 
+		p:order="2"
+	/>
 <!-- 	필터 : MultipartResolver -->
 <!-- 	wrapper : MultipartHttpServletRequest -->
 <!-- 	Part 캡슐화 타입 : MultipartFile -->
