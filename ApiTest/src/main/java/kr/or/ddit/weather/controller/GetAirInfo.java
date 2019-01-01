@@ -29,10 +29,10 @@ public class GetAirInfo {
 	public String doPost() throws IOException {
 		String tempUrl = "http://openapi.airkorea.or.kr/openapi/"
 				+ "services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst" 
-				+ "?itemCode=PM10&dataGubun=DAILY"
-				+ "&searchCondition=MONTH&pageNo=1&numOfRows=10"
+				+ "?itemCode=PM10"
+				+ "&dataGubun=HOUR"			// 일평균 , 시간 별로 측정
+				+ "&searchCondition=MONTH&pageNo=1&numOfRows=1"
 				+ "&ServiceKey="+API_KEY+"";
-		
 		return getData(tempUrl);
 	}
 	
