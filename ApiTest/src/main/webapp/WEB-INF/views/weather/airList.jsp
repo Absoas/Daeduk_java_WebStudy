@@ -41,10 +41,10 @@
 			},
 			dataType : "json",
 			success : function(resp){
+				var list = resp.response.body.items.item;
 				var html = "";
-				if(resp.list){
-					console.log(resp.list);
-					$.each(resp.list,function(idx,si){
+				if(list){
+					$.each(list,function(idx,si){
 						html += "<tr><td>"+si.dataTime+"</td>";
 						html += "<td>"+si.busan+"</td>";
 						html += "<td>"+si.daejeon+"</td>";

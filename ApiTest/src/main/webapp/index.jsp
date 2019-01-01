@@ -9,5 +9,6 @@
 <body>
 	인덱스 페이지
 	<a href="${pageContext.request.contextPath}/air/showAir.do">공기질 보기</a>
+	<a href="${pageContext.request.contextPath}/weather/showWeather.do">날씨 보기</a>
 </body>
 </html>
