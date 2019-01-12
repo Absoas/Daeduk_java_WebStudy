@@ -1,0 +1,28 @@
+package kr.or.ddit.common.board.suggestboard.service;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.common.board.suggestboard.dao.ISuggestBoardDao;
+import kr.or.ddit.vo.SuggestBoardVO;
+
+@Service
+public class SuggestBoardServiceImpl implements ISuggestBoardService{
+
+	@Inject
+	ISuggestBoardDao dao;
+	
+	@Override
+	public ServiceResult createSuggest(SuggestBoardVO sbVO) {
+	
+		ServiceResult result = ServiceResult.FAILED;
+		int cnt = dao.suggestInsert(sbVO);
+		if(cnt>0){
+			result= ServiceResult.OK;
+		}
+		
+		return result;
+	}
+}

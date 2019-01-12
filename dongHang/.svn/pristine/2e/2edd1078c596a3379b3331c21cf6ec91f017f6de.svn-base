@@ -1,0 +1,17 @@
+package kr.or.ddit.common.board.suggestboard.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+//건의 게시판 조회 기능
+//건의게시판의 게시글을 조회하는 로직
+
+@Controller
+public class SuggestboardRetrieveController {
+	
+	@RequestMapping("/suggest/suggestList.do")
+	public String getProcess(){
+		return "common/board/suggestboard/suggestboardList";
+	}
+	
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+<!-- 	definiation name == 논리적인 view name -->
+  <definition name="parent" template="/WEB-INF/views/template.jsp">
+  	<put-attribute name="preScript" value="/includee/preScript.jsp" />
+    <put-attribute name="title" value="동행" />
+    <put-attribute name="header" value="/includee/header.jsp" />
+    <put-attribute name="footer" value="/includee/footer.jsp" />
+  </definition>
+  
+  <definition name="common/board/eventboard/*" extends="parent">
+    <put-attribute name="body" value="/WEB-INF/views/common/board/eventboard/{1}.jsp" />
+  </definition>
+  
+  <definition name="common/board/postboard/*" extends="parent">
+    <put-attribute name="body" value="/WEB-INF/views/common/board/postboard/{1}.jsp" />
+  </definition>
+  
+  <definition name="board/*" extends="parent">
+    <put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp" />
+  </definition>
+  
+</tiles-definitions>

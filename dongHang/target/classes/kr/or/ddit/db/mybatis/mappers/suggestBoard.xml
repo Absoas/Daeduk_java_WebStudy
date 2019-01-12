@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.common.board.suggestboard.dao.ISuggestBoardDao">
+	
+	<insert id="suggestInsert" parameterType="SuggestBoardVO">
+	
+<!-- 			<selectKey order="BEFORE" resultType="long" keyProperty="suggest_board_no"> -->
+<!-- 				select suggest_board_seq.nextval from dual -->
+<!-- 			</selectKey> -->
+		
+<!-- 		INSERT INTO SUGGEST_BOARD ( -->
+<!-- 			    SUGGEST_BOARD_NO, -->
+<!-- 			    SUGGEST_BOARD_TITLE, -->
+<!-- 			    SUGGEST_BOARD_CONTENT, -->
+<!-- 			    SUGGEST_BOARD_DATE, -->
+<!-- 			    MEM_ID -->
+<!-- 			) VALUES ( -->
+<!-- 			    #{suggest_board_no}, -->
+<!-- 			    #{suggest_board_title}, -->
+<!-- 			    #{suggest_board_content}, -->
+<!-- 			    sysdate, -->
+<!-- 			    'A001' -->
+<!-- 			) -->
+			
+	</insert>
+	
+	<select id="suggestList"  resultType="SuggestBoardVO" >
+		SELECT * FROM SUGGEST_BOARD
+	</select>
+	
+	<select id="suggestSelect" parameterType="long" resultType="SuggestBoardVO">
+		SELECT * FROM SUGGEST_BOARD
+		WHERE SUGGEST_BOARD_NO  = #{suggest_board_no}
+	</select>
+	
+</mapper>

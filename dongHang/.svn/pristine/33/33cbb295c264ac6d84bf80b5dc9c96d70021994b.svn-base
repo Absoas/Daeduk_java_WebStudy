@@ -1,0 +1,10 @@
+package kr.or.ddit.common.board.suggestboard.dao;
+
+import org.springframework.stereotype.Repository;
+
+import kr.or.ddit.vo.SuggestBoardVO;
+
+@Repository
+public interface ISuggestBoardDao {
+	public int suggestInsert(SuggestBoardVO sbVO);
+}
